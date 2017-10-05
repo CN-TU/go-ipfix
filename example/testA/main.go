@@ -6,8 +6,8 @@ import (
 	"os"
 	"time"
 
-	"pm.cn.tuwien.ac.at/ipfix/ipfix"
-	_ "pm.cn.tuwien.ac.at/ipfix/ipfix/specs/iana"
+	"pm.cn.tuwien.ac.at/ipfix/go-ipfix"
+	_ "pm.cn.tuwien.ac.at/ipfix/go-ipfix/specs/iana"
 )
 
 func main() {
