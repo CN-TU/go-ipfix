@@ -12,6 +12,13 @@ type InformationElement struct {
 	Length uint16
 }
 
+func NewInformationElement(name string, pen uint32, id uint16, t Type, length uint16) InformationElement {
+	if length == 0 {
+		length = DefaultSize[t]
+	}
+	return InformationElement{name, pen, id, t, length}
+}
+
 func (ie *InformationElement) TemplateSize() int {
 	if ie.Pen == 0 {
 		return 4

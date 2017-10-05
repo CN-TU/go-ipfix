@@ -7,6 +7,7 @@ import (
 	"time"
 
 	"pm.cn.tuwien.ac.at/ipfix/ipfix"
+	_ "pm.cn.tuwien.ac.at/ipfix/ipfix/specs/iana"
 )
 
 func main() {
@@ -16,27 +17,9 @@ func main() {
 	}
 	msgStream := ipfix.MakeMessageStream(f, 0, 0)
 	id, err := msgStream.AddTemplate(time.Now(),
-		ipfix.InformationElement{
-			"octetDeltaCount",
-			0,
-			1,
-			ipfix.Unsigned64,
-			8,
-		},
-		ipfix.InformationElement{
-			"sourceIPv4Address",
-			0,
-			8,
-			ipfix.Ipv4Address,
-			4,
-		},
-		ipfix.InformationElement{
-			"flowEndNanoseconds",
-			0,
-			157,
-			ipfix.DateTimeNanoseconds,
-			8,
-		},
+		ipfix.GetInformationElement("octetDeltaCount"),
+		ipfix.GetInformationElement("sourceIPv4Address"),
+		ipfix.GetInformationElement("flowEndNanoseconds"),
 	)
 	if err != nil {
 		log.Panic(err)

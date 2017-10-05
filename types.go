@@ -35,6 +35,78 @@ const (
 	Ipv6Address
 )
 
+const VariableLength uint16 = 65535
+
+var DefaultSize = [...]uint16{
+	VariableLength,
+	1,
+	2,
+	4,
+	8,
+	1,
+	2,
+	4,
+	8,
+	4,
+	8,
+	1,
+	6,
+	VariableLength,
+	4,
+	8,
+	8,
+	8,
+	4,
+	16,
+}
+
+func NameToType(x []byte) Type {
+	switch string(x) {
+	case "octetArray":
+		return OctetArray
+	case "unsigned8":
+		return Unsigned8
+	case "unsigned16":
+		return Unsigned16
+	case "unsigned32":
+		return Unsigned32
+	case "unsigned64":
+		return Unsigned64
+	case "signed8":
+		return Signed8
+	case "signed16":
+		return Signed16
+	case "signed32":
+		return Signed32
+	case "signed64":
+		return Signed64
+	case "float32":
+		return Float32
+	case "float64":
+		return Float64
+	case "boolean":
+		return Boolean
+	case "macAddress":
+		return MacAddress
+	case "string":
+		return String
+	case "dateTimeSeconds":
+		return DateTimeSeconds
+	case "dateTimeMilliseconds":
+		return DateTimeMilliseconds
+	case "dateTimeMicroseconds":
+		return DateTimeMicroseconds
+	case "dateTimeNanoseconds":
+		return DateTimeNanoseconds
+	case "ipv4Address":
+		return Ipv4Address
+	case "ipv6Address":
+		return Ipv6Address
+	}
+	log.Panicf("Unknown type %s\n", x)
+	return -1
+}
+
 //Seconds between NTP and Unix epoch
 const NTPToUnix uint32 = 0x83AA7E80
 
