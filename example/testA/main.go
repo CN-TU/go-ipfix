@@ -7,7 +7,6 @@ import (
 	"time"
 
 	"pm.cn.tuwien.ac.at/ipfix/go-ipfix"
-	_ "pm.cn.tuwien.ac.at/ipfix/go-ipfix/specs/iana"
 )
 
 func main() {
@@ -15,6 +14,7 @@ func main() {
 	if err != nil {
 		log.Panic(err)
 	}
+	ipfix.LoadIANASpec()
 	msgStream := ipfix.MakeMessageStream(f, 0, 0)
 	id, err := msgStream.AddTemplate(time.Now(),
 		ipfix.GetInformationElement("octetDeltaCount"),
