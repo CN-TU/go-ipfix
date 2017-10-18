@@ -107,6 +107,52 @@ func NameToType(x []byte) Type {
 	return -1
 }
 
+func (t Type) String() string {
+	switch t {
+	case OctetArray:
+		return "octetArray"
+	case Unsigned8:
+		return "unsigned8"
+	case Unsigned16:
+		return "unsigned16"
+	case Unsigned32:
+		return "unsigned32"
+	case Unsigned64:
+		return "unsigned64"
+	case Signed8:
+		return "signed8"
+	case Signed16:
+		return "signed16"
+	case Signed32:
+		return "signed32"
+	case Signed64:
+		return "signed64"
+	case Float32:
+		return "float32"
+	case Float64:
+		return "float64"
+	case Boolean:
+		return "boolean"
+	case MacAddress:
+		return "macAddress"
+	case String:
+		return "string"
+	case DateTimeSeconds:
+		return "dateTimeSeconds"
+	case DateTimeMilliseconds:
+		return "dateTimeMilliseconds"
+	case DateTimeMicroseconds:
+		return "dateTimeMicroseconds"
+	case DateTimeNanoseconds:
+		return "dateTimeNanoseconds"
+	case Ipv4Address:
+		return "ipv4Address"
+	case Ipv6Address:
+		return "ipv6Address"
+	}
+	return "unknownType"
+}
+
 //Seconds between NTP and Unix epoch
 const NTPToUnix uint32 = 0x83AA7E80
 
