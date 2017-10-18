@@ -2,6 +2,7 @@ package ipfix
 
 import (
 	"encoding/binary"
+	"fmt"
 )
 
 type InformationElement struct {
@@ -17,6 +18,16 @@ func NewInformationElement(name string, pen uint32, id uint16, t Type, length ui
 		length = DefaultSize[t]
 	}
 	return InformationElement{name, pen, id, t, length}
+}
+
+func (ie InformationElement) String() string {
+	if ie.Pen == 0 {
+		return ie.Name
+	}
+	if ie.Length == 0 || ie.Length == DefaultSize[ie.Type] {
+		return fmt.Sprintf("%s(%d/%d)<%s>", ie.Name, ie.Pen, ie.ID, ie.Type)
+	}
+	return fmt.Sprintf("%s(%d/%d)<%s>[%d]", ie.Name, ie.Pen, ie.ID, ie.Type, ie.Length)
 }
 
 func (ie *InformationElement) TemplateSize() int {
