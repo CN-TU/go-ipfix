@@ -30,14 +30,14 @@ func (ie InformationElement) String() string {
 	return fmt.Sprintf("%s(%d/%d)<%s>[%d]", ie.Name, ie.Pen, ie.ID, ie.Type, ie.Length)
 }
 
-func (ie *InformationElement) TemplateSize() int {
+func (ie InformationElement) TemplateSize() int {
 	if ie.Pen == 0 {
 		return 4
 	}
 	return 8
 }
 
-func (ie *InformationElement) SerializeTo(buffer SerializeBuffer) {
+func (ie InformationElement) SerializeTo(buffer SerializeBuffer) {
 	ident := ie.ID
 	if ie.Pen == 0 {
 		b := buffer.Append(4)
@@ -52,6 +52,6 @@ func (ie *InformationElement) SerializeTo(buffer SerializeBuffer) {
 	binary.BigEndian.PutUint16(b[0:], uint16(ident))
 }
 
-func (ie *InformationElement) MakeDataRecord(value interface{}) DataRecordElement {
+func (ie InformationElement) MakeDataRecord(value interface{}) DataRecordElement {
 	return MakeDataRecordElement(ie.Type, value, int(ie.Length))
 }
