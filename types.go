@@ -33,6 +33,7 @@ const (
 	DateTimeNanoseconds
 	Ipv4Address
 	Ipv6Address
+	IllegalType
 )
 
 const VariableLength uint16 = 65535
@@ -104,7 +105,7 @@ func NameToType(x []byte) Type {
 		return Ipv6Address
 	}
 	log.Panicf("Unknown type %s\n", x)
-	return -1
+	return IllegalType
 }
 
 func (t Type) String() string {
@@ -149,6 +150,8 @@ func (t Type) String() string {
 		return "ipv4Address"
 	case Ipv6Address:
 		return "ipv6Address"
+	case IllegalType:
+		return "<bad>"
 	}
 	return "unknownType"
 }

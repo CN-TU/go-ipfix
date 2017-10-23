@@ -14,7 +14,7 @@ type InformationElement struct {
 }
 
 func NewInformationElement(name string, pen uint32, id uint16, t Type, length uint16) InformationElement {
-	if length == 0 {
+	if t != IllegalType && length == 0 {
 		length = DefaultSize[t]
 	}
 	return InformationElement{name, pen, id, t, length}
@@ -24,7 +24,7 @@ func (ie InformationElement) String() string {
 	if ie.Pen == 0 {
 		return ie.Name
 	}
-	if ie.Length == 0 || ie.Length == DefaultSize[ie.Type] {
+	if (ie.Length == 0 && ie.Type != IllegalType) || ie.Length == DefaultSize[ie.Type] {
 		return fmt.Sprintf("%s(%d/%d)<%s>", ie.Name, ie.Pen, ie.ID, ie.Type)
 	}
 	return fmt.Sprintf("%s(%d/%d)<%s>[%d]", ie.Name, ie.Pen, ie.ID, ie.Type, ie.Length)
