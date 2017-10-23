@@ -111,7 +111,7 @@ func (m *MessageStream) SendData(now time.Time, template int, data ...interface{
 }
 
 func (m *MessageStream) Finalize(now time.Time) (err error) {
-	if !m.dirty {
+	if !m.dirty || m.currentSet == nil {
 		return nil
 	}
 	m.currentSet.Finalize()
