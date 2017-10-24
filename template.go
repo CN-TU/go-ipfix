@@ -44,3 +44,14 @@ func (t Template) MakeDataRecord(values ...interface{}) (ret DataRecord) {
 	ret.elements = elements
 	return
 }
+
+func (t Template) AssignDataRecord(record *BufferedDataRecord, values ...interface{}) {
+	if len(values) != len(t.Elements) {
+		panic(fmt.Sprintf("Supplied values (%d) differ from number of information elements (%d)!\n", len(values), len(t.Elements)))
+	}
+	record.template = t.ID
+	values = values[:len(t.Elements)]
+	for i, element := range t.Elements {
+		element.MakeDataRecord(values[i]).SerializeTo(record)
+	}
+}

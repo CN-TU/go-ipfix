@@ -22,31 +22,36 @@ type Set struct {
 	id          int16
 }
 
-func MakeSet(record Record, buffer SerializeBuffer) (ret *Set, err error) {
-	len := record.Length() + 4
-	if buffer.BytesFree() < len {
-		return nil, BufferFullError(len)
-	}
-	ret = &Set{
+func MakeSet(buffer SerializeBuffer) Set {
+	return Set{
 		buffer: buffer,
-		id:     record.Id(),
-		length: len,
+	} // 0 id is illegal in ipfix
+}
+
+func (s *Set) startSet(record Record) (err error) {
+	length := record.Length() + 4
+	if s.buffer.BytesFree() < length {
+		return BufferFullError(length)
 	}
-	b := buffer.Append(4)
+	s.length = length
+	s.id = record.Id()
+	b := s.buffer.Append(4)
 	_ = b[3]
-	binary.BigEndian.PutUint16(b[0:2], uint16(ret.id))
-	ret.lengthBytes = b[2:4]
-	record.SerializeTo(buffer)
+	binary.BigEndian.PutUint16(b[0:2], uint16(s.id))
+	s.lengthBytes = b[2:4]
+	record.SerializeTo(s.buffer)
 	return
 }
 
-func (s *Set) Id() int16 {
-	return s.id
-}
-
 func (s *Set) AppendRecord(record Record) error {
-	if record.Id() != s.Id() {
-		return &RecordMismatchError{record.Id(), s.Id()}
+	if s.id == 0 {
+		if err := s.startSet(record); err != nil {
+			return err
+		}
+		return nil
+	}
+	if record.Id() != s.id {
+		return &RecordMismatchError{record.Id(), s.id}
 	}
 	len := record.Length()
 	if s.buffer.BytesFree() < len {
@@ -62,5 +67,7 @@ func (s *Set) Finalize() (int, error) {
 		return 0, &IllegalSetError{"Set does not contain data!"}
 	}
 	binary.BigEndian.PutUint16(s.lengthBytes, uint16(s.length))
+	s.id = 0 // 0 id is illegal in ipfix
+	s.length = 0
 	return s.length, nil
 }

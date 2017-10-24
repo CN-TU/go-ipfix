@@ -8,26 +8,30 @@ import (
 )
 
 type MessageStream struct {
-	w             io.Writer
-	buffer        SerializeBuffer
-	length        []byte
-	time          []byte
-	record        Record
-	sequence      uint32
-	observationID uint32
-	templates     []*Template
-	currentSet    *Set
-	dirty         bool
+	w                 io.Writer
+	buffer            SerializeBuffer
+	length            []byte
+	time              []byte
+	record            Record
+	sequence          uint32
+	observationID     uint32
+	templates         []*Template
+	currentSet        Set
+	currentDataRecord BufferedDataRecord
+	dirty             bool
 }
 
 func MakeMessageStream(w io.Writer, mtu uint16, observationID uint32) (ret *MessageStream) {
 	if mtu == 0 {
 		mtu = 65535
 	}
+	buffer := MakeSerializeBuffer(int(mtu))
 	ret = &MessageStream{
-		w:             w,
-		buffer:        MakeSerializeBuffer(int(mtu)),
-		observationID: observationID,
+		w:                 w,
+		buffer:            buffer,
+		observationID:     observationID,
+		currentSet:        MakeSet(buffer),
+		currentDataRecord: MakeBufferedDataRecord(4096),
 	}
 	return
 }
@@ -44,57 +48,32 @@ func (m *MessageStream) startMessage() {
 	binary.BigEndian.PutUint32(b[12:16], uint32(m.observationID))
 }
 
-func (m *MessageStream) createSet(record Record, now time.Time) (err error) {
-	var newSet *Set
+func (m *MessageStream) sendRecord(record Record, now time.Time) (err error) {
 	if !m.dirty {
 		m.startMessage()
 	}
-	if newSet, err = MakeSet(record, m.buffer); err != nil {
-		if ipfixerr, ok := err.(IPFIXError); ok && ipfixerr.BufferFull() {
-			// Buffer full -> finalize and try again
-			if err = m.Finalize(now); err != nil {
-				return
+	for {
+		err = m.currentSet.AppendRecord(record)
+		if err == nil {
+			if record.Id() >= 256 {
+				m.sequence++
 			}
-			m.startMessage()
-			if newSet, err = MakeSet(record, m.buffer); err != nil {
-				// ok if this happens, we lost
-				return
-			}
-		}
-	}
-	m.currentSet = newSet
-	return
-}
-
-func (m *MessageStream) sendRecord(record Record, now time.Time) (err error) {
-	if m.currentSet == nil {
-		if err = m.createSet(record, now); err != nil {
 			return
 		}
-		if record.Id() >= 256 {
-			m.sequence++
-		}
-		return nil
-	}
-	if err = m.currentSet.AppendRecord(record); err != nil {
 		if ipfixerr, ok := err.(IPFIXError); ok {
 			switch {
 			case ipfixerr.BufferFull():
-				m.currentSet.Finalize()
 				m.Finalize(now)
-				m.createSet(record, now)
+				m.startMessage()
 			case ipfixerr.RecordTypeMismatch():
 				m.currentSet.Finalize()
-				m.createSet(record, now)
 			default:
 				return
 			}
+		} else {
+			return
 		}
 	}
-	if record.Id() >= 256 {
-		m.sequence++
-	}
-	return nil
 }
 
 func (m *MessageStream) AddTemplate(now time.Time, elements ...InformationElement) (id int, err error) {
@@ -115,7 +94,8 @@ func (m *MessageStream) SendData(now time.Time, template int, data ...interface{
 	if t == nil {
 		panic(fmt.Sprintf("Unknown template id %d\n", template))
 	}
-	return m.sendRecord(t.MakeDataRecord(data...), now)
+	t.AssignDataRecord(&m.currentDataRecord, data...)
+	return m.sendRecord(&m.currentDataRecord, now)
 }
 
 func (m *MessageStream) Finalize(now time.Time) (err error) {
