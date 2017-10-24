@@ -31,20 +31,6 @@ func (t Template) SerializeTo(buffer SerializeBuffer) {
 	}
 }
 
-func (t Template) MakeDataRecord(values ...interface{}) (ret DataRecord) {
-	if len(values) != len(t.Elements) {
-		panic(fmt.Sprintf("Supplied values (%d) differ from number of information elements (%d)!\n", len(values), len(t.Elements)))
-	}
-	ret.template = t.ID
-	elements := make([]DataRecordElement, len(t.Elements))
-	values = values[:len(t.Elements)]
-	for i, element := range t.Elements {
-		elements[i] = element.MakeDataRecord(values[i])
-	}
-	ret.elements = elements
-	return
-}
-
 func (t Template) AssignDataRecord(record *BufferedDataRecord, values ...interface{}) {
 	if len(values) != len(t.Elements) {
 		panic(fmt.Sprintf("Supplied values (%d) differ from number of information elements (%d)!\n", len(values), len(t.Elements)))
@@ -52,6 +38,6 @@ func (t Template) AssignDataRecord(record *BufferedDataRecord, values ...interfa
 	record.template = t.ID
 	values = values[:len(t.Elements)]
 	for i, element := range t.Elements {
-		element.MakeDataRecord(values[i]).SerializeTo(record)
+		element.SerializeDataTo(record, values[i])
 	}
 }

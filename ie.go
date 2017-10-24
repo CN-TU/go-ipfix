@@ -52,6 +52,6 @@ func (ie InformationElement) SerializeTo(buffer SerializeBuffer) {
 	binary.BigEndian.PutUint16(b[0:], uint16(ident))
 }
 
-func (ie InformationElement) MakeDataRecord(value interface{}) DataRecordElement {
-	return MakeDataRecordElement(ie.Type, value, int(ie.Length))
+func (ie InformationElement) SerializeDataTo(buffer SerializeBuffer, value interface{}) {
+	ie.Type.SerializeDataTo(buffer, value, int(ie.Length))
 }

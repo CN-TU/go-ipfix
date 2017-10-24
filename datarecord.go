@@ -2,40 +2,17 @@ package ipfix
 
 import "io"
 
-type DataRecordElement interface {
-	Length() int
-	SerializeTo(buffer SerializeBuffer)
-}
-
-type DataRecord struct {
-	template int16
-	elements []DataRecordElement
-}
-
-func (d DataRecord) Id() int16 {
-	return d.template
-}
-
-func (d DataRecord) Length() (ret int) {
-	for _, element := range d.elements {
-		ret += element.Length()
-	}
-	return
-}
-
-func (d DataRecord) SerializeTo(buffer SerializeBuffer) {
-	for _, element := range d.elements {
-		element.SerializeTo(buffer)
-	}
-}
-
 type BufferedDataRecord struct {
-	DataRecord
-	buffer []byte
+	template int16
+	buffer   []byte
 }
 
 func MakeBufferedDataRecord(num int) BufferedDataRecord {
 	return BufferedDataRecord{buffer: make([]byte, 0, num)}
+}
+
+func (b BufferedDataRecord) Id() int16 {
+	return b.template
 }
 
 func (b *BufferedDataRecord) Append(num int) []byte {
@@ -58,10 +35,10 @@ func (b *BufferedDataRecord) SerializeTo(buffer SerializeBuffer) {
 	b.buffer = b.buffer[:0]
 }
 
-func (b *BufferedDataRecord) BytesFree() int {
+func (b BufferedDataRecord) BytesFree() int {
 	panic("Not implemented")
 }
 
-func (b *BufferedDataRecord) Finalize(io.Writer) (err error) {
+func (b BufferedDataRecord) Finalize(io.Writer) (err error) {
 	panic("Not implemented")
 }

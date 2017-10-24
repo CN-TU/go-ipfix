@@ -12,27 +12,39 @@ import (
 
 type Type int
 
+// DateTimeSeconds represents time in units of seconds from 00:00 UTC, Januray 1, 1970 according to RFC5102.
+type DateTimeSeconds uint64
+
+// DateTimeMilliseconds represents time in units of milliseconds from 00:00 UTC, Januray 1, 1970 according to RFC5102.
+type DateTimeMilliseconds uint64
+
+// DateTimeMicroseconds represents time in units of microseconds from 00:00 UTC, Januray 1, 1970 according to RFC5102.
+type DateTimeMicroseconds uint64
+
+// DateTimeNanoseconds represents time in units of nanoseconds from 00:00 UTC, Januray 1, 1970 according to RFC5102.
+type DateTimeNanoseconds uint64
+
 const (
-	OctetArray Type = iota
-	Unsigned8
-	Unsigned16
-	Unsigned32
-	Unsigned64
-	Signed8
-	Signed16
-	Signed32
-	Signed64
-	Float32
-	Float64
-	Boolean
-	MacAddress
-	String
-	DateTimeSeconds
-	DateTimeMilliseconds
-	DateTimeMicroseconds
-	DateTimeNanoseconds
-	Ipv4Address
-	Ipv6Address
+	OctetArrayType Type = iota
+	Unsigned8Type
+	Unsigned16Type
+	Unsigned32Type
+	Unsigned64Type
+	Signed8Type
+	Signed16Type
+	Signed32Type
+	Signed64Type
+	Float32Type
+	Float64Type
+	BooleanType
+	MacAddressType
+	StringType
+	DateTimeSecondsType
+	DateTimeMillisecondsType
+	DateTimeMicrosecondsType
+	DateTimeNanosecondsType
+	Ipv4AddressType
+	Ipv6AddressType
 	IllegalType
 )
 
@@ -64,45 +76,45 @@ var DefaultSize = [...]uint16{
 func NameToType(x []byte) Type {
 	switch string(x) {
 	case "octetArray":
-		return OctetArray
+		return OctetArrayType
 	case "unsigned8":
-		return Unsigned8
+		return Unsigned8Type
 	case "unsigned16":
-		return Unsigned16
+		return Unsigned16Type
 	case "unsigned32":
-		return Unsigned32
+		return Unsigned32Type
 	case "unsigned64":
-		return Unsigned64
+		return Unsigned64Type
 	case "signed8":
-		return Signed8
+		return Signed8Type
 	case "signed16":
-		return Signed16
+		return Signed16Type
 	case "signed32":
-		return Signed32
+		return Signed32Type
 	case "signed64":
-		return Signed64
+		return Signed64Type
 	case "float32":
-		return Float32
+		return Float32Type
 	case "float64":
-		return Float64
+		return Float64Type
 	case "boolean":
-		return Boolean
+		return BooleanType
 	case "macAddress":
-		return MacAddress
+		return MacAddressType
 	case "string":
-		return String
+		return StringType
 	case "dateTimeSeconds":
-		return DateTimeSeconds
+		return DateTimeSecondsType
 	case "dateTimeMilliseconds":
-		return DateTimeMilliseconds
+		return DateTimeMillisecondsType
 	case "dateTimeMicroseconds":
-		return DateTimeMicroseconds
+		return DateTimeMicrosecondsType
 	case "dateTimeNanoseconds":
-		return DateTimeNanoseconds
+		return DateTimeNanosecondsType
 	case "ipv4Address":
-		return Ipv4Address
+		return Ipv4AddressType
 	case "ipv6Address":
-		return Ipv6Address
+		return Ipv6AddressType
 	}
 	panic(fmt.Sprintf("Unknown type %s\n", x))
 	return IllegalType
@@ -110,45 +122,45 @@ func NameToType(x []byte) Type {
 
 func (t Type) String() string {
 	switch t {
-	case OctetArray:
+	case OctetArrayType:
 		return "octetArray"
-	case Unsigned8:
+	case Unsigned8Type:
 		return "unsigned8"
-	case Unsigned16:
+	case Unsigned16Type:
 		return "unsigned16"
-	case Unsigned32:
+	case Unsigned32Type:
 		return "unsigned32"
-	case Unsigned64:
+	case Unsigned64Type:
 		return "unsigned64"
-	case Signed8:
+	case Signed8Type:
 		return "signed8"
-	case Signed16:
+	case Signed16Type:
 		return "signed16"
-	case Signed32:
+	case Signed32Type:
 		return "signed32"
-	case Signed64:
+	case Signed64Type:
 		return "signed64"
-	case Float32:
+	case Float32Type:
 		return "float32"
-	case Float64:
+	case Float64Type:
 		return "float64"
-	case Boolean:
+	case BooleanType:
 		return "boolean"
-	case MacAddress:
+	case MacAddressType:
 		return "macAddress"
-	case String:
+	case StringType:
 		return "string"
-	case DateTimeSeconds:
+	case DateTimeSecondsType:
 		return "dateTimeSeconds"
-	case DateTimeMilliseconds:
+	case DateTimeMillisecondsType:
 		return "dateTimeMilliseconds"
-	case DateTimeMicroseconds:
+	case DateTimeMicrosecondsType:
 		return "dateTimeMicroseconds"
-	case DateTimeNanoseconds:
+	case DateTimeNanosecondsType:
 		return "dateTimeNanoseconds"
-	case Ipv4Address:
+	case Ipv4AddressType:
 		return "ipv4Address"
-	case Ipv6Address:
+	case Ipv6AddressType:
 		return "ipv6Address"
 	case IllegalType:
 		return "<bad>"
@@ -159,493 +171,299 @@ func (t Type) String() string {
 //Seconds between NTP and Unix epoch
 const NTPToUnix uint32 = 0x83AA7E80
 
-func MakeDataRecordElement(t Type, value interface{}, length int) DataRecordElement {
+func (t Type) SerializeDataTo(buffer SerializeBuffer, value interface{}, length int) {
 	switch t {
-	case OctetArray:
-		return &OctetArrayDataRecord{
-			BaseDataRecord{length},
-			value.([]byte),
-			length == 0,
-		}
-	case Unsigned8:
-		return &Unsigned8DataRecord{
-			value.(uint8),
-		}
-	case Unsigned16:
-		if length == 0 {
-			length = 2
-		}
-		return &Unsigned16DataRecord{
-			BaseDataRecord{length},
-			value.(uint16),
-		}
-	case Unsigned32:
-		if length == 0 {
-			length = 4
-		}
-		return &Unsigned32DataRecord{
-			BaseDataRecord{length},
-			value.(uint32),
-		}
-	case Unsigned64:
-		if length == 0 {
-			length = 8
-		}
-		return &Unsigned64DataRecord{
-			BaseDataRecord{length},
-			value.(uint64),
-		}
-	case Signed8:
-		return &Signed8DataRecord{
-			value.(int8),
-		}
-	case Signed16:
-		if length == 0 {
-			length = 2
-		}
-		return &Signed16DataRecord{
-			BaseDataRecord{length},
-			value.(int16),
-		}
-	case Signed32:
-		if length == 0 {
-			length = 4
-		}
-		return &Signed32DataRecord{
-			BaseDataRecord{length},
-			value.(int32),
-		}
-	case Signed64:
-		if length == 0 {
-			length = 8
-		}
-		return &Signed64DataRecord{
-			BaseDataRecord{length},
-			value.(int64),
-		}
-	case Float32:
-		return &Float32DataRecord{
-			value.(float32),
-		}
-	case Float64:
-		if length == 0 {
-			length = 8
-		}
-		return &Float64DataRecord{
-			BaseDataRecord{length},
-			value.(float64),
-		}
-	case Boolean:
-		return &BooleanDataRecord{
-			value.(bool),
-		}
-	case MacAddress:
-		return &MacAddressDataRecord{
-			value.(net.HardwareAddr),
-		}
-	case String:
-		return &StringDataRecord{
-			BaseDataRecord{length},
-			value.(string),
-			length == 0,
-		}
-	case DateTimeSeconds:
-		return &DateTimeSecondsDataRecord{
-			value.(time.Time),
-		}
-	case DateTimeMilliseconds:
-		return &DateTimeMillisecondsDataRecord{
-			value.(time.Time),
-		}
-	case DateTimeMicroseconds:
-		return &DateTimeMicrosecondsDataRecord{
-			value.(time.Time),
-		}
-	case DateTimeNanoseconds:
-		return &DateTimeNanosecondsDataRecord{
-			value.(time.Time),
-		}
-	case Ipv4Address:
-		return &Ipv4AddressDataRecord{
-			value.(net.IP),
-		}
-	case Ipv6Address:
-		return &Ipv6AddressDataRecord{
-			value.(net.IP),
-		}
+	case OctetArrayType, Ipv4AddressType, Ipv6AddressType, MacAddressType, StringType:
+		SerializeOctetArrayTo(buffer, t, value, length)
+	case Unsigned8Type, Unsigned16Type, Unsigned32Type, Unsigned64Type, Signed8Type, Signed16Type, Signed32Type, Signed64Type, BooleanType:
+		SerializeIntegerTo(buffer, t, value, length)
+	case Float32Type, Float64Type:
+		SerializeFloatTo(buffer, t, value, length)
+	case DateTimeSecondsType, DateTimeMillisecondsType, DateTimeMicrosecondsType, DateTimeNanosecondsType:
+		SerializeDateTimeTo(buffer, t, value, length)
+	default:
+		panic("unknown type")
 	}
-	return nil
 }
 
-type BaseDataRecord struct {
-	length int
-}
-
-func (bd *BaseDataRecord) Length() int { return bd.length }
-
-type OctetArrayDataRecord struct {
-	BaseDataRecord
-	value  []byte
-	varlen bool
-}
-
-func (d *OctetArrayDataRecord) SerializeTo(buffer SerializeBuffer) {
-	var b, assign, clear []byte
-	if d.varlen {
-		len := len(d.value)
-		if len < 255 {
-			b = buffer.Append(len + 1)
+func SerializeOctetArrayTo(buffer SerializeBuffer, t Type, value interface{}, length int) {
+	var val []byte
+	switch v := value.(type) {
+	case string:
+		val = []byte(v)
+	case []byte:
+		val = v
+	case net.IP:
+		val = []byte(v)
+	case net.HardwareAddr:
+		val = []byte(v)
+	case nil:
+		// val is already nil
+	default:
+		panic("Can't convert this")
+	}
+	if length == 0 {
+		length = int(DefaultSize[t])
+	}
+	if length == int(VariableLength) {
+		length = len(val)
+		var assign []byte
+		if length < 255 {
+			b := buffer.Append(length + 1)
 			_ = b[1]
-			b[0] = uint8(len)
+			b[0] = uint8(length)
 			assign = b[1:]
 		} else {
-			b = buffer.Append(len + 3)
+			b := buffer.Append(length + 3)
 			_ = b[3]
 			b[0] = 0xff
-			binary.BigEndian.PutUint16(b[1:3], uint16(len))
+			binary.BigEndian.PutUint16(b[1:3], uint16(length))
 			assign = b[3:]
 		}
-	} else {
-		assign = buffer.Append(d.length)
-		clear = assign[len(d.value):]
+		copy(assign, val)
+		return
 	}
-	copy(assign, d.value)
+	if len(val) == length {
+		copy(buffer.Append(length), val)
+		return
+	}
+	if t == Ipv4AddressType || t == Ipv6AddressType || t == MacAddressType {
+		panic("invalid address stored")
+	}
+	var clear []byte
+	assign := buffer.Append(length)
+	copy(assign, val)
+	clear = assign[len(val):]
 	for i := range clear {
 		clear[i] = 0
 	}
 }
 
-func (d *OctetArrayDataRecord) Length() int {
-	if d.varlen {
-		len := len(d.value)
-		if len < 255 {
-			return len + 1
+func SerializeIntegerTo(buffer SerializeBuffer, t Type, value interface{}, length int) {
+	var val uint64
+	switch v := value.(type) {
+	case float64:
+		val = uint64(v)
+	case float32:
+		val = uint64(v)
+	case int64:
+		val = uint64(v)
+	case int32:
+		val = uint64(v)
+	case int16:
+		val = uint64(v)
+	case int8:
+		val = uint64(v)
+	case int:
+		val = uint64(v)
+	case uint64:
+		val = v
+	case uint32:
+		val = uint64(v)
+	case uint16:
+		val = uint64(v)
+	case uint8:
+		val = uint64(v)
+	case uint:
+		val = uint64(v)
+	case nil:
+		// val already 0
+	case bool:
+		if v {
+			val = 1
+		} else {
+			val = 2
 		}
-		return len + 3
+	default:
+		panic("Can't convert this")
 	}
-	return d.length
-}
-
-func varEncodeInt(buffer SerializeBuffer, v uint64, length int) {
+	if length == 0 {
+		length = int(DefaultSize[t])
+	}
 	switch length {
 	case 1:
 		b := buffer.Append(1)
-		b[0] = byte(v)
+		b[0] = byte(val)
 	case 2:
 		b := buffer.Append(2)
-		binary.BigEndian.PutUint16(b, uint16(v))
+		binary.BigEndian.PutUint16(b, uint16(val))
 	case 3:
 		b := buffer.Append(3)
 		_ = b[2]
-		b[0] = byte(v >> 16)
-		b[1] = byte(v >> 8)
-		b[2] = byte(v)
+		b[0] = byte(val >> 16)
+		b[1] = byte(val >> 8)
+		b[2] = byte(val)
 	case 4:
-		b := buffer.Append(2)
-		binary.BigEndian.PutUint32(b, uint32(v))
+		b := buffer.Append(4)
+		binary.BigEndian.PutUint32(b, uint32(val))
 	case 5:
 		b := buffer.Append(5)
 		_ = b[4]
-		b[0] = byte(v >> 32)
-		b[1] = byte(v >> 24)
-		b[2] = byte(v >> 16)
-		b[3] = byte(v >> 8)
-		b[4] = byte(v)
+		b[0] = byte(val >> 32)
+		b[1] = byte(val >> 24)
+		b[2] = byte(val >> 16)
+		b[3] = byte(val >> 8)
+		b[4] = byte(val)
 	case 6:
 		b := buffer.Append(6)
 		_ = b[5]
-		b[0] = byte(v >> 40)
-		b[1] = byte(v >> 32)
-		b[2] = byte(v >> 24)
-		b[3] = byte(v >> 16)
-		b[4] = byte(v >> 8)
-		b[5] = byte(v)
+		b[0] = byte(val >> 40)
+		b[1] = byte(val >> 32)
+		b[2] = byte(val >> 24)
+		b[3] = byte(val >> 16)
+		b[4] = byte(val >> 8)
+		b[5] = byte(val)
 	case 7:
 		b := buffer.Append(7)
 		_ = b[6]
-		b[0] = byte(v >> 48)
-		b[1] = byte(v >> 40)
-		b[2] = byte(v >> 32)
-		b[3] = byte(v >> 24)
-		b[4] = byte(v >> 16)
-		b[5] = byte(v >> 8)
-		b[6] = byte(v)
+		b[0] = byte(val >> 48)
+		b[1] = byte(val >> 40)
+		b[2] = byte(val >> 32)
+		b[3] = byte(val >> 24)
+		b[4] = byte(val >> 16)
+		b[5] = byte(val >> 8)
+		b[6] = byte(val)
 	case 8:
 		b := buffer.Append(8)
-		binary.BigEndian.PutUint64(b, v)
+		binary.BigEndian.PutUint64(b, val)
 	default:
 		panic(fmt.Sprint("Illegal encoding length for integers. Must be 1-8. Was ", length))
 	}
 }
 
-type Unsigned8DataRecord struct {
-	value uint8
-}
-
-func (d *Unsigned8DataRecord) SerializeTo(buffer SerializeBuffer) {
-	b := buffer.Append(1)
-	b[0] = byte(d.value)
-}
-
-func (d *Unsigned8DataRecord) Length() int {
-	return 1
-}
-
-type Unsigned16DataRecord struct {
-	BaseDataRecord
-	value uint16
-}
-
-func (d *Unsigned16DataRecord) SerializeTo(buffer SerializeBuffer) {
-	varEncodeInt(buffer, uint64(d.value), d.length)
-}
-
-type Unsigned32DataRecord struct {
-	BaseDataRecord
-	value uint32
-}
-
-func (d *Unsigned32DataRecord) SerializeTo(buffer SerializeBuffer) {
-	varEncodeInt(buffer, uint64(d.value), d.length)
-}
-
-type Unsigned64DataRecord struct {
-	BaseDataRecord
-	value uint64
-}
-
-func (d *Unsigned64DataRecord) SerializeTo(buffer SerializeBuffer) {
-	varEncodeInt(buffer, d.value, d.length)
-}
-
-type Signed8DataRecord struct {
-	value int8
-}
-
-func (d *Signed8DataRecord) SerializeTo(buffer SerializeBuffer) {
-	b := buffer.Append(1)
-	b[0] = byte(d.value)
-}
-
-func (d *Signed8DataRecord) Length() int {
-	return 1
-}
-
-type Signed16DataRecord struct {
-	BaseDataRecord
-	value int16
-}
-
-func (d *Signed16DataRecord) SerializeTo(buffer SerializeBuffer) {
-	varEncodeInt(buffer, uint64(d.value), d.length)
-}
-
-type Signed32DataRecord struct {
-	BaseDataRecord
-	value int32
-}
-
-func (d *Signed32DataRecord) SerializeTo(buffer SerializeBuffer) {
-	varEncodeInt(buffer, uint64(d.value), d.length)
-}
-
-type Signed64DataRecord struct {
-	BaseDataRecord
-	value int64
-}
-
-func (d *Signed64DataRecord) SerializeTo(buffer SerializeBuffer) {
-	varEncodeInt(buffer, uint64(d.value), d.length)
-}
-
-type Float32DataRecord struct {
-	value float32
-}
-
-func (d *Float32DataRecord) SerializeTo(buffer SerializeBuffer) {
-	b := buffer.Append(4)
-	bits := math.Float32bits(d.value)
-	binary.LittleEndian.PutUint32(b, bits)
-}
-
-func (d *Float32DataRecord) Length() int {
-	return 4
-}
-
-type Float64DataRecord struct {
-	BaseDataRecord
-	value float64
-}
-
-func (d *Float64DataRecord) SerializeTo(buffer SerializeBuffer) {
-	switch d.length {
+func SerializeFloatTo(buffer SerializeBuffer, t Type, value interface{}, length int) {
+	if t == Float32Type {
+		var val float32
+		switch v := value.(type) {
+		case float64:
+			val = float32(v)
+		case float32:
+			val = v
+		case int64:
+			val = float32(v)
+		case int32:
+			val = float32(v)
+		case int16:
+			val = float32(v)
+		case int8:
+			val = float32(v)
+		case int:
+			val = float32(v)
+		case uint64:
+			val = float32(v)
+		case uint32:
+			val = float32(v)
+		case uint16:
+			val = float32(v)
+		case uint8:
+			val = float32(v)
+		case uint:
+			val = float32(v)
+		case nil:
+			// val already 0
+		case bool:
+			if v {
+				val = 1
+			} else {
+				val = 2
+			}
+		default:
+			panic("Can't convert this")
+		}
+		b := buffer.Append(4)
+		bits := math.Float32bits(val)
+		binary.LittleEndian.PutUint32(b, bits)
+		return
+	}
+	var val float64
+	switch v := value.(type) {
+	case float64:
+		val = v
+	case float32:
+		val = float64(v)
+	case int64:
+		val = float64(v)
+	case int32:
+		val = float64(v)
+	case int16:
+		val = float64(v)
+	case int8:
+		val = float64(v)
+	case int:
+		val = float64(v)
+	case uint64:
+		val = float64(v)
+	case uint32:
+		val = float64(v)
+	case uint16:
+		val = float64(v)
+	case uint8:
+		val = float64(v)
+	case uint:
+		val = float64(v)
+	case nil:
+		// val already 0
+	case bool:
+		if v {
+			val = 1
+		} else {
+			val = 2
+		}
+	default:
+		panic("Can't convert this")
+	}
+	switch length {
 	case 4:
 		b := buffer.Append(4)
-		bits := math.Float32bits(float32(d.value))
+		bits := math.Float32bits(float32(val))
 		binary.LittleEndian.PutUint32(b, bits)
 	case 8:
 		b := buffer.Append(8)
-		bits := math.Float64bits(d.value)
+		bits := math.Float64bits(val)
 		binary.LittleEndian.PutUint64(b, bits)
 	default:
-		panic(fmt.Sprint("Illegal encoding length for float64. Must be 4, 8. Was ", d.length))
+		panic(fmt.Sprint("Illegal encoding length for float64. Must be 4, 8. Was ", length))
 	}
 }
 
-type BooleanDataRecord struct {
-	value bool
-}
-
-func (d *BooleanDataRecord) SerializeTo(buffer SerializeBuffer) {
-	b := buffer.Append(1)
-	if d.value {
-		b[0] = 1
-	} else {
-		b[0] = 2
+func SerializeDateTimeTo(buffer SerializeBuffer, t Type, value interface{}, length int) {
+	var seconds, nanoseconds uint64
+	switch v := value.(type) {
+	case time.Time:
+		seconds = uint64(v.Unix())
+		nanoseconds = uint64(v.Nanosecond())
+	case DateTimeMilliseconds:
+		seconds = uint64(v) / 1e3
+		nanoseconds = (uint64(v) % 1e3) * 1e6
+	case DateTimeMicroseconds:
+		seconds = uint64(v) / 1e6
+		nanoseconds = (uint64(v) % 1e6) * 1e3
+	case DateTimeNanoseconds:
+		seconds = uint64(v) / 1e9
+		nanoseconds = uint64(v) % 1e9
+	case nil:
+		// val already 0
+	default:
+		panic("Can't convert this")
 	}
-}
-
-func (d *BooleanDataRecord) Length() int {
-	return 1
-}
-
-type MacAddressDataRecord struct {
-	value net.HardwareAddr
-}
-
-func (d *MacAddressDataRecord) SerializeTo(buffer SerializeBuffer) {
-	b := buffer.Append(6)
-	copy(b, d.value)
-}
-
-func (d *MacAddressDataRecord) Length() int {
-	return 6
-}
-
-type StringDataRecord struct {
-	BaseDataRecord
-	value  string
-	varlen bool
-}
-
-func (d *StringDataRecord) SerializeTo(buffer SerializeBuffer) {
-	var b, assign, clear []byte
-	if d.varlen {
-		len := len(d.value)
-		if len < 255 {
-			b = buffer.Append(len + 1)
-			_ = b[1]
-			b[0] = uint8(len)
-			assign = b[1:]
-		} else {
-			b = buffer.Append(len + 3)
-			_ = b[3]
-			b[0] = 0xff
-			binary.BigEndian.PutUint16(b[1:3], uint16(len))
-			assign = b[3:]
-		}
-	} else {
-		assign = buffer.Append(d.length)
-		clear = assign[len(d.value):]
+	switch t {
+	case DateTimeSecondsType:
+		binary.BigEndian.PutUint32(buffer.Append(4), uint32(seconds))
+	case DateTimeMillisecondsType:
+		binary.BigEndian.PutUint64(buffer.Append(8), uint64(seconds*1e3+nanoseconds/1e6))
+	case DateTimeMicrosecondsType:
+		//NTP epoch as 32bit seconds + 32bit fraction (~244ps)
+		//-> get time in Unixpoch seconds, add ntp epoch to unix epoch offset
+		//-> shift nanoseconds 32 bit to the left divide by nano (1e9)
+		//according to RFC7011 the last 11 bits should be zero (0xFFFFF800) to get micro seconds (~.447 microsecond resolution)
+		b := buffer.Append(8)
+		_ = b[7]
+		binary.BigEndian.PutUint32(b[:4], uint32(seconds)+NTPToUnix)
+		binary.BigEndian.PutUint32(b[4:8], uint32((nanoseconds<<32)/1e9)&0xFFFFF800)
+	case DateTimeNanosecondsType:
+		b := buffer.Append(8)
+		_ = b[7]
+		binary.BigEndian.PutUint32(b[:4], uint32(seconds)+NTPToUnix)
+		binary.BigEndian.PutUint32(b[4:8], uint32((nanoseconds<<32)/1e9))
 	}
-	copy(assign, d.value) // FIXME: fixup string if cutting short results in utf8 errors
-	for i := range clear {
-		clear[i] = 0
-	}
-}
-
-func (d *StringDataRecord) Length() int {
-	if d.varlen {
-		len := len(d.value)
-		if len < 255 {
-			return len + 1
-		}
-		return len + 3
-	}
-	return d.length
-}
-
-type DateTimeSecondsDataRecord struct {
-	value time.Time
-}
-
-func (d *DateTimeSecondsDataRecord) SerializeTo(buffer SerializeBuffer) {
-	b := buffer.Append(4)
-	binary.BigEndian.PutUint32(b, uint32(d.value.Unix()))
-}
-
-func (d *DateTimeSecondsDataRecord) Length() int {
-	return 4
-}
-
-type DateTimeMillisecondsDataRecord struct {
-	value time.Time
-}
-
-func (d *DateTimeMillisecondsDataRecord) SerializeTo(buffer SerializeBuffer) {
-	b := buffer.Append(8)
-	binary.BigEndian.PutUint64(b, uint64(d.value.UnixNano()/int64(time.Millisecond)))
-}
-
-func (d *DateTimeMillisecondsDataRecord) Length() int {
-	return 8
-}
-
-type DateTimeMicrosecondsDataRecord struct {
-	value time.Time
-}
-
-func (d *DateTimeMicrosecondsDataRecord) SerializeTo(buffer SerializeBuffer) {
-	//NTP epoch as 32bit seconds + 32bit fraction (~244ps)
-	//-> get time in Unixpoch seconds, add ntp epoch to unix epoch offset
-	//-> shift nanoseconds 32 bit to the left divide by nano (1e9)
-	//according to RFC7011 the last 11 bits should be zero (0xFFFFF800) to get micro seconds (~.447 microsecond resolution)
-	b := buffer.Append(8)
-	binary.BigEndian.PutUint32(b, uint32(d.value.Unix())+NTPToUnix)
-	binary.BigEndian.PutUint32(b, uint32((uint64(d.value.Nanosecond())<<32)/1e9)&0xFFFFF800)
-}
-
-func (d *DateTimeMicrosecondsDataRecord) Length() int {
-	return 8
-}
-
-type DateTimeNanosecondsDataRecord struct {
-	value time.Time
-}
-
-func (d *DateTimeNanosecondsDataRecord) SerializeTo(buffer SerializeBuffer) {
-	//same as microseconds, but without truncation
-	b := buffer.Append(8)
-	binary.BigEndian.PutUint32(b, uint32(d.value.Unix())+NTPToUnix)
-	binary.BigEndian.PutUint32(b, uint32((uint64(d.value.Nanosecond())<<32)/1e9))
-}
-
-func (d *DateTimeNanosecondsDataRecord) Length() int {
-	return 8
-}
-
-type Ipv4AddressDataRecord struct {
-	value net.IP
-}
-
-func (d *Ipv4AddressDataRecord) SerializeTo(buffer SerializeBuffer) {
-	b := buffer.Append(4)
-	copy(b, d.value)
-}
-
-func (d *Ipv4AddressDataRecord) Length() int {
-	return 4
-}
-
-type Ipv6AddressDataRecord struct {
-	value net.IP
-}
-
-func (d *Ipv6AddressDataRecord) SerializeTo(buffer SerializeBuffer) {
-	b := buffer.Append(16)
-	copy(b, d.value)
-}
-
-func (d *Ipv6AddressDataRecord) Length() int {
-	return 16
 }
