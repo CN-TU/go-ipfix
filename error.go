@@ -10,7 +10,7 @@ type IPFIXError interface {
 
 type BufferFullError int
 
-func (e BufferFullError) Error() string            { return "Buffer full - would need " + string(e) }
+func (e BufferFullError) Error() string            { return "Buffer full - would need " + fmt.Sprint(int(e)) }
 func (e BufferFullError) BufferFull() bool         { return true }
 func (e BufferFullError) RecordTypeMismatch() bool { return false }
 
