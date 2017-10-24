@@ -71,7 +71,9 @@ func (m *MessageStream) sendRecord(record Record, now time.Time) (err error) {
 		if err = m.createSet(record, now); err != nil {
 			return
 		}
-		m.sequence++
+		if record.Id() >= 256 {
+			m.sequence++
+		}
 		return nil
 	}
 	if err = m.currentSet.AppendRecord(record); err != nil {
@@ -89,7 +91,9 @@ func (m *MessageStream) sendRecord(record Record, now time.Time) (err error) {
 			}
 		}
 	}
-	m.sequence++
+	if record.Id() >= 256 {
+		m.sequence++
+	}
 	return nil
 }
 
