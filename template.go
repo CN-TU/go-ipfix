@@ -37,6 +37,7 @@ func (t Template) MakeDataRecord(values ...interface{}) (ret DataRecord) {
 	}
 	ret.template = t.ID
 	elements := make([]DataRecordElement, len(t.Elements))
+	elements = elements[:len(t.Elements)]
 	for i, element := range t.Elements {
 		elements[i] = element.MakeDataRecord(values[i])
 	}
