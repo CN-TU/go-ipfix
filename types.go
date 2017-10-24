@@ -2,7 +2,7 @@ package ipfix
 
 import (
 	"encoding/binary"
-	"log"
+	"fmt"
 	"math"
 	"net"
 	"time"
@@ -104,7 +104,7 @@ func NameToType(x []byte) Type {
 	case "ipv6Address":
 		return Ipv6Address
 	}
-	log.Panicf("Unknown type %s\n", x)
+	panic(fmt.Sprintf("Unknown type %s\n", x))
 	return IllegalType
 }
 
@@ -374,7 +374,7 @@ func varEncodeInt(buffer SerializeBuffer, v uint64, length int) {
 		b := buffer.Append(8)
 		binary.BigEndian.PutUint64(b, v)
 	default:
-		log.Panicln("Illegal encoding length for integers. Must be 1-8. Was ", length)
+		panic(fmt.Sprint("Illegal encoding length for integers. Must be 1-8. Was ", length))
 	}
 }
 
@@ -488,7 +488,7 @@ func (d *Float64DataRecord) SerializeTo(buffer SerializeBuffer) {
 		bits := math.Float64bits(d.value)
 		binary.LittleEndian.PutUint64(b, bits)
 	default:
-		log.Panicln("Illegal encoding length for float64. Must be 4, 8. Was ", d.length)
+		panic(fmt.Sprint("Illegal encoding length for float64. Must be 4, 8. Was ", d.length))
 	}
 }
 

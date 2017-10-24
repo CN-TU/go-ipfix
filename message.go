@@ -2,8 +2,8 @@ package ipfix
 
 import (
 	"encoding/binary"
+	"fmt"
 	"io"
-	"log"
 	"time"
 )
 
@@ -109,11 +109,11 @@ func (m *MessageStream) AddTemplate(now time.Time, elements ...InformationElemen
 func (m *MessageStream) SendData(now time.Time, template int, data ...interface{}) (err error) {
 	id := template - 256
 	if id < 0 || id >= len(m.templates) {
-		log.Panicf("Unknown template id %d\n", template)
+		panic(fmt.Sprintf("Unknown template id %d\n", template))
 	}
 	t := m.templates[id]
 	if t == nil {
-		log.Panicf("Unknown template id %d\n", template)
+		panic(fmt.Sprintf("Unknown template id %d\n", template))
 	}
 	return m.sendRecord(t.MakeDataRecord(data...), now)
 }

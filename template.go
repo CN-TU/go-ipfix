@@ -2,7 +2,7 @@ package ipfix
 
 import (
 	"encoding/binary"
-	"log"
+	"fmt"
 )
 
 type Template struct {
@@ -33,7 +33,7 @@ func (t Template) SerializeTo(buffer SerializeBuffer) {
 
 func (t Template) MakeDataRecord(values ...interface{}) (ret DataRecord) {
 	if len(values) != len(t.Elements) {
-		log.Panicf("Supplied values (%d) differ from number of information elements (%d)!\n", len(values), len(t.Elements))
+		panic(fmt.Sprintf("Supplied values (%d) differ from number of information elements (%d)!\n", len(values), len(t.Elements)))
 	}
 	ret.template = t.ID
 	elements := make([]DataRecordElement, len(t.Elements))
