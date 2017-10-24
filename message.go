@@ -29,7 +29,6 @@ func MakeMessageStream(w io.Writer, mtu uint16, observationID uint32) (ret *Mess
 		buffer:        MakeSerializeBuffer(int(mtu)),
 		observationID: observationID,
 	}
-	ret.startMessage()
 	return
 }
 
@@ -40,24 +39,30 @@ func (m *MessageStream) startMessage() {
 	b[1] = 0x0a
 	m.length = b[2:4]
 	m.time = b[4:8]
-	m.dirty = false
+	m.dirty = true
 	binary.BigEndian.PutUint32(b[8:12], uint32(m.sequence))
 	binary.BigEndian.PutUint32(b[12:16], uint32(m.observationID))
 }
 
 func (m *MessageStream) createSet(record Record, now time.Time) (err error) {
-	if m.currentSet, err = MakeSet(record, m.buffer); err != nil {
+	var newSet *Set
+	if !m.dirty {
+		m.startMessage()
+	}
+	if newSet, err = MakeSet(record, m.buffer); err != nil {
 		if ipfixerr, ok := err.(IPFIXError); ok && ipfixerr.BufferFull() {
 			// Buffer full -> finalize and try again
 			if err = m.Finalize(now); err != nil {
 				return
 			}
-			if m.currentSet, err = MakeSet(record, m.buffer); err != nil {
+			m.startMessage()
+			if newSet, err = MakeSet(record, m.buffer); err != nil {
 				// ok if this happens, we lost
 				return
 			}
 		}
 	}
+	m.currentSet = newSet
 	return
 }
 
@@ -66,7 +71,6 @@ func (m *MessageStream) sendRecord(record Record, now time.Time) (err error) {
 		if err = m.createSet(record, now); err != nil {
 			return
 		}
-		m.dirty = true
 		m.sequence++
 		return nil
 	}
@@ -111,13 +115,13 @@ func (m *MessageStream) SendData(now time.Time, template int, data ...interface{
 }
 
 func (m *MessageStream) Finalize(now time.Time) (err error) {
-	if !m.dirty || m.currentSet == nil {
+	if !m.dirty {
 		return nil
 	}
 	m.currentSet.Finalize()
 	binary.BigEndian.PutUint16(m.length, uint16(m.buffer.Length()))
 	binary.BigEndian.PutUint32(m.time, uint32(now.Unix()))
-	if err = m.buffer.Finalize(m.w); err != nil {
+	if err = m.buffer.Finalize(m.w); err == nil {
 		m.dirty = false
 	}
 	return
