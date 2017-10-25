@@ -48,7 +48,7 @@ func (m *MessageStream) startMessage() {
 	binary.BigEndian.PutUint32(b[12:16], uint32(m.observationID))
 }
 
-func (m *MessageStream) sendRecord(record Record, now time.Time) (err error) {
+func (m *MessageStream) sendRecord(record Record, now interface{}) (err error) {
 	if !m.dirty {
 		m.startMessage()
 	}
@@ -76,7 +76,7 @@ func (m *MessageStream) sendRecord(record Record, now time.Time) (err error) {
 	}
 }
 
-func (m *MessageStream) AddTemplate(now time.Time, elements ...InformationElement) (id int, err error) {
+func (m *MessageStream) AddTemplate(now interface{}, elements ...InformationElement) (id int, err error) {
 	id = len(m.templates) + 256
 	template := Template{int16(id), elements}
 	if err = m.sendRecord(template, now); err == nil {
@@ -85,7 +85,7 @@ func (m *MessageStream) AddTemplate(now time.Time, elements ...InformationElemen
 	return
 }
 
-func (m *MessageStream) SendData(now time.Time, template int, data ...interface{}) (err error) {
+func (m *MessageStream) SendData(now interface{}, template int, data ...interface{}) (err error) {
 	id := template - 256
 	if id < 0 || id >= len(m.templates) {
 		panic(fmt.Sprintf("Unknown template id %d\n", template))
@@ -98,13 +98,24 @@ func (m *MessageStream) SendData(now time.Time, template int, data ...interface{
 	return m.sendRecord(&m.currentDataRecord, now)
 }
 
-func (m *MessageStream) Finalize(now time.Time) (err error) {
+func (m *MessageStream) Finalize(now interface{}) (err error) {
 	if !m.dirty {
 		return nil
 	}
 	m.currentSet.Finalize()
 	binary.BigEndian.PutUint16(m.length, uint16(m.buffer.Length()))
-	binary.BigEndian.PutUint32(m.time, uint32(now.Unix()))
+	switch v := now.(type) {
+	case time.Time:
+		binary.BigEndian.PutUint32(m.time, uint32(v.Unix()))
+	case DateTimeSeconds:
+		binary.BigEndian.PutUint32(m.time, uint32(v))
+	case DateTimeMilliseconds:
+		binary.BigEndian.PutUint32(m.time, uint32(v/1e3))
+	case DateTimeMicroseconds:
+		binary.BigEndian.PutUint32(m.time, uint32(v/1e6))
+	case DateTimeNanoseconds:
+		binary.BigEndian.PutUint32(m.time, uint32(v/1e9))
+	}
 	if err = m.buffer.Finalize(m.w); err == nil {
 		m.dirty = false
 	}
