@@ -24,6 +24,7 @@ func (ie InformationElement) String() string {
 	if ie.Pen == 0 {
 		return ie.Name
 	}
+	// Output information element spec according to RFC7013 Section 10.1
 	if (ie.Length == 0 && ie.Type != IllegalType) || ie.Length == DefaultSize[ie.Type] {
 		return fmt.Sprintf("%s(%d/%d)<%s>", ie.Name, ie.Pen, ie.ID, ie.Type)
 	}
