@@ -441,6 +441,15 @@ func SerializeDateTimeTo(buffer SerializeBuffer, t Type, value interface{}, leng
 	case DateTimeNanoseconds:
 		seconds = uint64(v) / 1e9
 		nanoseconds = uint64(v) % 1e9
+	case uint64:
+		seconds = v / 1e9
+		nanoseconds = v % 1e9
+	case int64:
+		seconds = uint64(v) / 1e9
+		nanoseconds = uint64(v) % 1e9
+	case float64:
+		seconds = uint64(v) / 1e9
+		nanoseconds = uint64(v) % 1e9
 	case nil:
 		// val already 0
 	default:
