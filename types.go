@@ -215,7 +215,7 @@ func SerializeOctetArrayTo(buffer SerializeBuffer, t Type, value interface{}, le
 			assign = b[1:]
 		} else {
 			b := buffer.Append(length + 3)
-			_ = b[3]
+			_ = b[2]
 			b[0] = 0xff
 			binary.BigEndian.PutUint16(b[1:3], uint16(length))
 			assign = b[3:]
