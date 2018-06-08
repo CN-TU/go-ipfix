@@ -78,10 +78,17 @@ func (ie InformationElement) SerializeTo(buffer SerializeBuffer) int {
 	return 8
 }
 
+func (ie InformationElement) ListElement() (InformationElement, bool) {
+	if ie.Type != BasicListType {
+		return InformationElement{}, false
+	}
+	return ie.SubType.(InformationElement), true
+}
+
 func (ie InformationElement) SerializeDataTo(buffer SerializeBuffer, value interface{}) {
 	switch ie.Type {
 	case BasicListType:
-		subie := ie.SubType.(InformationElement)
+		subie, _ := ie.ListElement()
 		// Header according to RFC6313
 		written := 1
 
