@@ -37,13 +37,6 @@ func NewBasicList(name string, subelement InformationElement, number uint16) Inf
 	return InformationElement{name, 0, BasicListID, BasicListType, length, subelement}
 }
 
-func NewInformationElementBasicList(name string, elementpen uint32, elementid uint16, elementt Type, elementlength uint16, number uint16) InformationElement {
-	if elementt != IllegalType && elementlength == 0 {
-		elementlength = DefaultSize[elementt]
-	}
-	return NewBasicList(name, InformationElement{name, elementpen, elementid, elementt, elementlength, nil}, number)
-}
-
 func (ie InformationElement) String() string {
 	if ie.Pen == 0 {
 		return ie.Name
