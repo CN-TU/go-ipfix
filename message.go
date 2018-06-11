@@ -31,7 +31,7 @@ func MakeMessageStream(w io.Writer, mtu uint16, observationID uint32) (ret *Mess
 		buffer:            buffer,
 		observationID:     observationID,
 		currentSet:        MakeSet(buffer),
-		currentDataRecord: MakeBufferedDataRecord(4096),
+		currentDataRecord: MakeBufferedDataRecord(int(mtu)),
 	}
 	return
 }

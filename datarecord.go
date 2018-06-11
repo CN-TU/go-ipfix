@@ -1,6 +1,8 @@
 package ipfix
 
-import "io"
+import (
+	"io"
+)
 
 type BufferedDataRecord struct {
 	template int16
@@ -19,7 +21,8 @@ func (b *BufferedDataRecord) Append(num int) []byte {
 	blen := len(b.buffer)
 	newlen := blen + num
 	if newlen > cap(b.buffer) {
-		b.buffer = append(b.buffer, make([]byte, newlen-cap(b.buffer))...)
+		panic("Data record too small")
+		// Never append to datarecord; This breaks slice pointers
 	}
 	b.buffer = b.buffer[:newlen]
 	return b.buffer[blen:newlen]
