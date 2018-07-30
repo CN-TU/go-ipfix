@@ -389,7 +389,7 @@ func SerializeFloatTo(buffer SerializeBuffer, t Type, value interface{}, length 
 		}
 		b := buffer.Append(4)
 		bits := math.Float32bits(val)
-		binary.LittleEndian.PutUint32(b, bits)
+		binary.BigEndian.PutUint32(b, bits)
 		return 4
 	}
 	var val float64
@@ -433,11 +433,11 @@ func SerializeFloatTo(buffer SerializeBuffer, t Type, value interface{}, length 
 	case 4:
 		b := buffer.Append(4)
 		bits := math.Float32bits(float32(val))
-		binary.LittleEndian.PutUint32(b, bits)
+		binary.BigEndian.PutUint32(b, bits)
 	case 8:
 		b := buffer.Append(8)
 		bits := math.Float64bits(val)
-		binary.LittleEndian.PutUint64(b, bits)
+		binary.BigEndian.PutUint64(b, bits)
 	default:
 		panic(fmt.Sprint("Illegal encoding length for float64. Must be 4, 8. Was ", length))
 	}
