@@ -210,7 +210,11 @@ func SerializeOctetArrayTo(buffer SerializeBuffer, t Type, value interface{}, le
 		length = len(val)
 		written := length
 		var assign []byte
-		if length < 255 {
+		if length == 0 {
+			b := buffer.Append(length + 1)
+			b[0] = 0
+			return 1
+		} else if length < 255 {
 			written++
 			b := buffer.Append(length + 1)
 			_ = b[1]
@@ -232,6 +236,13 @@ func SerializeOctetArrayTo(buffer SerializeBuffer, t Type, value interface{}, le
 		return length
 	}
 	if t == Ipv4AddressType || t == Ipv6AddressType || t == MacAddressType {
+		if val == nil {
+			tmp := buffer.Append(length)
+			for i := range tmp {
+				tmp[i] = 0
+			}
+			return length
+		}
 		panic("invalid address stored")
 	}
 	var clear []byte
