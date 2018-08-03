@@ -101,13 +101,15 @@ func (ie InformationElement) SerializeDataTo(buffer SerializeBuffer, value inter
 		// followed by template header
 		written += subie.SerializeTo(buffer)
 		// followed by all the values
-		values := reflect.ValueOf(value)
-		for values.Kind() == reflect.Ptr {
-			values = values.Elem()
-		}
-		l := values.Len()
-		for i := 0; i < l; i++ {
-			written += subie.Type.SerializeDataTo(buffer, values.Index(i).Interface(), int(subie.Length))
+		if value != nil {
+			values := reflect.ValueOf(value)
+			for values.Kind() == reflect.Ptr {
+				values = values.Elem()
+			}
+			l := values.Len()
+			for i := 0; i < l; i++ {
+				written += subie.Type.SerializeDataTo(buffer, values.Index(i).Interface(), int(subie.Length))
+			}
 		}
 		if ie.Length == VariableLength {
 			binary.BigEndian.PutUint16(lengthbuffer, uint16(written))
