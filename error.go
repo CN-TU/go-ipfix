@@ -2,46 +2,40 @@ package ipfix
 
 import "fmt"
 
-type IPFIXError interface {
+type ipfixError interface {
 	error
-	BufferFull() bool
-	RecordTypeMismatch() bool
+	bufferFull() bool
+	recordTypeMismatch() bool
 }
 
-type BufferFullError int
+type bufferFullError int
 
-func (e BufferFullError) Error() string            { return "Buffer full - would need " + fmt.Sprint(int(e)) }
-func (e BufferFullError) BufferFull() bool         { return true }
-func (e BufferFullError) RecordTypeMismatch() bool { return false }
+func (e bufferFullError) Error() string            { return "Buffer full - would need " + fmt.Sprint(int(e)) }
+func (e bufferFullError) bufferFull() bool         { return true }
+func (e bufferFullError) recordTypeMismatch() bool { return false }
 
-type RecordMismatchError struct {
+type recordMismatchError struct {
 	a, b int16
 }
 
-func (e *RecordMismatchError) Error() string {
+func (e *recordMismatchError) Error() string {
 	if e == nil {
 		return "<nil>"
 	}
 	return fmt.Sprintf("Record type mismatch: %d != %d!", e.a, e.b)
 }
-func (e *RecordMismatchError) BufferFull() bool         { return false }
-func (e *RecordMismatchError) RecordTypeMismatch() bool { return true }
+func (e *recordMismatchError) bufferFull() bool         { return false }
+func (e *recordMismatchError) recordTypeMismatch() bool { return true }
 
-type IllegalSetError struct {
+type illegalSetError struct {
 	Err string
 }
 
-func (e *IllegalSetError) Error() string {
+func (e *illegalSetError) Error() string {
 	if e == nil {
 		return "<nil>"
 	}
 	return e.Err
 }
-func (e *IllegalSetError) BufferFull() bool         { return false }
-func (e *IllegalSetError) RecordTypeMismatch() bool { return false }
-
-type IllegalEncodingError string
-
-func (e IllegalEncodingError) Error() string            { return string(e) }
-func (e IllegalEncodingError) BufferFull() bool         { return false }
-func (e IllegalEncodingError) RecordTypeMismatch() bool { return false }
+func (e *illegalSetError) bufferFull() bool         { return false }
+func (e *illegalSetError) recordTypeMismatch() bool { return false }

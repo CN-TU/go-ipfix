@@ -9,15 +9,15 @@ import (
 
 type MessageStream struct {
 	w                 io.Writer
-	buffer            SerializeBuffer
+	buffer            scratchBuffer
 	length            []byte
 	time              []byte
-	record            Record
+	record            record
 	sequence          uint32
 	observationID     uint32
-	templates         []*Template
-	currentSet        Set
-	currentDataRecord BufferedDataRecord
+	templates         []*template
+	currentSet        set
+	currentDataRecord recordBuffer
 	dirty             bool
 }
 
@@ -25,19 +25,19 @@ func MakeMessageStream(w io.Writer, mtu uint16, observationID uint32) (ret *Mess
 	if mtu == 0 {
 		mtu = 65535
 	}
-	buffer := MakeSerializeBuffer(int(mtu))
+	buffer := makeBasicBuffer(int(mtu))
 	ret = &MessageStream{
 		w:                 w,
 		buffer:            buffer,
 		observationID:     observationID,
-		currentSet:        MakeSet(buffer),
-		currentDataRecord: MakeBufferedDataRecord(int(mtu)),
+		currentSet:        makeSet(buffer),
+		currentDataRecord: makeRecordBuffer(int(mtu)),
 	}
 	return
 }
 
 func (m *MessageStream) startMessage() {
-	b := m.buffer.Append(16)
+	b := m.buffer.append(16)
 	_ = b[15]
 	b[0] = 0
 	b[1] = 0x0a
@@ -48,25 +48,25 @@ func (m *MessageStream) startMessage() {
 	binary.BigEndian.PutUint32(b[12:16], uint32(m.observationID))
 }
 
-func (m *MessageStream) sendRecord(record Record, now interface{}) (err error) {
+func (m *MessageStream) sendRecord(rec record, now interface{}) (err error) {
 	if !m.dirty {
 		m.startMessage()
 	}
 	for {
-		err = m.currentSet.AppendRecord(record)
+		err = m.currentSet.appendRecord(rec)
 		if err == nil {
-			if record.Id() >= 256 {
+			if rec.id() >= 256 {
 				m.sequence++
 			}
 			return
 		}
-		if ipfixerr, ok := err.(IPFIXError); ok {
+		if ipfixerr, ok := err.(ipfixError); ok {
 			switch {
-			case ipfixerr.BufferFull():
+			case ipfixerr.bufferFull():
 				m.Finalize(now)
 				m.startMessage()
-			case ipfixerr.RecordTypeMismatch():
-				m.currentSet.Finalize()
+			case ipfixerr.recordTypeMismatch():
+				m.currentSet.finalize()
 			default:
 				return
 			}
@@ -78,9 +78,9 @@ func (m *MessageStream) sendRecord(record Record, now interface{}) (err error) {
 
 func (m *MessageStream) AddTemplate(now interface{}, elements ...InformationElement) (id int, err error) {
 	id = len(m.templates) + 256
-	template := Template{int16(id), elements}
-	if err = m.sendRecord(template, now); err == nil {
-		m.templates = append(m.templates, &template)
+	newTemplate := template{int16(id), elements}
+	if err = m.sendRecord(newTemplate, now); err == nil {
+		m.templates = append(m.templates, &newTemplate)
 	}
 	return
 }
@@ -94,7 +94,7 @@ func (m *MessageStream) SendData(now interface{}, template int, data ...interfac
 	if t == nil {
 		panic(fmt.Sprintf("Unknown template id %d\n", template))
 	}
-	t.AssignDataRecord(&m.currentDataRecord, data...)
+	t.assignDataRecord(&m.currentDataRecord, data...)
 	return m.sendRecord(&m.currentDataRecord, now)
 }
 
@@ -102,8 +102,8 @@ func (m *MessageStream) Finalize(now interface{}) (err error) {
 	if !m.dirty {
 		return nil
 	}
-	m.currentSet.Finalize()
-	binary.BigEndian.PutUint16(m.length, uint16(m.buffer.Length()))
+	m.currentSet.finalize()
+	binary.BigEndian.PutUint16(m.length, uint16(m.buffer.length()))
 	switch v := now.(type) {
 	case time.Time:
 		binary.BigEndian.PutUint32(m.time, uint32(v.Unix()))
@@ -116,7 +116,7 @@ func (m *MessageStream) Finalize(now interface{}) (err error) {
 	case DateTimeNanoseconds:
 		binary.BigEndian.PutUint32(m.time, uint32(v/1e9))
 	}
-	if err = m.buffer.Finalize(m.w); err == nil {
+	if err = m.buffer.finalize(m.w); err == nil {
 		m.dirty = false
 	}
 	return

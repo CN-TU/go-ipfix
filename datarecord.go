@@ -4,20 +4,20 @@ import (
 	"io"
 )
 
-type BufferedDataRecord struct {
+type recordBuffer struct {
 	template int16
 	buffer   []byte
 }
 
-func MakeBufferedDataRecord(num int) BufferedDataRecord {
-	return BufferedDataRecord{buffer: make([]byte, 0, num)}
+func makeRecordBuffer(num int) recordBuffer {
+	return recordBuffer{buffer: make([]byte, 0, num)}
 }
 
-func (b BufferedDataRecord) Id() int16 {
+func (b recordBuffer) id() int16 {
 	return b.template
 }
 
-func (b *BufferedDataRecord) Append(num int) []byte {
+func (b *recordBuffer) append(num int) []byte {
 	blen := len(b.buffer)
 	newlen := blen + num
 	if newlen > cap(b.buffer) {
@@ -28,20 +28,20 @@ func (b *BufferedDataRecord) Append(num int) []byte {
 	return b.buffer[blen:newlen]
 }
 
-func (b BufferedDataRecord) Length() int {
+func (b recordBuffer) length() int {
 	return len(b.buffer)
 }
 
-func (b *BufferedDataRecord) SerializeTo(buffer SerializeBuffer) {
-	buf := buffer.Append(len(b.buffer))
+func (b *recordBuffer) serializeTo(buffer scratchBuffer) {
+	buf := buffer.append(len(b.buffer))
 	copy(buf, b.buffer)
 	b.buffer = b.buffer[:0]
 }
 
-func (b BufferedDataRecord) BytesFree() int {
+func (b recordBuffer) bytesFree() int {
 	panic("Not implemented")
 }
 
-func (b BufferedDataRecord) Finalize(io.Writer) (err error) {
+func (b recordBuffer) finalize(io.Writer) (err error) {
 	panic("Not implemented")
 }

@@ -5,39 +5,39 @@ import (
 	"fmt"
 )
 
-type Template struct {
-	ID       int16
-	Elements []InformationElement
+type template struct {
+	identifier int16
+	elements   []InformationElement
 }
 
-func (t Template) Id() int16 {
-	return IDTemplateSet
+func (t template) id() int16 {
+	return templateSetID
 }
 
-func (t Template) Length() (ret int) {
+func (t template) length() (ret int) {
 	ret = 4
-	for _, element := range t.Elements {
-		ret += element.TemplateSize()
+	for _, element := range t.elements {
+		ret += element.templateSize()
 	}
 	return
 }
 
-func (t Template) SerializeTo(buffer SerializeBuffer) {
-	b := buffer.Append(4)
-	binary.BigEndian.PutUint16(b[2:], uint16(len(t.Elements)))
-	binary.BigEndian.PutUint16(b[0:], uint16(t.ID))
-	for _, element := range t.Elements {
-		element.SerializeTo(buffer)
+func (t template) serializeTo(buffer scratchBuffer) {
+	b := buffer.append(4)
+	binary.BigEndian.PutUint16(b[2:], uint16(len(t.elements)))
+	binary.BigEndian.PutUint16(b[0:], uint16(t.identifier))
+	for _, element := range t.elements {
+		element.serializeTo(buffer)
 	}
 }
 
-func (t Template) AssignDataRecord(record *BufferedDataRecord, values ...interface{}) {
-	if len(values) != len(t.Elements) {
-		panic(fmt.Sprintf("Supplied values (%d) differ from number of information elements (%d)!\n", len(values), len(t.Elements)))
+func (t template) assignDataRecord(record *recordBuffer, values ...interface{}) {
+	if len(values) != len(t.elements) {
+		panic(fmt.Sprintf("Supplied values (%d) differ from number of information elements (%d)!\n", len(values), len(t.elements)))
 	}
-	record.template = t.ID
-	values = values[:len(t.Elements)]
-	for i, element := range t.Elements {
-		element.SerializeDataTo(record, values[i])
+	record.template = t.identifier
+	values = values[:len(t.elements)]
+	for i, element := range t.elements {
+		element.serializeDataTo(record, values[i])
 	}
 }

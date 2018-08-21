@@ -171,23 +171,23 @@ func (t Type) String() string {
 }
 
 //Seconds between NTP and Unix epoch
-const NTPToUnix uint32 = 0x83AA7E80
+const ntp2Unix uint32 = 0x83AA7E80
 
-func (t Type) SerializeDataTo(buffer SerializeBuffer, value interface{}, length int) int {
+func (t Type) serializeDataTo(buffer scratchBuffer, value interface{}, length int) int {
 	switch t {
 	case OctetArrayType, Ipv4AddressType, Ipv6AddressType, MacAddressType, StringType:
-		return SerializeOctetArrayTo(buffer, t, value, length)
+		return serializeOctetArrayTo(buffer, t, value, length)
 	case Unsigned8Type, Unsigned16Type, Unsigned32Type, Unsigned64Type, Signed8Type, Signed16Type, Signed32Type, Signed64Type, BooleanType:
-		return SerializeIntegerTo(buffer, t, value, length)
+		return serializeIntegerTo(buffer, t, value, length)
 	case Float32Type, Float64Type:
-		return SerializeFloatTo(buffer, t, value, length)
+		return serializeFloatTo(buffer, t, value, length)
 	case DateTimeSecondsType, DateTimeMillisecondsType, DateTimeMicrosecondsType, DateTimeNanosecondsType:
-		return SerializeDateTimeTo(buffer, t, value, length)
+		return serializeDateTimeTo(buffer, t, value, length)
 	}
 	panic("unknown type")
 }
 
-func SerializeOctetArrayTo(buffer SerializeBuffer, t Type, value interface{}, length int) int {
+func serializeOctetArrayTo(buffer scratchBuffer, t Type, value interface{}, length int) int {
 	var val []byte
 	switch v := value.(type) {
 	case string:
@@ -211,18 +211,18 @@ func SerializeOctetArrayTo(buffer SerializeBuffer, t Type, value interface{}, le
 		written := length
 		var assign []byte
 		if length == 0 {
-			b := buffer.Append(length + 1)
+			b := buffer.append(length + 1)
 			b[0] = 0
 			return 1
 		} else if length < 255 {
 			written++
-			b := buffer.Append(length + 1)
+			b := buffer.append(length + 1)
 			_ = b[1]
 			b[0] = uint8(length)
 			assign = b[1:]
 		} else {
 			written += 3
-			b := buffer.Append(length + 3)
+			b := buffer.append(length + 3)
 			_ = b[2]
 			b[0] = 0xff
 			binary.BigEndian.PutUint16(b[1:3], uint16(length))
@@ -232,12 +232,12 @@ func SerializeOctetArrayTo(buffer SerializeBuffer, t Type, value interface{}, le
 		return written
 	}
 	if len(val) == length {
-		copy(buffer.Append(length), val)
+		copy(buffer.append(length), val)
 		return length
 	}
 	if t == Ipv4AddressType || t == Ipv6AddressType || t == MacAddressType {
 		if val == nil {
-			tmp := buffer.Append(length)
+			tmp := buffer.append(length)
 			for i := range tmp {
 				tmp[i] = 0
 			}
@@ -246,7 +246,7 @@ func SerializeOctetArrayTo(buffer SerializeBuffer, t Type, value interface{}, le
 		panic("invalid address stored")
 	}
 	var clear []byte
-	assign := buffer.Append(length)
+	assign := buffer.append(length)
 	copy(assign, val)
 	clear = assign[len(val):]
 	for i := range clear {
@@ -255,7 +255,7 @@ func SerializeOctetArrayTo(buffer SerializeBuffer, t Type, value interface{}, le
 	return length
 }
 
-func SerializeIntegerTo(buffer SerializeBuffer, t Type, value interface{}, length int) int {
+func serializeIntegerTo(buffer scratchBuffer, t Type, value interface{}, length int) int {
 	var val uint64
 	switch v := value.(type) {
 	case float64:
@@ -298,22 +298,22 @@ func SerializeIntegerTo(buffer SerializeBuffer, t Type, value interface{}, lengt
 	}
 	switch length {
 	case 1:
-		b := buffer.Append(1)
+		b := buffer.append(1)
 		b[0] = byte(val)
 	case 2:
-		b := buffer.Append(2)
+		b := buffer.append(2)
 		binary.BigEndian.PutUint16(b, uint16(val))
 	case 3:
-		b := buffer.Append(3)
+		b := buffer.append(3)
 		_ = b[2]
 		b[0] = byte(val >> 16)
 		b[1] = byte(val >> 8)
 		b[2] = byte(val)
 	case 4:
-		b := buffer.Append(4)
+		b := buffer.append(4)
 		binary.BigEndian.PutUint32(b, uint32(val))
 	case 5:
-		b := buffer.Append(5)
+		b := buffer.append(5)
 		_ = b[4]
 		b[0] = byte(val >> 32)
 		b[1] = byte(val >> 24)
@@ -321,7 +321,7 @@ func SerializeIntegerTo(buffer SerializeBuffer, t Type, value interface{}, lengt
 		b[3] = byte(val >> 8)
 		b[4] = byte(val)
 	case 6:
-		b := buffer.Append(6)
+		b := buffer.append(6)
 		_ = b[5]
 		b[0] = byte(val >> 40)
 		b[1] = byte(val >> 32)
@@ -330,7 +330,7 @@ func SerializeIntegerTo(buffer SerializeBuffer, t Type, value interface{}, lengt
 		b[4] = byte(val >> 8)
 		b[5] = byte(val)
 	case 7:
-		b := buffer.Append(7)
+		b := buffer.append(7)
 		_ = b[6]
 		b[0] = byte(val >> 48)
 		b[1] = byte(val >> 40)
@@ -340,7 +340,7 @@ func SerializeIntegerTo(buffer SerializeBuffer, t Type, value interface{}, lengt
 		b[5] = byte(val >> 8)
 		b[6] = byte(val)
 	case 8:
-		b := buffer.Append(8)
+		b := buffer.append(8)
 		binary.BigEndian.PutUint64(b, val)
 	default:
 		panic(fmt.Sprint("Illegal encoding length for integers. Must be 1-8. Was ", length))
@@ -348,7 +348,7 @@ func SerializeIntegerTo(buffer SerializeBuffer, t Type, value interface{}, lengt
 	return length
 }
 
-func SerializeFloatTo(buffer SerializeBuffer, t Type, value interface{}, length int) int {
+func serializeFloatTo(buffer scratchBuffer, t Type, value interface{}, length int) int {
 	if t == Float32Type {
 		var val float32
 		switch v := value.(type) {
@@ -387,7 +387,7 @@ func SerializeFloatTo(buffer SerializeBuffer, t Type, value interface{}, length 
 		default:
 			panic("Can't convert this")
 		}
-		b := buffer.Append(4)
+		b := buffer.append(4)
 		bits := math.Float32bits(val)
 		binary.BigEndian.PutUint32(b, bits)
 		return 4
@@ -431,11 +431,11 @@ func SerializeFloatTo(buffer SerializeBuffer, t Type, value interface{}, length 
 	}
 	switch length {
 	case 4:
-		b := buffer.Append(4)
+		b := buffer.append(4)
 		bits := math.Float32bits(float32(val))
 		binary.BigEndian.PutUint32(b, bits)
 	case 8:
-		b := buffer.Append(8)
+		b := buffer.append(8)
 		bits := math.Float64bits(val)
 		binary.BigEndian.PutUint64(b, bits)
 	default:
@@ -444,7 +444,7 @@ func SerializeFloatTo(buffer SerializeBuffer, t Type, value interface{}, length 
 	return length
 }
 
-func SerializeDateTimeTo(buffer SerializeBuffer, t Type, value interface{}, length int) int {
+func serializeDateTimeTo(buffer scratchBuffer, t Type, value interface{}, length int) int {
 	var seconds, nanoseconds uint64
 	switch v := value.(type) {
 	case time.Time:
@@ -475,25 +475,25 @@ func SerializeDateTimeTo(buffer SerializeBuffer, t Type, value interface{}, leng
 	}
 	switch t {
 	case DateTimeSecondsType:
-		binary.BigEndian.PutUint32(buffer.Append(4), uint32(seconds))
+		binary.BigEndian.PutUint32(buffer.append(4), uint32(seconds))
 		return 4
 	case DateTimeMillisecondsType:
-		binary.BigEndian.PutUint64(buffer.Append(8), uint64(seconds*1e3+nanoseconds/1e6))
+		binary.BigEndian.PutUint64(buffer.append(8), uint64(seconds*1e3+nanoseconds/1e6))
 		return 8
 	case DateTimeMicrosecondsType:
 		//NTP epoch as 32bit seconds + 32bit fraction (~244ps)
 		//-> get time in Unixpoch seconds, add ntp epoch to unix epoch offset
 		//-> shift nanoseconds 32 bit to the left divide by nano (1e9)
 		//according to RFC7011 the last 11 bits should be zero (0xFFFFF800) to get micro seconds (~.447 microsecond resolution)
-		b := buffer.Append(8)
+		b := buffer.append(8)
 		_ = b[7]
-		binary.BigEndian.PutUint32(b[:4], uint32(seconds)+NTPToUnix)
+		binary.BigEndian.PutUint32(b[:4], uint32(seconds)+ntp2Unix)
 		binary.BigEndian.PutUint32(b[4:8], uint32((nanoseconds<<32)/1e9)&0xFFFFF800)
 		return 8
 	case DateTimeNanosecondsType:
-		b := buffer.Append(8)
+		b := buffer.append(8)
 		_ = b[7]
-		binary.BigEndian.PutUint32(b[:4], uint32(seconds)+NTPToUnix)
+		binary.BigEndian.PutUint32(b[:4], uint32(seconds)+ntp2Unix)
 		binary.BigEndian.PutUint32(b[4:8], uint32((nanoseconds<<32)/1e9))
 		return 8
 	}

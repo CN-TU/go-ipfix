@@ -6,11 +6,11 @@ import (
 	"reflect"
 )
 
-// BasicListID is the IE ID of basicLists as defined by RFC6313
-const BasicListID = 291
+// basicListID is the IE ID of basicLists as defined by RFC6313
+const basicListID = 291
 
-// SubType represents additional information needed by RFC6313 datatypes
-type SubType interface{}
+// subType represents additional information needed by RFC6313 datatypes
+type subType interface{}
 
 type InformationElement struct {
 	Name    string
@@ -18,7 +18,7 @@ type InformationElement struct {
 	ID      uint16
 	Type    Type
 	Length  uint16
-	SubType SubType
+	subType subType
 }
 
 func NewInformationElement(name string, pen uint32, id uint16, t Type, length uint16) InformationElement {
@@ -30,11 +30,11 @@ func NewInformationElement(name string, pen uint32, id uint16, t Type, length ui
 
 func NewBasicList(name string, subelement InformationElement, number uint16) InformationElement {
 	// RFC6313: semantic + template of element + number of elements * size of element
-	length := 1 + uint16(subelement.TemplateSize()) + number*subelement.Length
+	length := 1 + uint16(subelement.templateSize()) + number*subelement.Length
 	if number == 0 || subelement.Length == VariableLength || number == VariableLength {
 		length = VariableLength
 	}
-	return InformationElement{name, 0, BasicListID, BasicListType, length, subelement}
+	return InformationElement{name, 0, basicListID, BasicListType, length, subelement}
 }
 
 func (ie InformationElement) String() string {
@@ -48,23 +48,23 @@ func (ie InformationElement) String() string {
 	return fmt.Sprintf("%s(%d/%d)<%s>[%d]", ie.Name, ie.Pen, ie.ID, ie.Type, ie.Length)
 }
 
-func (ie InformationElement) TemplateSize() int {
+func (ie InformationElement) templateSize() int {
 	if ie.Pen == 0 {
 		return 4
 	}
 	return 8
 }
 
-func (ie InformationElement) SerializeTo(buffer SerializeBuffer) int {
+func (ie InformationElement) serializeTo(buffer scratchBuffer) int {
 	ident := ie.ID
 	if ie.Pen == 0 {
-		b := buffer.Append(4)
+		b := buffer.append(4)
 		binary.BigEndian.PutUint16(b[2:], uint16(ie.Length))
 		binary.BigEndian.PutUint16(b[0:], uint16(ident))
 		return 4
 	}
 	ident |= 0x8000
-	b := buffer.Append(8)
+	b := buffer.append(8)
 	binary.BigEndian.PutUint32(b[4:], uint32(ie.Pen))
 	binary.BigEndian.PutUint16(b[2:], uint16(ie.Length))
 	binary.BigEndian.PutUint16(b[0:], uint16(ident))
@@ -75,10 +75,10 @@ func (ie InformationElement) ListElement() (InformationElement, bool) {
 	if ie.Type != BasicListType {
 		return InformationElement{}, false
 	}
-	return ie.SubType.(InformationElement), true
+	return ie.subType.(InformationElement), true
 }
 
-func (ie InformationElement) SerializeDataTo(buffer SerializeBuffer, value interface{}) {
+func (ie InformationElement) serializeDataTo(buffer scratchBuffer, value interface{}) {
 	switch ie.Type {
 	case BasicListType:
 		subie, _ := ie.ListElement()
@@ -89,17 +89,17 @@ func (ie InformationElement) SerializeDataTo(buffer SerializeBuffer, value inter
 
 		if ie.Length == VariableLength {
 			// RFC6313 recommends 3 byte encoding of length field
-			b := buffer.Append(3)
+			b := buffer.append(3)
 			_ = b[2]
 			b[0] = 0xff
 			lengthbuffer = b[1:3]
 		}
 
 		// first semantic
-		b := buffer.Append(1)
+		b := buffer.append(1)
 		b[0] = byte(UndefinedSemantic)
 		// followed by template header
-		written += subie.SerializeTo(buffer)
+		written += subie.serializeTo(buffer)
 		// followed by all the values
 		if value != nil {
 			values := reflect.ValueOf(value)
@@ -108,7 +108,7 @@ func (ie InformationElement) SerializeDataTo(buffer SerializeBuffer, value inter
 			}
 			l := values.Len()
 			for i := 0; i < l; i++ {
-				written += subie.Type.SerializeDataTo(buffer, values.Index(i).Interface(), int(subie.Length))
+				written += subie.Type.serializeDataTo(buffer, values.Index(i).Interface(), int(subie.Length))
 			}
 		}
 		if ie.Length == VariableLength {
@@ -119,6 +119,6 @@ func (ie InformationElement) SerializeDataTo(buffer SerializeBuffer, value inter
 			}
 		}
 	default:
-		ie.Type.SerializeDataTo(buffer, value, int(ie.Length))
+		ie.Type.serializeDataTo(buffer, value, int(ie.Length))
 	}
 }
