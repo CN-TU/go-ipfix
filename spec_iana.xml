@@ -4,7 +4,7 @@
 <registry xmlns="http://www.iana.org/assignments" id="ipfix">
 <title>IP Flow Information Export (IPFIX) Entities</title>
 <created>2007-05-10</created>
-<updated>2017-08-10</updated>
+<updated>2018-07-10</updated>
 
 <note><xref type="rfc" data="rfc7012"/> has obsoleted <xref type="rfc" data="rfc5102"/>. However, references to <xref type="rfc" data="rfc5102"/>
 remain as part of the historical record.</note>
@@ -115,7 +115,7 @@ header of the packet.
 <paragraph>
 See <xref type="rfc" data="rfc791"/> for the specification of the IPv4
 protocol field.
-See <xref type="draft" data="RFC-ietf-6man-rfc2460bis-13"/> for the specification of the
+See <xref type="rfc" data="rfc8200"/> for the specification of the
 IPv6 protocol field.
 See the list of protocol numbers assigned by IANA at <xref type="registry" data="protocol-numbers"/>.
 </paragraph>
@@ -143,7 +143,7 @@ value of the Traffic Class field in the IPv6 packet header.
 <references>
 <paragraph>
 See <xref type="rfc" data="rfc1812"/> (Section 5.3.2) and <xref type="rfc" data="rfc791"/> for the definition of the IPv4 TOS field.
-See <xref type="draft" data="RFC-ietf-6man-rfc2460bis-13"/> for the definition of the IPv6
+See <xref type="rfc" data="rfc8200"/> for the definition of the IPv6
 Traffic Class field.
 </paragraph>
 </references>
@@ -716,7 +716,7 @@ the IP payload length.
 <paragraph>
 See <xref type="rfc" data="rfc791"/> for the specification of the IPv4
 total length.
-See <xref type="draft" data="RFC-ietf-6man-rfc2460bis-13"/> for the specification of the
+See <xref type="rfc" data="rfc8200"/> for the specification of the
 IPv6 payload length.
 See <xref type="rfc" data="rfc2675"/> for the specification of the
 IPv6 jumbo payload length.
@@ -746,7 +746,7 @@ the IP payload length.
 <paragraph>
 See <xref type="rfc" data="rfc791"/> for the specification of the IPv4
 total length.
-See <xref type="draft" data="RFC-ietf-6man-rfc2460bis-13"/> for the specification of the
+See <xref type="rfc" data="rfc8200"/> for the specification of the
 IPv6 payload length.
 See <xref type="rfc" data="rfc2675"/> for the specification of the
 IPv6 jumbo payload length.
@@ -772,7 +772,7 @@ The IPv6 source address in the IP packet header.
 </description>
 <references>
 <paragraph>
-See <xref type="draft" data="RFC-ietf-6man-rfc2460bis-13"/> for the definition of the Source
+See <xref type="rfc" data="rfc8200"/> for the definition of the Source
 Address field in the IPv6 header.
 </paragraph>
 </references>
@@ -796,7 +796,7 @@ The IPv6 destination address in the IP packet header.
 </description>
 <references>
 <paragraph>
-See <xref type="draft" data="RFC-ietf-6man-rfc2460bis-13"/> for the definition of the
+See <xref type="rfc" data="rfc8200"/> for the definition of the
 Destination Address field in the IPv6 header.
 </paragraph>
 </references>
@@ -861,7 +861,7 @@ The value of the IPv6 Flow Label field in the IP packet header.
 <range>0-0xFFFFF</range>
 <references>
 <paragraph>
-See <xref type="draft" data="RFC-ietf-6man-rfc2460bis-13"/> for the definition of the
+See <xref type="rfc" data="rfc8200"/> for the definition of the
 Flow Label field in the IPv6 packet header.
 </paragraph>
 </references>
@@ -950,9 +950,9 @@ Deprecated in favor of 304 selectorAlgorithm.  The type of
 algorithm used for sampled NetFlow:
 </paragraph>
 <artwork>
-  
-   1 - Deterministic Sampling,
-   2 - Random Sampling.
+
+1 - Deterministic Sampling,
+2 - Random Sampling.
 
 </artwork>
 <paragraph>
@@ -1017,9 +1017,9 @@ specified by this field.
 Type of flow switching engine in a router/switch:
 </paragraph>
 <artwork>
-   RP = 0,
-   VIP/Line card = 1,
-   PFC/DFC = 2.
+RP = 0,
+VIP/Line card = 1,
+PFC/DFC = 2.
 </artwork>
 <paragraph>
 Reserved for internal use on the Collector.
@@ -1330,7 +1330,7 @@ Minimum TTL value observed for any packet in this Flow.
 <paragraph>
 See <xref type="rfc" data="rfc791"/> for the definition of the IPv4
 Time to Live field.
-See <xref type="draft" data="RFC-ietf-6man-rfc2460bis-13"/> for the definition of the IPv6
+See <xref type="rfc" data="rfc8200"/> for the definition of the IPv6
 Hop Limit field.
 </paragraph>
 </references>
@@ -1356,7 +1356,7 @@ Maximum TTL value observed for any packet in this Flow.
 <paragraph>
 See <xref type="rfc" data="rfc791"/> for the definition of the IPv4
 Time to Live field.
-See <xref type="draft" data="RFC-ietf-6man-rfc2460bis-13"/> for the definition of the IPv6
+See <xref type="rfc" data="rfc8200"/> for the definition of the IPv6
 Hop Limit field.
 </paragraph>
 </references>
@@ -1385,7 +1385,7 @@ no fragment header.
 <paragraph>
 See <xref type="rfc" data="rfc791"/> for the definition of the IPv4
 Identification field.
-See <xref type="draft" data="RFC-ietf-6man-rfc2460bis-13"/> for the definition of the
+See <xref type="rfc" data="rfc8200"/> for the definition of the
 Identification field in the IPv6 Fragment header.
 </paragraph>
 </references>
@@ -1415,7 +1415,7 @@ function after the packet passed the Observation Point.
 <paragraph>
 See <xref type="rfc" data="rfc791"/> for the definition of the IPv4
 TOS field.
-See <xref type="draft" data="RFC-ietf-6man-rfc2460bis-13"/> for the definition of the IPv6
+See <xref type="rfc" data="rfc8200"/> for the definition of the IPv6
 Traffic Class field.
 See <xref type="rfc" data="rfc3234"/> for the definition of
 middleboxes.
@@ -1532,7 +1532,7 @@ The IP version field in the IP packet header.
 <paragraph>
 See <xref type="rfc" data="rfc791"/> for the definition of the version
 field in the IPv4 packet header.
-See <xref type="draft" data="RFC-ietf-6man-rfc2460bis-13"/> for the definition of the
+See <xref type="rfc" data="rfc8200"/> for the definition of the
 version field in the IPv6 packet header.
 Additional information on defined version numbers can be found at
 <xref type="registry" data="version-numbers"/>.
@@ -1627,46 +1627,48 @@ the respective IPv6 extension header, the value of the
 corresponding bit is 0.
 </paragraph>
 <artwork>
-0     1     2     3     4     5     6     7
-+-----+-----+-----+-----+-----+-----+-----+-----+
-| DST | HOP | Res | UNK |FRA0 | RH  |FRA1 | Res |  ...
-+-----+-----+-----+-----+-----+-----+-----+-----+
+        0     1     2     3     4     5     6     7
+    +-----+-----+-----+-----+-----+-----+-----+-----+
+    | DST | HOP | Res | UNK |FRA0 | RH  |FRA1 | Res |  ...
+    +-----+-----+-----+-----+-----+-----+-----+-----+
 
-8     9    10    11    12    13    14    15
-+-----+-----+-----+-----+-----+-----+-----+-----+
+        8     9    10    11    12    13    14    15
+    +-----+-----+-----+-----+-----+-----+-----+-----+
 ... |           Reserved    | MOB | ESP | AH  | PAY | ...
-+-----+-----+-----+-----+-----+-----+-----+-----+
+    +-----+-----+-----+-----+-----+-----+-----+-----+
 
-16    17    18    19    20    21    22    23
-+-----+-----+-----+-----+-----+-----+-----+-----+
+       16    17    18    19    20    21    22    23
+    +-----+-----+-----+-----+-----+-----+-----+-----+
 ... |                  Reserved                     | ...
-+-----+-----+-----+-----+-----+-----+-----+-----+
-24    25    26    27    28    29    30    31
-+-----+-----+-----+-----+-----+-----+-----+-----+
+    +-----+-----+-----+-----+-----+-----+-----+-----+
+
+       24    25    26    27    28    29    30    31
+    +-----+-----+-----+-----+-----+-----+-----+-----+
 ... |                  Reserved                     |
-+-----+-----+-----+-----+-----+-----+-----+-----+
+    +-----+-----+-----+-----+-----+-----+-----+-----+
 
 Bit    IPv6 Option   Description
+
 0, DST      60       Destination option header
 1, HOP       0       Hop-by-hop option header
 2, Res               Reserved
 3, UNK               Unknown Layer 4 header
-(compressed, encrypted, not supported)
+                     (compressed, encrypted, not supported)
 4, FRA0     44       Fragment header - first fragment
 5, RH       43       Routing header
 6, FRA1     44       Fragmentation header - not first fragment
 7, Res               Reserved
-8 to 11               Reserved
-12, MOB     135       IPv6 mobility [RFC3775]
-13, ESP      50       Encrypted security payload
-14, AH       51       Authentication Header
-15, PAY     108       Payload compression header
-16 to 31              Reserved
+8 to 11              Reserved
+12, MOB     135      IPv6 mobility [RFC3775]
+13, ESP      50      Encrypted security payload
+14, AH       51      Authentication Header
+15, PAY     108      Payload compression header
+16 to 31             Reserved
 </artwork>
 </description>
 <references>
 <paragraph>
-See <xref type="draft" data="RFC-ietf-6man-rfc2460bis-13"/> for the general definition of
+See <xref type="rfc" data="rfc8200"/> for the general definition of
 IPv6 extension headers and for the specification of the hop-by-hop
 options header, the routing header, the fragment header, and the
 destination options header.
@@ -1714,8 +1716,8 @@ stack entry, i.e., from the last label that was pushed.
 The size of this Information Element is 3 octets.
 </paragraph>
 <artwork>
-0                   1                   2
-0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3
+ 0                   1                   2
+ 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3
 +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 |                Label                  | Exp |S|
 +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
@@ -2070,7 +2072,7 @@ See <xref type="rfc" data="rfc2863"/> for the definition of the ifName object.
 <record>
 <name>interfaceDescription</name>
 <dataType>string</dataType>
- <dataTypeSemantics>default</dataTypeSemantics>
+<dataTypeSemantics>default</dataTypeSemantics>
 <elementId>83</elementId>
 <status>current</status>
 <description>
@@ -2186,7 +2188,7 @@ no fragment header.
 <paragraph>
 See <xref type="rfc" data="rfc791"/> for the specification of the
 fragment offset in the IPv4 header.
-See <xref type="draft" data="RFC-ietf-6man-rfc2460bis-13"/> for the specification of the
+See <xref type="rfc" data="rfc8200"/> for the specification of the
 fragment offset in the IPv6 Fragment header.
 </paragraph>
 </references>
@@ -2197,78 +2199,39 @@ fragment offset in the IPv6 Fragment header.
 
 <record>
 <name>forwardingStatus</name>
-<dataType>unsigned32</dataType>
+<dataType>unsigned8</dataType>
 <dataTypeSemantics>identifier</dataTypeSemantics>
 <elementId>89</elementId>
 <status>current</status>
 <description>
 <paragraph>
 This Information Element describes the forwarding status of the
-flow and any attached reasons.  The reduced-size encoding rules as
-per <xref type="rfc" data="rfc7011"/> apply.
+flow and any attached reasons.
 </paragraph>
 <paragraph>
-The basic encoding is 8 bits. The future extensions
-could add one or three bytes. The layout of the basic
-encoding is as follows:
+The layout of the encoding is as follows:
 </paragraph>
 <artwork>
-   MSB -   0   1   2   3   4   5   6   7   - LSB
-         +---+---+---+---+---+---+---+---+
-         | Status|  Reason code or flags |
-         +---+---+---+---+---+---+---+---+
-
-Status:
-
-00b = Unknown
-01b = Forwarded
-10b = Dropped
-11b = Consumed
-
-
-Reason Code (status = 01b, Forwarded)
-
-01 000000b = 64 = Unknown
-01 000001b = 65 = Fragmented
-01 000010b = 66 = Not Fragmented
-
-Reason Code (status = 10b, Dropped)
-
-10 000000b = 128 = Unknown
-10 000001b = 129 = ACL deny
-10 000010b = 130 = ACL drop
-10 000011b = 131 = Unroutable
-10 000100b = 132 = Adjacency
-10 000101b = 133 = Fragmentation and DF set
-10 000110b = 134 = Bad header checksum
-10 000111b = 135 = Bad total Length
-10 001000b = 136 = Bad header length
-10 001001b = 137 = bad TTL
-10 001010b = 138 = Policer
-10 001011b = 139 = WRED
-10 001100b = 140 = RPF
-10 001101b = 141 = For us
-10 001110b = 142 = Bad output interface
-10 001111b = 143 = Hardware
-
-Reason Code (status = 11b, Consumed)
-
-11 000000b = 192 = Unknown
-11 000001b = 193 = Punt Adjacency
-11 000010b = 194 = Incomplete Adjacency
-11 000011b = 195 = For us
-
+MSB  -  0   1   2   3   4   5   6   7  -  LSB
+      +---+---+---+---+---+---+---+---+
+      | Status|  Reason code or flags |
+      +---+---+---+---+---+---+---+---+
+</artwork>
+<paragraph>
+See the Forwarding Status sub-registries at <xref type="uri" data="http://www.iana.org/assignments/ipfix/ipfix.xhtml#forwarding-status"/>.
+</paragraph>
+<artwork>
 Examples:
 
-  value : 0x40 = 64
-  binary: 01000000
-  decode: 01        -&gt; Forward
-            000000  -&gt; No further information
+value : 0x40 = 64
+binary: 01000000
+decode: 01        -&gt; Forward
+          000000  -&gt; No further information
 
-  value : 0x89 = 137
-  binary: 10001001
-  decode: 10        -&gt; Drop
-            001001  -&gt; Fragmentation and DF set
+value : 0x89 = 137
+binary: 10001001
+decode: 10        -&gt; Drop
+          001001  -&gt; Bad TTL
 
 </artwork>
 </description>
@@ -2278,8 +2241,9 @@ See "NetFlow Version 9 Flow-Record Format" <xref type="uri" data="http://www.cis
 </paragraph>
 </references>
 <xref type="rfc" data="rfc7270"/>
-<revision>0</revision>
-<date>2014-04-04</date>
+  <xref type="rfc-errata" data="5262"/>
+<revision>2</revision>
+<date>2018-02-21</date>
 </record>
 
 <record>
@@ -2482,7 +2446,7 @@ Point.
 See <xref type="rfc" data="rfc3260"/> for the definition of the Differentiated 
 Services Field.  See section 5.3.2 of <xref type="rfc" data="rfc1812"/> and 
 <xref type="rfc" data="rfc791"/> for the definition of the IPv4 TOS field.  See 
-<xref type="draft" data="RFC-ietf-6man-rfc2460bis-13"/> for the definition of the IPv6 Traffic Class 
+<xref type="rfc" data="rfc8200"/> for the definition of the IPv6 Traffic Class 
 field.  See the IPFIX Information Model <xref type="rfc" data="rfc5102"/> for the 
 'ipDiffServCodePoint' specification.  
 </paragraph>
@@ -2825,24 +2789,28 @@ the following:
 </paragraph>
 <artwork>
 0x01: idle timeout
-The Flow was terminated because it was considered to be
-idle.
+      The Flow was terminated because it was considered to be
+      idle.
+      
 0x02: active timeout
-The Flow was terminated for reporting purposes while it was
-still active, for example, after the maximum lifetime of
-unreported Flows was reached.
+      The Flow was terminated for reporting purposes while it was
+      still active, for example, after the maximum lifetime of
+      unreported Flows was reached.
+
 0x03: end of Flow detected
-The Flow was terminated because the Metering Process
-detected signals indicating the end of the Flow,
-for example, the TCP FIN flag.
+      The Flow was terminated because the Metering Process
+      detected signals indicating the end of the Flow,
+      for example, the TCP FIN flag.
+
 0x04: forced end
-The Flow was terminated because of some external event,
-for example, a shutdown of the Metering Process initiated
-by a network management application.
+      The Flow was terminated because of some external event,
+      for example, a shutdown of the Metering Process initiated
+      by a network management application.
+
 0x05: lack of resources
-The Flow was terminated because of lack of resources
-available to the Metering Process and/or the Exporting
-Process.
+      The Flow was terminated because of lack of resources
+      available to the Metering Process and/or the Exporting
+      Process.
 </artwork>
 </description>
 <xref type="rfc" data="rfc5102"/>
@@ -4070,7 +4038,7 @@ Information Element is 40.
 <paragraph>
 See <xref type="rfc" data="rfc791"/> for the definition of the IPv4
 header.
-See <xref type="draft" data="RFC-ietf-6man-rfc2460bis-13"/> for the definition of the IPv6
+See <xref type="rfc" data="rfc8200"/> for the definition of the IPv6
 header.
 </paragraph>
 </references>
@@ -4123,7 +4091,7 @@ by this Information Element.
 <units>octets</units>
 <references>
 <paragraph>
-See <xref type="draft" data="RFC-ietf-6man-rfc2460bis-13"/> for the specification of the IPv6
+See <xref type="rfc" data="rfc8200"/> for the specification of the IPv6
 payload length.
 See <xref type="rfc" data="rfc2675"/> for the specification of the IPv6
 jumbo payload option.
@@ -4182,7 +4150,7 @@ Protocol Numbers registry.
 </description>
 <references>
 <paragraph>
-See <xref type="draft" data="RFC-ietf-6man-rfc2460bis-13"/> for the definition of the IPv6
+See <xref type="rfc" data="rfc8200"/> for the definition of the IPv6
 Next Header field.
 See the list of protocol numbers assigned by IANA at <xref type="registry" data="protocol-numbers"/>.
 </paragraph>
@@ -4246,7 +4214,7 @@ range from 0 to 63.
 See <xref type="rfc" data="rfc3260"/> for the definition of the
 Differentiated Services field.
 See <xref type="rfc" data="rfc1812"/> (Section 5.3.2) and <xref type="rfc" data="rfc791"/> for the definition of the IPv4 TOS field.
-See <xref type="draft" data="RFC-ietf-6man-rfc2460bis-13"/> for the definition of the IPv6
+See <xref type="rfc" data="rfc8200"/> for the definition of the IPv6
 Traffic Class field.
 </paragraph>
 </references>
@@ -4279,7 +4247,7 @@ Therefore, its value may range from 0 to 7.
 <paragraph>
 See <xref type="rfc" data="rfc1812"/> (Section 5.3.3) and <xref type="rfc" data="rfc791"/> for the definition of the IP Precedence.
 See <xref type="rfc" data="rfc1812"/> (Section 5.3.2) and <xref type="rfc" data="rfc791"/> for the definition of the IPv4 TOS field.
-See <xref type="draft" data="RFC-ietf-6man-rfc2460bis-13"/> for the definition of the IPv6
+See <xref type="rfc" data="rfc8200"/> for the definition of the IPv6
 Traffic Class field.
 </paragraph>
 </references>
@@ -4304,32 +4272,35 @@ packet header or the IPv6 Fragment header, respectively.
 <artwork>
 
 Bit 0:    (RS) Reserved.
-The value of this bit MUST be 0 until specified
-otherwise.
-Bit 1:    (DF) 0 = May Fragment,  1 = Don't Fragment.
-Corresponds to the value of the DF flag in the
-IPv4 header.  Will always be 0 for IPv6 unless
-a "don't fragment" feature is introduced to IPv6.
-Bit 2:    (MF) 0 = Last Fragment, 1 = More Fragments.
-Corresponds to the MF flag in the IPv4 header
-or to the M flag in the IPv6 Fragment header,
-respectively.  The value is 0 for IPv6 if there
-is no fragment header.
-Bits 3-7: (DC) Don't Care.
-The values of these bits are irrelevant.
+          The value of this bit MUST be 0 until specified
+          otherwise.
 
-0   1   2   3   4   5   6   7
-+---+---+---+---+---+---+---+---+
-| R | D | M | D | D | D | D | D |
-| S | F | F | C | C | C | C | C |
-+---+---+---+---+---+---+---+---+
+Bit 1:    (DF) 0 = May Fragment,  1 = Don't Fragment.
+          Corresponds to the value of the DF flag in the
+          IPv4 header.  Will always be 0 for IPv6 unless
+          a "don't fragment" feature is introduced to IPv6.
+
+Bit 2:    (MF) 0 = Last Fragment, 1 = More Fragments.
+          Corresponds to the MF flag in the IPv4 header
+          or to the M flag in the IPv6 Fragment header,
+          respectively.  The value is 0 for IPv6 if there
+          is no fragment header.
+
+Bits 3-7: (DC) Don't Care.
+          The values of these bits are irrelevant.
+
+     0   1   2   3   4   5   6   7
+   +---+---+---+---+---+---+---+---+
+   | R | D | M | D | D | D | D | D |
+   | S | F | F | C | C | C | C | C |
+   +---+---+---+---+---+---+---+---+
 </artwork>
 </description>
 <references>
 <paragraph>
 See <xref type="rfc" data="rfc791"/> for the specification of the IPv4
 fragment flags.
-See <xref type="draft" data="RFC-ietf-6man-rfc2460bis-13"/> for the specification of the
+See <xref type="rfc" data="rfc8200"/> for the specification of the
 IPv6 Fragment header.
 </paragraph>
 </references>
@@ -4441,7 +4412,7 @@ MPLS label stack.
 The number of labels in the MPLS label stack.
 </paragraph>
 </description>
-<units>label stack entries</units>
+<units>entries</units>
 <references>
 <paragraph>
 See <xref type="rfc" data="rfc3032"/> for the specification of the
@@ -4470,10 +4441,10 @@ i.e., the last label that was pushed.
 Bits 0-4:  Don't Care, value is irrelevant.
 Bits 5-7:  MPLS Exp field.
 
-0   1   2   3   4   5   6   7
-+---+---+---+---+---+---+---+---+
-|     don't care    |    Exp    |
-+---+---+---+---+---+---+---+---+
+     0   1   2   3   4   5   6   7
+   +---+---+---+---+---+---+---+---+
+   |     don't care    |    Exp    |
+   +---+---+---+---+---+---+---+---+
 </artwork>
 </description>
 <references>
@@ -4520,7 +4491,7 @@ is reported.
 <paragraph>
 See <xref type="rfc" data="rfc791"/> for the specification of IPv4
 packets.
-See <xref type="draft" data="RFC-ietf-6man-rfc2460bis-13"/> for the specification of the
+See <xref type="rfc" data="rfc8200"/> for the specification of the
 IPv6 payload length.
 See <xref type="rfc" data="rfc2675"/> for the specification of the
 IPv6 jumbo payload length.
@@ -4590,15 +4561,15 @@ set to the value of the scope field in the IPv6
 multicast address.
 </paragraph>
 <artwork>
-0      1      2      3      4      5      6      7
-+------+------+------+------+------+------+------+------+
-|   IPv6 multicast scope    |  T   | RES. | RES. | MCv4 |
-+------+------+------+------+------+------+------+------+
+      0      1      2      3      4      5      6      7
+   +------+------+------+------+------+------+------+------+
+   |   IPv6 multicast scope    |  T   | RES. | RES. | MCv4 |
+   +------+------+------+------+------+------+------+------+
 
-Bits 0-3:  set to value of multicast scope if IPv6 multicast
-Bit  4:    set to value of T flag, if IPv6 multicast
-Bits 5-6:  reserved for future use
-Bit  7:    set to 1 if IPv4 multicast
+   Bits 0-3:  set to value of multicast scope if IPv6 multicast
+   Bit  4:    set to value of T flag, if IPv6 multicast
+   Bits 5-6:  reserved for future use
+   Bit  7:    set to 1 if IPv4 multicast
 </artwork>
 </description>
 <references>
@@ -4633,7 +4604,7 @@ different from most of the other Information Elements
 reporting length values.
 </paragraph>
 </description>
-<units>4 octets</units>
+<units>4-octet words</units>
 <references>
 <paragraph>
 See <xref type="rfc" data="rfc791"/> for the specification of the IPv4
@@ -4677,62 +4648,61 @@ Option number X is mapped to bit X.
 The mapping is illustrated by the figure below.
 </paragraph>
 <artwork>
-0      1      2      3      4      5      6      7
-+------+------+------+------+------+------+------+------+
+        0      1      2      3      4      5      6      7
+    +------+------+------+------+------+------+------+------+
 ... |  RR  |CIPSO |E-SEC |  TS  | LSR  |  SEC | NOP  | EOOL |
-+------+------+------+------+------+------+------+------+
+    +------+------+------+------+------+------+------+------+
 
-8      9     10     11     12     13     14     15
-+------+------+------+------+------+------+------+------+
+        8      9     10     11     12     13     14     15
+    +------+------+------+------+------+------+------+------+
 ... |ENCODE| VISA | FINN | MTUR | MTUP | ZSU  | SSR  | SID  | ...
-+------+------+------+------+------+------+------+------+
+    +------+------+------+------+------+------+------+------+
 
-16     17     18     19     20     21     22     23
-+------+------+------+------+------+------+------+------+
+       16     17     18     19     20     21     22     23
+    +------+------+------+------+------+------+------+------+
 ... | DPS  |NSAPA | SDB  |RTRALT|ADDEXT|  TR  | EIP  |IMITD | ...
-+------+------+------+------+------+------+------+------+
+    +------+------+------+------+------+------+------+------+
 
-24     25     26     27     28     29     30     31
-+------+------+------+------+------+------+------+------+
-|      | EXP  |   to be assigned by IANA  |  QS  | UMP  | ...
-+------+------+------+------+------+------+------+------+
+       24     25     26     27     28     29     30     31
+    +------+------+------+------+------+------+------+------+
+... |      | EXP  |   to be assigned by IANA  |  QS  | UMP  |
+    +------+------+------+------+------+------+------+------+
 
-Type   Option
-Bit Value  Name    Reference
----+-----+-------+------------------------------------
-0     7   RR      Record Route, RFC 791
-1   134   CIPSO   Commercial Security
-2   133   E-SEC   Extended Security, RFC 1108
-3    68   TS      Time Stamp, RFC 791
-4   131   LSR     Loose Source Route, RFC791
-5   130   SEC     Security, RFC 1108
-6     1   NOP     No Operation, RFC 791
-7     0   EOOL    End of Options List, RFC 791
-8    15   ENCODE
-9   142   VISA    Experimental Access Control
-10   205   FINN    Experimental Flow Control
-11    12   MTUR    (obsoleted) MTU Reply, RFC 1191
-12    11   MTUP    (obsoleted) MTU Probe, RFC 1191
-13    10   ZSU     Experimental Measurement
-14   137   SSR     Strict Source Route, RFC 791
-15   136   SID     Stream ID, RFC 791
-16   151   DPS     Dynamic Packet State
-17   150   NSAPA   NSAP Address
-18   149   SDB     Selective Directed Broadcast
-19   147   ADDEXT  Address Extension
-20   148   RTRALT  Router Alert, RFC 2113
-21    82   TR      Traceroute, RFC 3193
-22   145   EIP     Extended Internet Protocol, RFC 1385
-23   144   IMITD   IMI Traffic Descriptor
-25    30   EXP     RFC3692-style Experiment
-25    94   EXP     RFC3692-style Experiment
-25   158   EXP     RFC3692-style Experiment
-25   222   EXP     RFC3692-style Experiment
-30    25   QS      Quick-Start
-31   152   UMP     Upstream Multicast Pkt.
-...  ...   ...     Further options numbers
-may be assigned by IANA
-
+       Type   Option
+   Bit Value  Name    Reference
+   ---+-----+-------+------------------------------------
+   0      7   RR      Record Route, RFC 791
+   1    134   CIPSO   Commercial Security
+   2    133   E-SEC   Extended Security, RFC 1108
+   3     68   TS      Time Stamp, RFC 791
+   4    131   LSR     Loose Source Route, RFC791
+   5    130   SEC     Security, RFC 1108
+   6      1   NOP     No Operation, RFC 791
+   7      0   EOOL    End of Options List, RFC 791
+   8     15   ENCODE
+   9    142   VISA    Experimental Access Control
+   10   205   FINN    Experimental Flow Control
+   11    12   MTUR    (obsoleted) MTU Reply, RFC 1191
+   12    11   MTUP    (obsoleted) MTU Probe, RFC 1191
+   13    10   ZSU     Experimental Measurement
+   14   137   SSR     Strict Source Route, RFC 791
+   15   136   SID     Stream ID, RFC 791
+   16   151   DPS     Dynamic Packet State
+   17   150   NSAPA   NSAP Address
+   18   149   SDB     Selective Directed Broadcast
+   19   147   ADDEXT  Address Extension
+   20   148   RTRALT  Router Alert, RFC 2113
+   21    82   TR      Traceroute, RFC 3193
+   22   145   EIP     Extended Internet Protocol, RFC 1385
+   23   144   IMITD   IMI Traffic Descriptor
+   25    30   EXP     RFC3692-style Experiment
+   25    94   EXP     RFC3692-style Experiment
+   25   158   EXP     RFC3692-style Experiment
+   25   222   EXP     RFC3692-style Experiment
+   30    25   QS      Quick-Start
+   31   152   UMP     Upstream Multicast Pkt.
+   ...  ...   ...     Further options numbers
+                      may be assigned by IANA
 </artwork>
 </description>
 <references>
@@ -4774,27 +4744,27 @@ numbers.  Option number X is mapped to bit X.
 TCP option numbers are maintained by IANA.
 </paragraph>
 <artwork>
-0     1     2     3     4     5     6     7
-+-----+-----+-----+-----+-----+-----+-----+-----+
-|   7 |   6 |   5 |   4 |   3 |   2 |   1 |   0 |  ...
-+-----+-----+-----+-----+-----+-----+-----+-----+
+        0     1     2     3     4     5     6     7
+    +-----+-----+-----+-----+-----+-----+-----+-----+
+    |   7 |   6 |   5 |   4 |   3 |   2 |   1 |   0 |  ...
+    +-----+-----+-----+-----+-----+-----+-----+-----+
 
-8     9    10    11    12    13    14    15
-+-----+-----+-----+-----+-----+-----+-----+-----+
+        8     9    10    11    12    13    14    15
+    +-----+-----+-----+-----+-----+-----+-----+-----+
 ... |  15 |  14 |  13 |  12 |  11 |  10 |   9 |   8 |...
-+-----+-----+-----+-----+-----+-----+-----+-----+
+    +-----+-----+-----+-----+-----+-----+-----+-----+
 
-16    17    18    19    20    21    22    23
-+-----+-----+-----+-----+-----+-----+-----+-----+
+       16    17    18    19    20    21    22    23
+    +-----+-----+-----+-----+-----+-----+-----+-----+
 ... |  23 |  22 |  21 |  20 |  19 |  18 |  17 |  16 |...
-+-----+-----+-----+-----+-----+-----+-----+-----+
+    +-----+-----+-----+-----+-----+-----+-----+-----+
 
-. . .
+                          . . .
 
-56    57    58    59    60    61    62    63
-+-----+-----+-----+-----+-----+-----+-----+-----+
+       56    57    58    59    60    61    62    63
+    +-----+-----+-----+-----+-----+-----+-----+-----+
 ... |  63 |  62 |  61 |  60 |  59 |  58 |  57 |  56 |
-+-----+-----+-----+-----+-----+-----+-----+-----+
+    +-----+-----+-----+-----+-----+-----+-----+-----+
 </artwork>
 </description>
 <references>
@@ -4960,7 +4930,7 @@ header of the packet.
 <paragraph>
 See <xref type="rfc" data="rfc791"/> for the specification of the IPv4
 protocol field.
-See <xref type="draft" data="RFC-ietf-6man-rfc2460bis-13"/> for the specification of the
+See <xref type="rfc" data="rfc8200"/> for the specification of the
 IPv6 protocol field.
 See the list of protocol numbers assigned by IANA at <xref type="registry" data="protocol-numbers"/>.
 </paragraph>
@@ -5215,7 +5185,7 @@ The total length of the IP packet.
 <paragraph>
 See <xref type="rfc" data="rfc791"/> for the specification of the IPv4
 total length.
-See <xref type="draft" data="RFC-ietf-6man-rfc2460bis-13"/> for the specification of the
+See <xref type="rfc" data="rfc8200"/> for the specification of the
 IPv6 payload length.
 See <xref type="rfc" data="rfc2675"/> for the specification of the
 IPv6 jumbo payload length.
@@ -5251,7 +5221,7 @@ NAT.  See <xref type="rfc" data="rfc3234"/> for the definition of middleboxes.
 <revision>1</revision>
 <date>2014-02-03</date>
 </record>
-  
+
 <record>
 <name>postNATDestinationIPv4Address</name>
 <dataType>ipv4Address</dataType>
@@ -5376,7 +5346,7 @@ See <xref type="rfc" data="rfc3022"/> for the definition of NAT.
 <revision>1</revision>
 <date>2014-08-13</date>
 </record>
-  
+
 <record updated="2017-03-15">
 <name>natEvent</name>
 <dataType>unsigned8</dataType>
@@ -5385,30 +5355,31 @@ See <xref type="rfc" data="rfc3022"/> for the definition of NAT.
 <status>current</status>
 <description>
 <paragraph>
-  This Information Element identifies a NAT event. This
-  IE identifies the type of a NAT event. Examples of NAT events
-  include, but are not limited to, NAT translation create, NAT
-  translation delete, Threshold Reached, or Threshold Exceeded, etc.
-  Values for this Information Element are listed in the NAT Event Type
-  registry, see <xref type="uri" data="http://www.iana.org/assignments/ipfix/ipfix.xml#ipfix-nat-event-type"/>. 
-  New assignments of values will be administered by IANA and are subject to
-  Expert Review <xref type="rfc" data="rfc8126"/>. Experts need to check definitions of new
-  values for completeness, accuracy, and redundancy.
+This Information Element identifies a NAT event. This IE identifies 
+the type of a NAT event. Examples of NAT events include, but are not 
+limited to, NAT translation create, NAT translation delete, Threshold 
+Reached, or Threshold Exceeded, etc. Values for this Information 
+Element are listed in the "NAT Event Type" registry, see 
+<xref type="uri" data="http://www.iana.org/assignments/ipfix/ipfix.xml#ipfix-nat-event-type"/>. 
+New assignments of values will be administered by IANA and are 
+subject to Expert Review <xref type="rfc" data="rfc8126"/>. Experts 
+need to check definitions of new values for completeness, accuracy, 
+and redundancy.
 </paragraph>
 </description>
 <references>
 <paragraph>
 See <xref type="rfc" data="rfc3022"/> for the definition of NAT.  See 
 <xref type="rfc" data="rfc3234"/> for the definition of middleboxes.  
-See <xref type="draft" data="RFC-ietf-behave-ipfix-nat-logging-13"/> 
+See <xref type="rfc" data="rfc8158"/> 
 for the definitions of values 4-16.
 </paragraph>
 </references>
-<xref type="draft" data="RFC-ietf-behave-ipfix-nat-logging-13"/>
+<xref type="rfc" data="rfc8158"/>
 <revision>2</revision>
 <date>2017-03-15</date>
 </record>
-  
+
 <record>
 <name>initiatorOctets</name>
 <dataType>unsigned64</dataType>
@@ -5418,9 +5389,9 @@ for the definitions of values 4-16.
 <description>
 <paragraph>
 The total number of layer 4 payload bytes in a flow from the 
-initiator.  The initiator is the device which triggered the 
-session creation, and remains the same for the life of the 
-session.  
+initiator since the previous report. The initiator is the device 
+which triggered the session creation, and remains the same for 
+the life of the session. 
 </paragraph>
 </description>
 <units>octets</units>
@@ -5433,7 +5404,7 @@ See #298, initiatorPackets.
 <revision>1</revision>
 <date>2014-08-13</date>
 </record> 
-  
+
 <record>
 <name>responderOctets</name>
 <dataType>unsigned64</dataType>
@@ -5443,8 +5414,9 @@ See #298, initiatorPackets.
 <description>
 <paragraph>
 The total number of layer 4 payload bytes in a flow from the 
-responder.  The responder is the device which replies to the 
-initiator, and remains the same for the life of the session. 
+responder since the previous report. The responder is the device 
+which replies to the initiator, and remains the same for the life 
+of the session.
 </paragraph>
 </description>
 <units>octets</units>
@@ -5698,7 +5670,7 @@ of a frame as defined in section 3.1 of [IEEE.802-3.2005].
 <revision>1</revision>
 <date>2014-08-13</date>
 </record>
- 
+
 <record>
 <name>ethernetTotalLength</name>
 <dataType>unsigned16</dataType>
@@ -5722,7 +5694,7 @@ SFD, Extension and FCS fields) as described in section 3.1 of
 <revision>1</revision>
 <date>2014-08-13</date>
 </record>
- 
+
 <record>
 <name>dot1qVlanId</name>
 <dataType>unsigned16</dataType>
@@ -5760,7 +5732,7 @@ VLAN identifier, except for I-TAG.
 <revision>2</revision>
 <date>2014-01-11</date>
 </record> 
- 
+
 <record>
 <name>dot1qPriority</name>
 <dataType>unsigned8</dataType>
@@ -5788,7 +5760,7 @@ except for I-TAG.
 <revision>1</revision>
 <date>2014-01-11</date>
 </record> 
- 
+
 <record>
 <name>dot1qCustomerVlanId</name>
 <dataType>unsigned16</dataType>
@@ -5812,7 +5784,7 @@ in [IEEE802.1Q].
 <revision>1</revision>
 <date>2014-01-11</date>
 </record> 
- 
+
 <record>
 <name>dot1qCustomerPriority</name>
 <dataType>unsigned8</dataType>
@@ -5836,7 +5808,7 @@ field as described in [IEEE802.1Q].
 <revision>1</revision>
 <date>2014-01-11</date>
 </record>
- 
+
 <record>
 <name>metroEvcId</name>
 <dataType>string</dataType>
@@ -5861,7 +5833,7 @@ MEF16 (Ethernet Local Management Interface)
 <revision>1</revision>
 <date>2014-02-03</date>
 </record>
- 
+
 <record>
 <name>metroEvcType</name>
 <dataType>unsigned8</dataType>
@@ -5884,7 +5856,7 @@ MEF16 (Ethernet Local Management Interface)
 <revision>0</revision>
 <date>2013-02-18</date>
 </record>
- 
+
 <record>
 <name>pseudoWireId</name>
 <dataType>unsigned32</dataType>
@@ -5906,7 +5878,7 @@ See <xref type="rfc" data="rfc8077"/> for pseudowire definitions.
 <revision>0</revision>
 <date>2013-02-18</date>
 </record>
- 
+
 <record>
 <name>pseudoWireType</name>
 <dataType>unsigned16</dataType>
@@ -5930,7 +5902,7 @@ Pseudowire Types Registry.
 <revision>0</revision>
 <date>2013-02-18</date>
 </record>
- 
+
 <record>
 <name>pseudoWireControlWord</name>
 <dataType>unsigned32</dataType>
@@ -6095,7 +6067,7 @@ See <xref type="rfc" data="rfc1812"/> (Section 5.3.3) and
 IP Precedence. See <xref type="rfc" data="rfc1812"/> 
 (Section 5.3.2) and <xref type="rfc" data="rfc791"/> for the
 definition of the IPv4 TOS field. See 
-<xref type="draft" data="RFC-ietf-6man-rfc2460bis-13"/> for the definition of the 
+<xref type="rfc" data="rfc8200"/> for the definition of the 
 IPv6 Traffic Class field. 
 </paragraph>
 </references>
@@ -6639,7 +6611,7 @@ the definition of Information Element 'sourceIPv6Address', except that
 it reports a modified value caused by a NAT64 middlebox function after
 the packet passed the Observation Point.
 
-See <xref type="draft" data="RFC-ietf-6man-rfc2460bis-13"/> for the definition of the Source Address field in the IPv6
+See <xref type="rfc" data="rfc8200"/> for the definition of the Source Address field in the IPv6
 header. See <xref type="rfc" data="rfc3234"/> for the definition of middleboxes. See
 <xref type="rfc" data="rfc6146"/> for nat64 specification.
 </paragraph>
@@ -6661,7 +6633,7 @@ the definition of Information Element 'destinationIPv6Address', except
 that it reports a modified value caused by a NAT64 middlebox function
 after the packet passed the Observation Point.
 
-See <xref type="draft" data="RFC-ietf-6man-rfc2460bis-13"/> for the definition of the Destination Address field in the
+See <xref type="rfc" data="rfc8200"/> for the definition of the Destination Address field in the
 IPv6 header. See <xref type="rfc" data="rfc3234"/> for the definition of middleboxes. See
 <xref type="rfc" data="rfc6146"/> for nat64 specification.
 </paragraph>
@@ -7138,7 +7110,7 @@ See <xref type="rfc" data="rfc6144"/> for the definition of NAT64.
 See <xref type="rfc" data="rfc6146"/> for the definition of NAT46.
 See <xref type="rfc" data="rfc6296"/> for the definition of NAT66.
 See <xref type="rfc" data="rfc791"/> for the definition of IPv4.
-See <xref type="draft" data="RFC-ietf-6man-rfc2460bis-13"/> for the definition of IPv6.
+See <xref type="rfc" data="rfc8200"/> for the definition of IPv6.
 </paragraph>
 </references>
 <xref type="person" data="ipfix-iana_at_cisco.com"/>
@@ -7154,10 +7126,10 @@ See <xref type="draft" data="RFC-ietf-6man-rfc2460bis-13"/> for the definition o
 <status>current</status>
 <description>
 <paragraph>
-The total number of layer 4 packets in a flow from the
-initiator. The initiator is the device which triggered the
-session creation, and remains the same for the life of the
-session.
+The total number of layer 4 packets in a flow from the initiator 
+since the previous report. The initiator is the device which 
+triggered the session creation, and remains the same for the life 
+of the session.
 </paragraph>
 </description>
 <units>packets</units>
@@ -7179,9 +7151,10 @@ See #231, initiatorOctets.
 <status>current</status>
 <description>
 <paragraph>
-The total number of layer 4 packets in a flow from the
-responder. The responder is the device which replies to the
-initiator, and remains the same for the life of the session.
+The total number of layer 4 packets in a flow from the responder 
+since the previous report. The responder is the device which 
+replies to the initiator, and remains the same for the life of the 
+session.
 </paragraph>
 </description>
 <units>packets</units>
@@ -7599,7 +7572,7 @@ Appendix A.
 <paragraph>
 The IPv6 payload is the rest of the packet following the 40-octet
 IPv6 header.  Note that any extension headers present are
-considered part of the payload.  See <xref type="draft" data="RFC-ietf-6man-rfc2460bis-13"/> for the IPv6
+considered part of the payload.  See <xref type="rfc" data="rfc8200"/> for the IPv6
 specification.
 </paragraph>
 <paragraph>
@@ -7622,7 +7595,7 @@ limitations in the IPFIX protocol.
 <references>
 <paragraph>
 <xref type="rfc" data="rfc791"/>
-<xref type="draft" data="RFC-ietf-6man-rfc2460bis-13"/>
+<xref type="rfc" data="rfc8200"/>
 </paragraph>
 </references>
 <xref type="rfc" data="rfc5477"/>
@@ -7878,10 +7851,10 @@ scoped to the observation to which it refers.  See Section 3.4.2.1
 of the IPFIX protocol document <xref type="rfc" data="rfc7011"/>.   
 </paragraph>
 </description>
-<units>The units of the Information Element for which the error is specified.</units>
+<units>inferred</units>
 <xref type="rfc" data="rfc5477"/>
-<revision>0</revision>
-<date>2013-02-18</date>
+<revision>1</revision>
+<date>2018-06-13</date>
 </record>
 
 <record>
@@ -8277,7 +8250,7 @@ unless all three are specified together.
 <revision>0</revision>
 <date>2013-02-18</date>
 </record>
- 
+
 <record>
 <name>informationElementDataType</name>
 <dataType>unsigned8</dataType>
@@ -9377,7 +9350,7 @@ measured in nanoseconds.
 <revision>0</revision>
 <date>2013-02-18</date>
 </record>
-    
+
 <record>
 <name>dot1qDEI</name>
 <dataType>boolean</dataType>
@@ -9402,7 +9375,7 @@ field in the incoming packet is occupied by the Canonical Format Indicator
 <revision>1</revision>
 <date>2014-02-03</date>
 </record>
-    
+
 <record>
 <name>dot1qCustomerDEI</name>
 <dataType>boolean</dataType>
@@ -9411,9 +9384,9 @@ field in the incoming packet is occupied by the Canonical Format Indicator
 <status>current</status>
 <description>
 <paragraph>
- In case of a QinQ frame, it represents the inner tag's Drop Eligible Indicator 
- (DEI) field and in case of an IEEE 802.1ad frame it represents the DEI field of 
- the C-TAG.
+In case of a QinQ frame, it represents the inner tag's Drop Eligible Indicator 
+(DEI) field and in case of an IEEE 802.1ad frame it represents the DEI field of 
+the C-TAG.
 </paragraph>
 </description>
 <units/>
@@ -9424,7 +9397,7 @@ field in the incoming packet is occupied by the Canonical Format Indicator
 <revision>1</revision>
 <date>2014-02-03</date>
 </record>
- 
+
 <record>
 <name>flowSelectorAlgorithm</name>
 <dataType>unsigned16</dataType>
@@ -9514,9 +9487,9 @@ Process since the previous report.
 <status>current</status>
 <description>
 <paragraph>
- This Information Element specifies the number of Flows that were
- selected in the Intermediate Flow Selection Process since the last
- report.
+This Information Element specifies the number of Flows that were
+selected in the Intermediate Flow Selection Process since the last
+report.
 </paragraph>
 </description>
 <units>flows</units>
@@ -9696,7 +9669,7 @@ Layer 4 transport protocol header(s), observed for this Flow at the Observation
 Point since the previous report (if any).
 </paragraph>
 </description>
- <units>packets</units>
+<units>packets</units>
 <xref type="person" data="Brian_Trammell"/>
 <revision>0</revision>
 <date>2013-08-01</date>
@@ -9801,7 +9774,7 @@ operations performed by the Intermediate Process.
 <revision>0</revision>
 <date>2013-12-24</date>
 </record>
- 
+
 <record>
 <name>dataLinkFrameType</name>
 <dataType>unsigned16</dataType>
@@ -9935,7 +9908,7 @@ within the Tag Control Information field are defined in
 <revision>1</revision>
 <date>2014-05-02</date>
 </record>
- 
+
 <record>
 <name>dot1qServiceInstanceId</name>
 <dataType>unsigned32</dataType>
@@ -9950,7 +9923,7 @@ Control Information (TCI) field of an Ethernet frame as described
 in [IEEE802.1Q].
 </paragraph>
 </description>
-<range>The valid range is 0 - 16777215 (i.e., 24 bits).</range>
+<range>0-0xFFFFFF</range>
 <references>
 <paragraph>
 [IEEE802.1Q]
@@ -9975,7 +9948,7 @@ Tag Control Information (TCI) field of an Ethernet frame as
 described in [IEEE802.1Q].
 </paragraph>
 </description>
-<range>The valid range is 0-7.</range>
+<range>0-7</range>
 <references>
 <paragraph>
 [IEEE802.1Q]
@@ -10454,7 +10427,7 @@ this Observation Point.
 <revision>0</revision>
 <date>2014-05-02</date>
 </record>
-  
+
 <record date="2014-05-28">
 <name>pseudoWireDestinationIPv4Address</name>
 <dataType>ipv4Address</dataType>
@@ -10494,7 +10467,7 @@ This Information Element is the layer 2 version of ignoredPacketTotalCount (Elem
 <revision>0</revision>
 <date>2014-06-27</date>
 </record>
-  
+
 <record date="2015-12-13">
 <name>mibObjectValueInteger</name>
 <dataType>signed32</dataType>
@@ -10593,7 +10566,7 @@ at the end of the octetArray MUST be set to 0.
 <revision>0</revision>
 <date>2015-12-13</date>
 </record>
-  
+
 <record date="2015-12-13">
 <name>mibObjectValueIPAddress</name>
 <dataType>ipv4Address</dataType>
@@ -10692,7 +10665,7 @@ of unsigned32.
 <record date="2015-12-13">
 <name>mibObjectValueUnsigned</name>
 <dataType>unsigned32</dataType>
-  <dataTypeSemantics>quantity</dataTypeSemantics>
+<dataTypeSemantics>quantity</dataTypeSemantics>
 <elementId>442</elementId>
 <status>current</status>
 <description>
@@ -11189,228 +11162,509 @@ of this field is limited to 10 characters, UTF-8 encoded.
 <revision>0</revision>
 <date>2016-11-15</date>
 </record>
-  
-  <record date="2017-03-15">
-    <name>natInstanceID</name>
-    <dataType>unsigned32</dataType>
-    <dataTypeSemantics>identifier</dataTypeSemantics>
-    <elementId>463</elementId>
-    <status>current</status>
-    <description>
-      <paragraph>
-        This Information Element uniquely identifies an Instance
-        of the NAT that runs on a NAT middlebox function after the packet
-        passes the Observation Point. natInstanceID is defined in 
-        <xref type="rfc" data="rfc7659"/>
-      </paragraph>
-    </description>
-    <references>
-      <paragraph>
-        See <xref type="rfc" data="rfc791"/> for the definition of the IPv4 
-        source address field.  See <xref type="rfc" data="rfc3022"/> 
-        for the definition of NAT.  See <xref type="rfc" data="rfc3234"/> 
-        for the definition of middleboxes.
-      </paragraph>
-    </references>
-    <xref type="draft" data="RFC-ietf-behave-ipfix-nat-logging-13"/>
-    <revision>0</revision>
-    <date>2017-03-15</date>
-  </record>
-  
-  <record date="2017-03-15">
-    <name>internalAddressRealm</name>
-    <dataType>octetArray</dataType>
-    <dataTypeSemantics>identifier</dataTypeSemantics>
-    <elementId>464</elementId>
-    <status>current</status>
-    <description>
-      <paragraph>
-        This Information Element represents the internal address realm where
-        the packet is originated from or destined to. By definition, a NAT
-        mapping can be created from two address realms, one from internal and
-        one from external. Realms are implementation dependent and can
-        represent a Virtual Routing and Forwarding (VRF) ID, a VLAN ID, or
-        some unique identifier. Realms are optional, and when left
-        unspecified, would mean that the external and internal realms are the
-        same.
-      </paragraph>
-    </description>
-    <references>
-      <paragraph>
-        See <xref type="rfc" data="rfc791"/> for the definition of the IPv4 
-        source address field.  See <xref type="rfc" data="rfc3022"/> 
-        for the definition of NAT.  See <xref type="rfc" data="rfc3234"/> 
-        for the definition of middleboxes.
-      </paragraph>
-    </references>
-    <xref type="draft" data="RFC-ietf-behave-ipfix-nat-logging-13"/>
-    <revision>0</revision>
-    <date>2017-03-15</date>
-  </record>
-  
-  <record date="2017-03-15">
-    <name>externalAddressRealm</name>
-    <dataType>octetArray</dataType>
-    <dataTypeSemantics>identifier</dataTypeSemantics>
-    <elementId>465</elementId>
-    <status>current</status>
-    <description>
-      <paragraph>
-        This Information Element represents the external address
-        realm where the packet is originated from or destined to.  The
-        detailed definition is in the internal address realm as specified
-        above.
-      </paragraph>
-    </description>
-    <references>
-      <paragraph>
-        See <xref type="rfc" data="rfc791"/> for the definition of the IPv4 
-        source address field.  See <xref type="rfc" data="rfc3022"/> 
-        for the definition of NAT.  See <xref type="rfc" data="rfc3234"/> 
-        for the definition of middleboxes.
-      </paragraph>
-    </references>
-    <xref type="draft" data="RFC-ietf-behave-ipfix-nat-logging-13"/>
-    <revision>0</revision>
-    <date>2017-03-15</date>
-  </record>
-  
-  <record date="2017-03-15">
-    <name>natQuotaExceededEvent</name>
-    <dataType>unsigned32</dataType>
-    <dataTypeSemantics>identifier</dataTypeSemantics>
-    <elementId>466</elementId>
-    <status>current</status>
-    <description>
-      <paragraph>
-        This Information Element identifies the type of a NAT
-        Quota Exceeded event. Values for this Information Element are listed
-        in the NAT Quota Exceeded Event Type registry, see <xref type="uri" data="http://www.iana.org/assignments/ipfix/ipfix.xhtml#ipfix-nat-quota-exceeded-event"/>. 
-        New assignments of values will be administered by IANA and are subject to
-        Expert Review <xref type="rfc" data="rfc8126"/>. Experts need to check definitions of new
-        values for completeness, accuracy, and redundancy.
-      </paragraph>
-    </description>
-    <references>
-      <paragraph>
-        See <xref type="rfc" data="rfc791"/> for the definition of the IPv4 
-        source address field.  See <xref type="rfc" data="rfc3022"/> 
-        for the definition of NAT.  See <xref type="rfc" data="rfc3234"/> 
-        for the definition of middleboxes.
-      </paragraph>
-    </references>
-    <xref type="draft" data="RFC-ietf-behave-ipfix-nat-logging-13"/>
-    <revision>0</revision>
-    <date>2017-03-15</date>
-  </record>
-  
-  <record date="2017-03-15">
-    <name>natThresholdEvent</name>
-    <dataType>unsigned32</dataType>
-    <dataTypeSemantics>identifier</dataTypeSemantics>
-    <elementId>467</elementId>
-    <status>current</status>
-    <description>
-      <paragraph>
-        This Information Element identifies a type of a NAT
-        Threshold event. Values for this Information Element are listed in
-        the NAT Threshold Event Type registry, see <xref type="uri" data="http://www.iana.org/assignments/ipfix/ipfix.xhtml#ipfix-nat-threshold-event"/>. 
-        New
-        assignments of values will be administered by IANA and are subject to
-        Expert Review <xref type="rfc" data="rfc8126"/>. Experts need to check definitions of new
-        values for completeness, accuracy, and redundancy.
-      </paragraph>
-    </description>
-    <references>
-      <paragraph>
-        See <xref type="rfc" data="rfc791"/> for the definition of the IPv4 
-        source address field.  See <xref type="rfc" data="rfc3022"/> 
-        for the definition of NAT.  See <xref type="rfc" data="rfc3234"/> 
-        for the definition of middleboxes.
-      </paragraph>
-    </references>
-    <xref type="draft" data="RFC-ietf-behave-ipfix-nat-logging-13"/>
-    <revision>0</revision>
-    <date>2017-03-15</date>
-  </record>
 
-  <record date="2017-04-19">
-    <name>httpUserAgent</name>
-    <dataType>string</dataType>
-    <dataTypeSemantics>default</dataTypeSemantics>
-    <elementId>468</elementId>
-    <status>current</status>
-    <description>
-      <paragraph>
-        The HTTP User-Agent header field as defined in section 5.5.3 of  
-        <xref type="rfc" data="rfc7231"/>. Encoded in UTF-8.
-      </paragraph>
-    </description>
-    <units/>
-    <range/>
-    <references>
-      <paragraph>
-        <xref type="rfc" data="rfc7231"/>
-      </paragraph>
-    </references>
-    <xref type="person" data="Andrew_Feren"/>
-    <revision>0</revision>
-    <date>2017-04-19</date>
-  </record>
-  
-  <record date="2017-04-19">
-    <name>httpContentType</name>
-    <dataType>string</dataType>
-    <dataTypeSemantics>default</dataTypeSemantics>
-    <elementId>469</elementId>
-    <status>current</status>
-    <description>
-      <paragraph>
-        The HTTP Content-Type header field as defined in section 3.1.1.5 of 
-        <xref type="rfc" data="rfc7231"/>. Encoded in UTF-8.
-      </paragraph>
-    </description>
-    <units/>
-    <range/>
-    <references>
-      <paragraph>
-        <xref type="rfc" data="rfc7231"/>
-      </paragraph>
-    </references>
-    <xref type="person" data="Andrew_Feren"/>
-    <revision>0</revision>
-    <date>2017-04-19</date>
-  </record>
+<record date="2017-03-15">
+<name>natInstanceID</name>
+<dataType>unsigned32</dataType>
+<dataTypeSemantics>identifier</dataTypeSemantics>
+<elementId>463</elementId>
+<status>current</status>
+<description>
+  <paragraph>
+    This Information Element uniquely identifies an Instance of the NAT 
+    that runs on a NAT middlebox function after the packet passes the 
+    Observation Point. natInstanceID is defined in 
+    <xref type="rfc" data="rfc7659"/>.
+  </paragraph>
+</description>
+<references>
+  <paragraph>
+    See <xref type="rfc" data="rfc791"/> for the definition of the IPv4 
+    source address field.  See <xref type="rfc" data="rfc3022"/> 
+    for the definition of NAT.  See <xref type="rfc" data="rfc3234"/> 
+    for the definition of middleboxes.
+  </paragraph>
+</references>
+<xref type="rfc" data="rfc8158"/>
+<revision>0</revision>
+<date>2017-03-15</date>
+</record>
 
-  <record date="2017-06-19">
-    <name>httpReasonPhrase</name>
-    <dataType>string</dataType>
-    <dataTypeSemantics>default</dataTypeSemantics>
-    <elementId>470</elementId>
-    <status>current</status>
-    <description>
-      <paragraph>
-        The HTTP reason phrase as defined in section 6.1 of of 
-        <xref type="rfc" data="rfc7231"/>.
-      </paragraph>
-    </description>
-    <units/>
-    <range/>
-    <references>
-      <paragraph>
-        <xref type="rfc" data="rfc7231"/>
-      </paragraph>
-    </references>
-    <xref type="person" data="Felix_Erlacher"/>
-    <revision>0</revision>
-    <date>2017-06-19</date>
-  </record>
+<record date="2017-03-15">
+<name>internalAddressRealm</name>
+<dataType>octetArray</dataType>
+<dataTypeSemantics>identifier</dataTypeSemantics>
+<elementId>464</elementId>
+<status>current</status>
+<description>
+  <paragraph>
+    This Information Element represents the internal address realm where 
+    the packet is originated from or destined to. By definition, a NAT 
+    mapping can be created from two address realms, one from internal and 
+    one from external. Realms are implementation dependent and can represent 
+    a Virtual Routing and Forwarding (VRF) ID, a VLAN ID, or some unique 
+    identifier. Realms are optional and, when left unspecified, would mean 
+    that the external and internal realms are the same.
+  </paragraph>
+</description>
+<references>
+  <paragraph>
+    See <xref type="rfc" data="rfc791"/> for the definition of the IPv4 
+    source address field.  See <xref type="rfc" data="rfc3022"/> 
+    for the definition of NAT.  See <xref type="rfc" data="rfc3234"/> 
+    for the definition of middleboxes.
+  </paragraph>
+</references>
+<xref type="rfc" data="rfc8158"/>
+<revision>0</revision>
+<date>2017-03-15</date>
+</record>
+
+<record date="2017-03-15">
+<name>externalAddressRealm</name>
+<dataType>octetArray</dataType>
+<dataTypeSemantics>identifier</dataTypeSemantics>
+<elementId>465</elementId>
+<status>current</status>
+<description>
+  <paragraph>
+    This Information Element represents the external address
+    realm where the packet is originated from or destined to.  The
+    detailed definition is in the internal address realm as specified
+    above.
+  </paragraph>
+</description>
+<references>
+  <paragraph>
+    See <xref type="rfc" data="rfc791"/> for the definition of the IPv4 
+    source address field.  See <xref type="rfc" data="rfc3022"/> 
+    for the definition of NAT.  See <xref type="rfc" data="rfc3234"/> 
+    for the definition of middleboxes.
+  </paragraph>
+</references>
+<xref type="rfc" data="rfc8158"/>
+<revision>0</revision>
+<date>2017-03-15</date>
+</record>
+
+<record date="2017-03-15">
+<name>natQuotaExceededEvent</name>
+<dataType>unsigned32</dataType>
+<dataTypeSemantics>identifier</dataTypeSemantics>
+<elementId>466</elementId>
+<status>current</status>
+<description>
+  <paragraph>
+    This Information Element identifies the type of a NAT Quota Exceeded 
+    event. Values for this Information Element are listed in the "NAT 
+    Quota Exceeded Event Type" registry, see 
+    <xref type="uri" data="http://www.iana.org/assignments/ipfix/ipfix.xhtml#ipfix-nat-quota-exceeded-event"/>. 
+    New assignments of values will be administered by IANA and are subject 
+    to Expert Review <xref type="rfc" data="rfc8126"/>. Experts need to 
+    check definitions of new values for completeness, accuracy, and 
+    redundancy.
+  </paragraph>
+</description>
+<references>
+  <paragraph>
+    See <xref type="rfc" data="rfc791"/> for the definition of the IPv4 
+    source address field.  See <xref type="rfc" data="rfc3022"/> 
+    for the definition of NAT.  See <xref type="rfc" data="rfc3234"/> 
+    for the definition of middleboxes.
+  </paragraph>
+</references>
+<xref type="rfc" data="rfc8158"/>
+<revision>0</revision>
+<date>2017-03-15</date>
+</record>
+
+<record date="2017-03-15">
+<name>natThresholdEvent</name>
+<dataType>unsigned32</dataType>
+<dataTypeSemantics>identifier</dataTypeSemantics>
+<elementId>467</elementId>
+<status>current</status>
+<description>
+  <paragraph>
+    This Information Element identifies a type of a NAT Threshold event. 
+    Values for this Information Element are listed in the "NAT Threshold 
+    Event Type" registry, see 
+    <xref type="uri" data="http://www.iana.org/assignments/ipfix/ipfix.xhtml#ipfix-nat-threshold-event"/>. 
+    New assignments of values will be administered by IANA and are 
+    subject to Expert Review <xref type="rfc" data="rfc8126"/>. Experts 
+    need to check definitions of new values for completeness, accuracy, 
+    and redundancy.
+  </paragraph>
+</description>
+<references>
+  <paragraph>
+    See <xref type="rfc" data="rfc791"/> for the definition of the IPv4 
+    source address field.  See <xref type="rfc" data="rfc3022"/> 
+    for the definition of NAT.  See <xref type="rfc" data="rfc3234"/> 
+    for the definition of middleboxes.
+  </paragraph>
+</references>
+<xref type="rfc" data="rfc8158"/>
+<revision>0</revision>
+<date>2017-03-15</date>
+</record>
+
+<record date="2017-04-19">
+<name>httpUserAgent</name>
+<dataType>string</dataType>
+<dataTypeSemantics>default</dataTypeSemantics>
+<elementId>468</elementId>
+<status>current</status>
+<description>
+  <paragraph>
+    The HTTP User-Agent header field as defined in section 5.5.3 of  
+    <xref type="rfc" data="rfc7231"/>. Encoded in UTF-8.
+  </paragraph>
+</description>
+<units/>
+<range/>
+<references>
+  <paragraph>
+    <xref type="rfc" data="rfc7231"/>
+  </paragraph>
+</references>
+<xref type="person" data="Andrew_Feren"/>
+<revision>0</revision>
+<date>2017-04-19</date>
+</record>
+
+<record date="2017-04-19">
+<name>httpContentType</name>
+<dataType>string</dataType>
+<dataTypeSemantics>default</dataTypeSemantics>
+<elementId>469</elementId>
+<status>current</status>
+<description>
+  <paragraph>
+    The HTTP Content-Type header field as defined in section 3.1.1.5 of 
+    <xref type="rfc" data="rfc7231"/>. Encoded in UTF-8.
+  </paragraph>
+</description>
+<units/>
+<range/>
+<references>
+  <paragraph>
+    <xref type="rfc" data="rfc7231"/>
+  </paragraph>
+</references>
+<xref type="person" data="Andrew_Feren"/>
+<revision>0</revision>
+<date>2017-04-19</date>
+</record>
+
+<record date="2017-06-19">
+<name>httpReasonPhrase</name>
+<dataType>string</dataType>
+<dataTypeSemantics>default</dataTypeSemantics>
+<elementId>470</elementId>
+<status>current</status>
+<description>
+  <paragraph>
+    The HTTP reason phrase as defined in section 6.1 of of 
+    <xref type="rfc" data="rfc7231"/>.
+  </paragraph>
+</description>
+<units/>
+<range/>
+<references>
+  <paragraph>
+    <xref type="rfc" data="rfc7231"/>
+  </paragraph>
+</references>
+<xref type="person" data="Felix_Erlacher"/>
+<revision>0</revision>
+<date>2017-06-19</date>
+</record>
+
+<record date="2017-12-01">
+<name>maxSessionEntries</name>
+<dataType>unsigned32</dataType>
+<dataTypeSemantics>identifier</dataTypeSemantics>
+<elementId>471</elementId>
+<status>current</status>
+<description>
+  <paragraph>
+    This element represents the maximum session entries that
+    can be created by the NAT device. 
+  </paragraph>
+</description>
+<references>
+  <paragraph>
+    See <xref type="rfc" data="rfc3022"/> for the definition of NAT.  
+    See <xref type="rfc" data="rfc3234"/> for the definition of middleboxes.
+  </paragraph>
+</references>
+<xref type="rfc" data="rfc8158"/>
+<revision>0</revision>
+<date>2017-12-01</date>
+</record>
+
+<record date="2017-12-01">
+<name>maxBIBEntries</name>
+<dataType>unsigned32</dataType>
+<dataTypeSemantics>identifier</dataTypeSemantics>
+<elementId>472</elementId>
+<status>current</status>
+<description>
+  <paragraph>
+    This element represents the maximum BIB entries that can
+    be created by the NAT device.
+  </paragraph>
+</description>
+<references>
+  <paragraph>
+    See <xref type="rfc" data="rfc3022"/> for the definition of NAT.  
+    See <xref type="rfc" data="rfc3234"/> for the definition of middleboxes.
+  </paragraph>
+</references>
+<xref type="rfc" data="rfc8158"/>
+<revision>0</revision>
+<date>2017-12-01</date>
+</record>
+
+<record date="2017-12-01">
+<name>maxEntriesPerUser</name>
+<dataType>unsigned32</dataType>
+<dataTypeSemantics>identifier</dataTypeSemantics>
+<elementId>473</elementId>
+<status>current</status>
+<description>
+  <paragraph>
+    This element represents the maximum NAT entries that can
+    be created per user by the NAT device.
+  </paragraph>
+</description>
+<references>
+  <paragraph>
+    See <xref type="rfc" data="rfc3022"/> for the definition of NAT.  
+    See <xref type="rfc" data="rfc3234"/> for the definition of middleboxes.
+  </paragraph>
+</references>
+<xref type="rfc" data="rfc8158"/>
+<revision>0</revision>
+<date>2017-12-01</date>
+</record>
+
+<record date="2017-12-01">
+<name>maxSubscribers</name>
+<dataType>unsigned32</dataType>
+<dataTypeSemantics>identifier</dataTypeSemantics>
+<elementId>474</elementId>
+<status>current</status>
+<description>
+  <paragraph>
+    This element represents the maximum subscribers or
+    maximum hosts that are allowed by the NAT device.
+  </paragraph>
+</description>
+<references>
+  <paragraph>
+    See <xref type="rfc" data="rfc3022"/> for the definition of NAT.  
+    See <xref type="rfc" data="rfc3234"/> for the definition of middleboxes.
+  </paragraph>
+</references>
+<xref type="rfc" data="rfc8158"/>
+<revision>0</revision>
+<date>2017-12-01</date>
+</record>
+
+<record date="2017-12-01">
+<name>maxFragmentsPendingReassembly</name>
+<dataType>unsigned32</dataType>
+<dataTypeSemantics>identifier</dataTypeSemantics>
+<elementId>475</elementId>
+<status>current</status>
+<description>
+  <paragraph>
+    This element represents the maximum fragments that the
+    NAT device can store for reassembling the packet.
+  </paragraph>
+</description>
+<references>
+  <paragraph>
+    See <xref type="rfc" data="rfc3022"/> for the definition of NAT.  
+    See <xref type="rfc" data="rfc3234"/> for the definition of middleboxes.
+  </paragraph>
+</references>
+<xref type="rfc" data="rfc8158"/>
+<revision>0</revision>
+<date>2017-12-01</date>
+</record>
+
+<record date="2017-12-01">
+<name>addressPoolHighThreshold</name>
+<dataType>unsigned32</dataType>
+<dataTypeSemantics>identifier</dataTypeSemantics>
+<elementId>476</elementId>
+<status>current</status>
+<description>
+  <paragraph>
+    This element represents the high threshold value of the
+    number of public IP addresses in the address pool.
+  </paragraph>
+</description>
+<references>
+  <paragraph>
+    See <xref type="rfc" data="rfc3022"/> for the definition of NAT.  
+    See <xref type="rfc" data="rfc3234"/> for the definition of middleboxes.
+  </paragraph>
+</references>
+<xref type="rfc" data="rfc8158"/>
+<revision>0</revision>
+<date>2017-12-01</date>
+</record>
+
+<record date="2017-12-01">
+<name>addressPoolLowThreshold</name>
+<dataType>unsigned32</dataType>
+<dataTypeSemantics>identifier</dataTypeSemantics>
+<elementId>477</elementId>
+<status>current</status>
+<description>
+  <paragraph>
+    This element represents the low threshold value of the
+    number of public IP addresses in the address pool.
+  </paragraph>
+</description>
+<references>
+  <paragraph>
+    See <xref type="rfc" data="rfc3022"/> for the definition of NAT.  
+    See <xref type="rfc" data="rfc3234"/> for the definition of middleboxes.
+  </paragraph>
+</references>
+<xref type="rfc" data="rfc8158"/>
+<revision>0</revision>
+<date>2017-12-01</date>
+</record>
+
+<record date="2017-12-01">
+<name>addressPortMappingHighThreshold</name>
+<dataType>unsigned32</dataType>
+<dataTypeSemantics>identifier</dataTypeSemantics>
+<elementId>478</elementId>
+<status>current</status>
+<description>
+  <paragraph>
+    This element represents the high threshold value of the
+    number of address and port mappings.
+  </paragraph>
+</description>
+<references>
+  <paragraph>
+    See <xref type="rfc" data="rfc3022"/> for the definition of NAT.  
+    See <xref type="rfc" data="rfc3234"/> for the definition of middleboxes.
+  </paragraph>
+</references>
+<xref type="rfc" data="rfc8158"/>
+<revision>0</revision>
+<date>2017-12-01</date>
+</record>
+
+<record date="2017-12-01">
+<name>addressPortMappingLowThreshold</name>
+<dataType>unsigned32</dataType>
+<dataTypeSemantics>identifier</dataTypeSemantics>
+<elementId>479</elementId>
+<status>current</status>
+<description>
+  <paragraph>
+    This element represents the low threshold value of the
+    number of address and port mappings.
+  </paragraph>
+</description>
+<references>
+  <paragraph>
+    See <xref type="rfc" data="rfc3022"/> for the definition of NAT.  
+    See <xref type="rfc" data="rfc3234"/> for the definition of middleboxes.
+  </paragraph>
+</references>
+<xref type="rfc" data="rfc8158"/>
+<revision>0</revision>
+<date>2017-12-01</date>
+</record>
+
+<record date="2017-12-01">
+<name>addressPortMappingPerUserHighThreshold</name>
+<dataType>unsigned32</dataType>
+<dataTypeSemantics>identifier</dataTypeSemantics>
+<elementId>480</elementId>
+<status>current</status>
+<description>
+  <paragraph>
+    This element represents the high threshold value of the
+    number of address and port mappings that a single user is allowed to
+    create on a NAT device.
+  </paragraph>
+</description>
+<references>
+  <paragraph>
+    See <xref type="rfc" data="rfc3022"/> for the definition of NAT.  
+    See <xref type="rfc" data="rfc3234"/> for the definition of middleboxes.
+  </paragraph>
+</references>
+<xref type="rfc" data="rfc8158"/>
+<revision>0</revision>
+<date>2017-12-01</date>
+</record>
+
+<record date="2017-12-01">
+<name>globalAddressMappingHighThreshold</name>
+<dataType>unsigned32</dataType>
+<dataTypeSemantics>identifier</dataTypeSemantics>
+<elementId>481</elementId>
+<status>current</status>
+<description>
+  <paragraph>
+    This element represents the high threshold value of the
+    number of address and port mappings that a single user is allowed to
+    create on a NAT device in a paired address pooling behavior.
+  </paragraph>
+</description>
+<references>
+  <paragraph>
+    See <xref type="rfc" data="rfc3022"/> for the definition of NAT.  
+    See <xref type="rfc" data="rfc3234"/> for the definition of middleboxes.
+    See <xref type="rfc" data="rfc4787"/> for the definition of paired 
+    address pooling behavior.    
+  </paragraph>
+</references>
+<xref type="rfc" data="rfc8158"/>
+<revision>0</revision>
+<date>2017-12-01</date>
+</record>
   
+<record date="2018-07-10">
+  <name>vpnIdentifier</name>
+  <dataType>octetArray</dataType>
+  <dataTypeSemantics>default</dataTypeSemantics>
+  <elementId>482</elementId>
+  <status>current</status>
+  <description>
+    <paragraph>
+      VPN ID in the format specified by <xref type="rfc" data="rfc2685"/>.
+      The size of this Information Element is 7 octets.
+    </paragraph>
+  </description>
+  <references>
+    <paragraph>
+      <xref type="rfc" data="rfc2685"/>   
+    </paragraph>
+  </references>
+  <xref type="person" data="ipfix-iana_at_cisco.com"/>
+  <revision>0</revision>
+  <date>2018-07-10</date>
+</record>
+
 <record>
 <name>Unassigned</name>
-<elementId>471-32767</elementId>
+<elementId>483-32767</elementId>
 </record>
-   
+
 
 
 
@@ -11462,6 +11716,263 @@ of this field is limited to 10 characters, UTF-8 encoded.
 <description>Unassigned</description>
 <xref type="rfc" data="rfc5102"/>
 </record>
+</registry>
+
+
+
+<registry id="forwarding-status">
+<title>Forwarding Status (Value 89)</title>
+<registration_rule>Expert Review</registration_rule>
+<expert>IE Doctors</expert>
+<xref type="rfc" data="rfc7270"/>
+
+<record>
+  <value>00b</value>
+  <description>Unknown</description>
+  <xref type="rfc" data="rfc7270"/>
+</record>
+
+<record>
+  <value>01b</value>
+  <description>Forwarded</description>
+  <xref type="rfc" data="rfc7270"/>
+</record>
+
+<record>
+  <value>10b</value>
+  <description>Dropped</description>
+  <xref type="rfc" data="rfc7270"/>
+</record>
+
+<record>
+  <value>11b</value>
+  <description>Consumed</description>
+  <xref type="rfc" data="rfc7270"/>
+</record>
+
+<registry id="forwarding-status-00b">
+  <title>Status 00b: Unknown</title>
+  <registration_rule>Expert Review</registration_rule>
+  <expert>IE Doctors</expert>
+  <xref type="rfc" data="rfc7270"/>
+ 
+  <record>
+    <binary-value/>
+    <value>0x00-0x3F</value>
+    <description>Unassigned</description>
+  </record>
+
+</registry>
+
+<registry id="forwarding-status-01b">
+  <title>Status 01b: Forwarded</title>
+  <registration_rule>Expert Review</registration_rule>
+  <expert>IE Doctors</expert>
+  <xref type="rfc" data="rfc7270"/>
+  
+  <record>
+    <binary-value>01 000000b</binary-value>
+    <value>0x40</value>
+    <description>Unknown</description>
+    <xref type="rfc" data="rfc7270"/>
+  </record>
+  
+  <record>
+    <binary-value>01 000001b</binary-value>
+    <value>0x41</value>
+    <description>Fragmented</description>
+    <xref type="rfc" data="rfc7270"/>
+  </record>
+  
+  <record>
+    <binary-value>01 000010b</binary-value>
+    <value>0x42</value>
+    <description>Not Fragmented</description>
+    <xref type="rfc" data="rfc7270"/>
+  </record>
+  
+  <record date="2018-02-12">
+    <binary-value>01 000011b</binary-value>
+    <value>0x43</value>
+    <description>Tunneled</description>
+    <xref type="person" data="Alfred_Nothaft"/>
+  </record>
+  
+  <record>
+    <binary-value/>
+    <value>0x44-0x7F</value>
+    <description>Unassigned</description>
+  </record>
+
+</registry>
+
+<registry id="forwarding-status-10b">
+  <title>Status 10b: Dropped</title>
+  <registration_rule>Expert Review</registration_rule>
+  <expert>IE Doctors</expert>
+  <xref type="rfc" data="rfc7270"/>
+  
+  <record>
+    <binary-value>10 000000b</binary-value>
+    <value>0x80</value>
+    <description>Unknown</description>
+    <xref type="rfc" data="rfc7270"/>
+  </record>
+  
+  <record>
+    <binary-value>10 000001b</binary-value>
+    <value>0x81</value>
+    <description>ACL deny</description>
+    <xref type="rfc" data="rfc7270"/>
+  </record>
+  
+  <record>
+    <binary-value>10 000010b</binary-value>
+    <value>0x82</value>
+    <description>ACL drop</description>
+    <xref type="rfc" data="rfc7270"/>
+  </record>
+  
+  <record>
+    <binary-value>10 000011b</binary-value>
+    <value>0x83</value>
+    <description>Unroutable</description>
+    <xref type="rfc" data="rfc7270"/>
+  </record>
+  
+  <record>
+    <binary-value>10 000100b</binary-value>
+    <value>0x84</value>
+    <description>Adjacency</description>
+    <xref type="rfc" data="rfc7270"/>
+  </record>
+  
+  <record>
+    <binary-value>10 000101b</binary-value>
+    <value>0x85</value>
+    <description>Fragmentation and DF set</description>
+    <xref type="rfc" data="rfc7270"/>
+  </record>
+  
+  <record>
+    <binary-value>10 000110b</binary-value>
+    <value>0x86</value>
+    <description>Bad header checksum</description>
+    <xref type="rfc" data="rfc7270"/>
+  </record>
+  
+  <record>
+    <binary-value>10 000111b</binary-value>
+   <value>0x87</value>
+    <description>Bad total Length</description>
+    <xref type="rfc" data="rfc7270"/>
+  </record>
+  
+  <record>
+    <binary-value>10 001000b</binary-value>
+    <value>0x88</value>
+    <description>Bad header length</description>
+    <xref type="rfc" data="rfc7270"/>
+  </record>
+  
+  <record>
+    <binary-value>10 001001b</binary-value>
+    <value>0x89</value>
+    <description>bad TTL</description>
+    <xref type="rfc" data="rfc7270"/>
+  </record>
+  
+  <record>
+    <binary-value>10 001010b</binary-value>
+    <value>0x8A</value>
+    <description>Policer</description>
+    <xref type="rfc" data="rfc7270"/>
+  </record>
+  
+  <record>
+    <binary-value>10 001011b</binary-value>
+    <value>0x8B</value>
+    <description>WRED</description>
+    <xref type="rfc" data="rfc7270"/>
+  </record>
+  
+  <record>
+    <binary-value>10 001100b</binary-value>
+    <value>0x8C</value>
+    <description>RPF</description>
+    <xref type="rfc" data="rfc7270"/>
+  </record>
+  
+  <record>
+    <binary-value>10 001101b</binary-value>
+    <value>0x8D</value>
+    <description>For us</description>
+    <xref type="rfc" data="rfc7270"/>
+  </record>
+  
+  <record>
+    <binary-value>10 001110b</binary-value>
+    <value>0x8E</value>
+    <description>Bad output interface</description>
+    <xref type="rfc" data="rfc7270"/>
+  </record>
+  
+  <record>
+    <binary-value>10 001111b</binary-value>
+    <value>0x8F</value>
+    <description>Hardware</description>
+    <xref type="rfc" data="rfc7270"/>
+  </record>
+  
+  <record>
+    <binary-value/>
+    <value>0x90-0xBF</value>
+    <description>Unassigned</description>
+  </record>
+
+</registry>
+
+<registry id="forwarding-status-11b">
+  <title>Status 11b: Consumed</title>
+  <registration_rule>Expert Review</registration_rule>
+  <expert>IE Doctors</expert>
+  <xref type="rfc" data="rfc7270"/>
+  
+  <record>
+    <binary-value>11 000000b</binary-value>
+    <value>0xC0</value>
+    <description>Unknown</description>
+    <xref type="rfc" data="rfc7270"/>
+  </record>
+  
+  <record>
+    <binary-value>11 000001b</binary-value>
+    <value>0xC1</value>
+    <description>Punt Adjacency</description>
+    <xref type="rfc" data="rfc7270"/>
+  </record>
+  
+  <record>
+    <binary-value>11 000010b</binary-value>
+    <value>0xC2</value>
+    <description>Incomplete Adjacency</description>
+    <xref type="rfc" data="rfc7270"/>
+  </record>
+  
+  <record>
+    <binary-value>11 000011b</binary-value>
+    <value>0xC3</value>
+    <description>For us</description>
+    <xref type="rfc" data="rfc7270"/>
+  </record>
+  
+  <record>
+    <binary-value/>
+    <value>0xC4-0xFF</value>
+    <description>Unassigned</description>
+  </record>
+</registry>
+
 </registry>
 
 
@@ -11693,126 +12204,126 @@ enterprise.
 <title>NAT Event Type (Value 230)</title>
 <registration_rule>Expert Review</registration_rule>
 <expert>IE Doctors</expert>
-<xref type="draft" data="RFC-ietf-behave-ipfix-nat-logging-13"/>
+<xref type="rfc" data="rfc8158"/>
 
 <record date="2017-03-27">
 <value>0</value>
 <description>Reserved</description>
-<xref type="draft" data="RFC-ietf-behave-ipfix-nat-logging-13"/>
+<xref type="rfc" data="rfc8158"/>
 </record>
 
 <record>
 <value>1</value>
 <description>NAT translation create (Historic)</description>
-<xref type="draft" data="RFC-ietf-behave-ipfix-nat-logging-13"/>
+<xref type="rfc" data="rfc8158"/>
 </record>
 
 <record>
 <value>2</value>
 <description>NAT translation delete (Historic)</description>
-<xref type="draft" data="RFC-ietf-behave-ipfix-nat-logging-13"/>
+<xref type="rfc" data="rfc8158"/>
 </record>
 
 <record>
 <value>3</value>
 <description>NAT Addresses exhausted</description>
-<xref type="draft" data="RFC-ietf-behave-ipfix-nat-logging-13"/>
+<xref type="rfc" data="rfc8158"/>
 </record>
 
 <record>
 <value>4</value>
 <description>NAT44 session create</description>
-<xref type="draft" data="RFC-ietf-behave-ipfix-nat-logging-13"/>
+<xref type="rfc" data="rfc8158"/>
 </record>
 
 <record>
 <value>5</value>
 <description>NAT44 session delete</description>
-<xref type="draft" data="RFC-ietf-behave-ipfix-nat-logging-13"/>
+<xref type="rfc" data="rfc8158"/>
 </record>
 
 <record>
 <value>6</value>
 <description>NAT64 session create</description>
-<xref type="draft" data="RFC-ietf-behave-ipfix-nat-logging-13"/>
+<xref type="rfc" data="rfc8158"/>
 </record>
 
 <record>
 <value>7</value>
 <description>NAT64 session delete</description>
-<xref type="draft" data="RFC-ietf-behave-ipfix-nat-logging-13"/>
+<xref type="rfc" data="rfc8158"/>
 </record>
 
 <record>
 <value>8</value>
 <description>NAT44 BIB create</description>
-<xref type="draft" data="RFC-ietf-behave-ipfix-nat-logging-13"/>
+<xref type="rfc" data="rfc8158"/>
 </record>
 
 <record>
 <value>9</value>
 <description>NAT44 BIB delete</description>
-<xref type="draft" data="RFC-ietf-behave-ipfix-nat-logging-13"/>
+<xref type="rfc" data="rfc8158"/>
 </record>
 
 <record>
 <value>10</value>
 <description>NAT64 BIB create</description>
-<xref type="draft" data="RFC-ietf-behave-ipfix-nat-logging-13"/>
+<xref type="rfc" data="rfc8158"/>
 </record>
 
 <record>
 <value>11</value>
 <description>NAT64 BIB delete</description>
-<xref type="draft" data="RFC-ietf-behave-ipfix-nat-logging-13"/>
+<xref type="rfc" data="rfc8158"/>
 </record>
 
 <record>
 <value>12</value>
 <description>NAT ports exhausted</description>
-<xref type="draft" data="RFC-ietf-behave-ipfix-nat-logging-13"/>
+<xref type="rfc" data="rfc8158"/>
 </record>
 
 <record>
 <value>13</value>
 <description>Quota Exceeded</description>
-<xref type="draft" data="RFC-ietf-behave-ipfix-nat-logging-13"/>
+<xref type="rfc" data="rfc8158"/>
 </record>
 
 <record>
 <value>14</value>
 <description>Address binding create</description>
-<xref type="draft" data="RFC-ietf-behave-ipfix-nat-logging-13"/>
+<xref type="rfc" data="rfc8158"/>
 </record>
 
 <record>
 <value>15</value>
 <description>Address binding delete</description>
-<xref type="draft" data="RFC-ietf-behave-ipfix-nat-logging-13"/>
+<xref type="rfc" data="rfc8158"/>
 </record>
 
 <record>
 <value>16</value>
 <description>Port block allocation</description>
-<xref type="draft" data="RFC-ietf-behave-ipfix-nat-logging-13"/>
+<xref type="rfc" data="rfc8158"/>
 </record>
 
 <record>
 <value>17</value>
 <description>Port block de-allocation</description>
-<xref type="draft" data="RFC-ietf-behave-ipfix-nat-logging-13"/>
+<xref type="rfc" data="rfc8158"/>
 </record>
 
 <record>
 <value>18</value>
 <description>Threshold Reached</description>
-<xref type="draft" data="RFC-ietf-behave-ipfix-nat-logging-13"/>
+<xref type="rfc" data="rfc8158"/>
 </record>
 
 </registry>
 
-  
- 
+
+
 <registry id="ipfix-flowselectoralgorithm">
 <title>flowSelectorAlgorithm (Value 390)</title>
 <registration_rule>Expert Review</registration_rule>
@@ -11831,14 +12342,14 @@ enterprise.
 <parameters>flowSamplingInterval, flowSamplingSpacing</parameters>
 <xref type="rfc" data="rfc7014"/>
 </record>
-  
+
 <record>
 <value>2</value>
 <description>Systematic time-based Sampling</description>
 <parameters>flowSamplingTimeInterval, flowSamplingTimeSpacing</parameters>
 <xref type="rfc" data="rfc7014"/>
 </record>
- 
+
 <record>
 <value>3</value>
 <description>Random n-out-of-N Sampling</description>
@@ -11859,7 +12370,7 @@ enterprise.
 <parameters>Information Element Value Range</parameters>
 <xref type="rfc" data="rfc7014"/>
 </record>
-  
+
 <record>
 <value>6</value>
 <description>Hash-based Filtering using BOB</description>
@@ -11867,7 +12378,7 @@ enterprise.
 hashSelectedRangeMax, hashOutputRangeMin, hashOutputRangeMax</parameters>
 <xref type="rfc" data="rfc7014"/>
 </record>
- 
+
 <record>
 <value>7</value>
 <description>Hash-based Filtering using IPSX</description>
@@ -11892,49 +12403,49 @@ hashSelectedRangeMax, hashOutputRangeMin, hashOutputRangeMax</parameters>
 </record>
 
 </registry>
- 
- 
- 
+
+
+
 <registry id="ipfix-nat-quota-exceeded-event">
 <title>NAT Quota Exceeded Event Type (Value 466)</title>
 <registration_rule>Expert Review</registration_rule>
 <expert>IE Doctors</expert>
-<xref type="draft" data="RFC-ietf-behave-ipfix-nat-logging-13"/>
+<xref type="rfc" data="rfc8158"/>
 
 <record date="2017-03-27">
 <value>0</value>
 <description>Reserved</description>
-<xref type="draft" data="RFC-ietf-behave-ipfix-nat-logging-13"/>
+<xref type="rfc" data="rfc8158"/>
 </record>
 
 <record date="2017-03-15">
 <value>1</value>
 <description>Maximum session entries</description>
-<xref type="draft" data="RFC-ietf-behave-ipfix-nat-logging-13"/>
+<xref type="rfc" data="rfc8158"/>
 </record>
 
 <record date="2017-03-15">
 <value>2</value>
 <description>Maximum BIB entries</description>
-<xref type="draft" data="RFC-ietf-behave-ipfix-nat-logging-13"/>
+<xref type="rfc" data="rfc8158"/>
 </record>
 
 <record date="2017-03-15">
 <value>3</value>
 <description>Maximum entries per user</description>
-<xref type="draft" data="RFC-ietf-behave-ipfix-nat-logging-13"/>
+<xref type="rfc" data="rfc8158"/>
 </record>
 
 <record date="2017-03-15">
 <value>4</value>
 <description>Maximum active hosts or subscribers</description>
-<xref type="draft" data="RFC-ietf-behave-ipfix-nat-logging-13"/>
+<xref type="rfc" data="rfc8158"/>
 </record>
 
 <record date="2017-03-15">
 <value>5</value>
 <description>Maximum fragments pending reassembly</description>
-<xref type="draft" data="RFC-ietf-behave-ipfix-nat-logging-13"/>
+<xref type="rfc" data="rfc8158"/>
 </record>
 
 </registry>
@@ -11945,48 +12456,48 @@ hashSelectedRangeMax, hashOutputRangeMin, hashOutputRangeMax</parameters>
 <title>NAT Threshold Event Type (Value 467)</title>
 <registration_rule>Expert Review</registration_rule>
 <expert>IE Doctors</expert>
-<xref type="draft" data="RFC-ietf-behave-ipfix-nat-logging-13"/>
+<xref type="rfc" data="rfc8158"/>
 
 <record date="2017-03-27">
 <value>0</value>
 <description>Reserved</description>
-<xref type="draft" data="RFC-ietf-behave-ipfix-nat-logging-13"/>
+<xref type="rfc" data="rfc8158"/>
 </record>
 
 <record date="2017-03-15">
 <value>1</value>
 <description>Address pool high threshold event</description>
-<xref type="draft" data="RFC-ietf-behave-ipfix-nat-logging-13"/>
+<xref type="rfc" data="rfc8158"/>
 </record>
 
 <record date="2017-03-15">
 <value>2</value>
 <description>Address pool low threshold event</description>
-<xref type="draft" data="RFC-ietf-behave-ipfix-nat-logging-13"/>
+<xref type="rfc" data="rfc8158"/>
 </record>
 
 <record date="2017-03-15">
 <value>3</value>
 <description>Address and port mapping high threshold event</description>
-<xref type="draft" data="RFC-ietf-behave-ipfix-nat-logging-13"/>
+<xref type="rfc" data="rfc8158"/>
 </record>
 
 <record date="2017-03-15">
 <value>4</value>
 <description>Address and port mapping per user high threshold event</description>
-<xref type="draft" data="RFC-ietf-behave-ipfix-nat-logging-13"/>
+<xref type="rfc" data="rfc8158"/>
 </record>
 
 <record date="2017-03-15">
 <value>5</value>
 <description>Global Address mapping high threshold event</description>
-<xref type="draft" data="RFC-ietf-behave-ipfix-nat-logging-13"/>
+<xref type="rfc" data="rfc8158"/>
 </record>
 
 </registry>
- 
- 
- 
+
+
+
 </registry>
 
 
@@ -12048,7 +12559,7 @@ hashSelectedRangeMax, hashOutputRangeMin, hashOutputRangeMax</parameters>
 <value>3</value>
 <description>Options Template Set</description>
 <xref type="rfc" data="rfc7011"/>
- <xref type="rfc-errata" data="1818"/>
+<xref type="rfc-errata" data="1818"/>
 </record>
 
 <record>
@@ -12077,161 +12588,161 @@ hashSelectedRangeMax, hashOutputRangeMin, hashOutputRangeMax</parameters>
 <value>0</value>
 <description>octetArray</description>
 <xref type="rfc" data="rfc5102"/>
-  <xref type="rfc" data="rfc7011"/>
+<xref type="rfc" data="rfc7011"/>
 </record>
 
 <record>
 <value>1</value>
 <description>unsigned8</description>
 <xref type="rfc" data="rfc5102"/>
-  <xref type="rfc" data="rfc7011"/>
+<xref type="rfc" data="rfc7011"/>
 </record>
 
 <record>
 <value>2</value>
 <description>unsigned16</description>
 <xref type="rfc" data="rfc5102"/>
-  <xref type="rfc" data="rfc7011"/>
+<xref type="rfc" data="rfc7011"/>
 </record>
 
 <record>
 <value>3</value>
 <description>unsigned32</description>
 <xref type="rfc" data="rfc5102"/>
-  <xref type="rfc" data="rfc7011"/>
+<xref type="rfc" data="rfc7011"/>
 </record>
 
 <record>
 <value>4</value>
 <description>unsigned64</description>
 <xref type="rfc" data="rfc5102"/>
-  <xref type="rfc" data="rfc7011"/>
+<xref type="rfc" data="rfc7011"/>
 </record>
 
 <record>
 <value>5</value>
 <description>signed8</description>
 <xref type="rfc" data="rfc5102"/>
-  <xref type="rfc" data="rfc7011"/>
+<xref type="rfc" data="rfc7011"/>
 </record>
 
 <record>
 <value>6</value>
 <description>signed16</description>
 <xref type="rfc" data="rfc5102"/>
-  <xref type="rfc" data="rfc7011"/>
+<xref type="rfc" data="rfc7011"/>
 </record>
 
 <record>
 <value>7</value>
 <description>signed32</description>
 <xref type="rfc" data="rfc5102"/>
-  <xref type="rfc" data="rfc7011"/>
+<xref type="rfc" data="rfc7011"/>
 </record>
 
 <record>
 <value>8</value>
 <description>signed64</description>
 <xref type="rfc" data="rfc5102"/>
-  <xref type="rfc" data="rfc7011"/>
+<xref type="rfc" data="rfc7011"/>
 </record>
 
 <record>
 <value>9</value>
 <description>float32</description>
 <xref type="rfc" data="rfc5102"/>
-  <xref type="rfc" data="rfc7011"/>
+<xref type="rfc" data="rfc7011"/>
 </record>
 
 <record>
 <value>10</value>
 <description>float64</description>
 <xref type="rfc" data="rfc5102"/>
-  <xref type="rfc" data="rfc7011"/>
+<xref type="rfc" data="rfc7011"/>
 </record>
 
 <record>
 <value>11</value>
 <description>boolean</description>
 <xref type="rfc" data="rfc5102"/>
-  <xref type="rfc" data="rfc7011"/>
+<xref type="rfc" data="rfc7011"/>
 </record>
 
 <record>
 <value>12</value>
 <description>macAddress</description>
 <xref type="rfc" data="rfc5102"/>
-  <xref type="rfc" data="rfc7011"/>
+<xref type="rfc" data="rfc7011"/>
 </record>
 
 <record>
 <value>13</value>
 <description>string</description>
 <xref type="rfc" data="rfc5102"/>
-  <xref type="rfc" data="rfc7011"/>
+<xref type="rfc" data="rfc7011"/>
 </record>
 
 <record>
 <value>14</value>
 <description>dateTimeSeconds</description>
 <xref type="rfc" data="rfc5102"/>
-  <xref type="rfc" data="rfc7011"/>
+<xref type="rfc" data="rfc7011"/>
 </record>
 
 <record>
 <value>15</value>
 <description>dateTimeMilliseconds</description>
 <xref type="rfc" data="rfc5102"/>
-  <xref type="rfc" data="rfc7011"/>
+<xref type="rfc" data="rfc7011"/>
 </record>
 
 <record>
 <value>16</value>
 <description>dateTimeMicroseconds</description>
 <xref type="rfc" data="rfc5102"/>
-  <xref type="rfc" data="rfc7011"/>
+<xref type="rfc" data="rfc7011"/>
 </record>
 
 <record>
 <value>17</value>
 <description>dateTimeNanoseconds</description>
 <xref type="rfc" data="rfc5102"/>
-  <xref type="rfc" data="rfc7011"/>
+<xref type="rfc" data="rfc7011"/>
 </record>
 
 <record>
 <value>18</value>
 <description>ipv4Address</description>
 <xref type="rfc" data="rfc5102"/>
-  <xref type="rfc" data="rfc7011"/>
+<xref type="rfc" data="rfc7011"/>
 </record>
 
 <record>
 <value>19</value>
 <description>ipv6Address</description>
 <xref type="rfc" data="rfc5102"/>
-  <xref type="rfc" data="rfc7011"/>
+<xref type="rfc" data="rfc7011"/>
 </record>
 
 <record>
 <value>20</value>
 <description>basicList</description>
 <xref type="rfc" data="rfc6313"/>
-  <xref type="rfc" data="rfc7011"/>
+<xref type="rfc" data="rfc7011"/>
 </record>
 
 <record>
 <value>21</value>
 <description>subTemplateList</description>
 <xref type="rfc" data="rfc6313"/>
-  <xref type="rfc" data="rfc7011"/>
+<xref type="rfc" data="rfc7011"/>
 </record>
 
 <record>
 <value>22</value>
 <description>subTemplateMultiList</description>
 <xref type="rfc" data="rfc6313"/>
-  <xref type="rfc" data="rfc7011"/>
+<xref type="rfc" data="rfc7011"/>
 </record>
 
 <record>
@@ -12291,7 +12802,7 @@ hashSelectedRangeMax, hashOutputRangeMin, hashOutputRangeMax</parameters>
 <description>list</description>
 <xref type="rfc" data="rfc6313"/>
 </record>
-  
+
 <record date="2015-12-13">
 <value>7</value>
 <description>snmpCounter</description>
@@ -12386,40 +12897,54 @@ hashSelectedRangeMax, hashOutputRangeMin, hashOutputRangeMax</parameters>
 <record>
 <value>9</value>
 <description>4-octet words</description>
-<comments>for IPv4 header length</comments>
+<comments>For example, for IPv4 header length</comments>
 <xref type="rfc" data="rfc5610"/>
 </record>
 
 <record>
 <value>10</value>
 <description>messages</description>
-<comments>for reliability reporting</comments>
+<comments>For example, for reliability reporting</comments>
 <xref type="rfc" data="rfc5610"/>
 </record>
 
 <record>
 <value>11</value>
 <description>hops</description>
-<comments>for TTL</comments>
+<comments>For example, for TTL</comments>
 <xref type="rfc" data="rfc5610"/>
 </record>
 
 <record>
 <value>12</value>
 <description>entries</description>
-<comments>for MPLS label stack</comments>
+<comments>For example, for MPLS label stack</comments>
 <xref type="rfc" data="rfc5610"/>
 </record>
 
 <record date="2014-05-02">
 <value>13</value>
 <description>frames</description>
-<comments>Layer 2 frames</comments>
+<comments>For example, Layer 2 frames</comments>
 <xref type="person" data="ipfix-iana_at_cisco.com"/>
+</record>
+  
+<record date="2018-06-13">
+<value>14</value> 
+<description>ports</description>
+<comments/>
+<xref type="rfc" data="rfc8045"/> 
+</record>
+
+<record date="2018-06-13">
+<value>15</value> 
+<description>inferred</description>
+<comments>The units of the inferred Information Element</comments>
+<xref type="rfc" data="rfc5477"/> 
 </record>
 
 <record>
-<value>14-65535</value>
+<value>16-65535</value>
 <description>Unassigned</description>
 <comments/>
 <xref type="rfc" data="rfc5610"/>
@@ -12509,18 +13034,25 @@ data type semantic is the default structured data type semantic.
 
 
 <people>
+
+<person id="Alfred_Nothaft">
+<name>Alfred Nothaft</name>
+<uri>mailto:alfred.nothaft&amp;nokia.com</uri>
+<updated>2018-02-12</updated>
+</person>  
+
 <person id="Andrew_Feren">
 <name>Andrew Feren</name>
 <uri>mailto:andrew.feren&amp;plixer.com</uri>
 <updated>2017-04-19</updated>
 </person>  
-  
+
 <person id="Brian_Trammell">
 <name>Brian Trammell</name>
 <uri>mailto:brian&amp;trammell.ch</uri>
 <updated>2013-08-01</updated>
 </person>
-  
+
 <person id="Felix_Erlacher">
 <name>Felix Erlacher</name>
 <uri>mailto:felix.erlacher&amp;ccs-labs.org</uri>
@@ -12532,11 +13064,11 @@ data type semantic is the default structured data type semantic.
 <uri>mailto:ipfix-iana&amp;cisco.com</uri>
 <updated>2013-04-11</updated>
 </person>
-  
+
 <person id="Paul_Aitken">
 <name>Paul Aitken</name>
-<uri>mailto:pjaitken&amp;brocade.com</uri>
-<updated>2017-02-21</updated>
+<uri>mailto:paul.aitken&amp;att.com</uri>
+<updated>2018-02-12</updated>
 </person>
 
 <person id="Qosmos">
@@ -12544,7 +13076,7 @@ data type semantic is the default structured data type semantic.
 <uri>http://www.qosmos.com</uri>
 <updated>2017-02-21</updated>
 </person> 
-    
+
 <person id="Yaakov_J_Stein">
 <name>Yaakov (J) Stein</name>
 <uri>mailto:yaakov_s&amp;rad.com</uri>
