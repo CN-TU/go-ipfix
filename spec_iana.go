@@ -4,6 +4,7 @@ package ipfix
 
 var loadedLoadIANASpec = false
 
+// LoadIANASpec loads information elements from the given specification
 func LoadIANASpec() {
 	if loadedLoadIANASpec {
 		return

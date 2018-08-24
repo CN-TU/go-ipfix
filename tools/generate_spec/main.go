@@ -60,12 +60,13 @@ func main() {
 
 var loaded%s = false
 
+// %s loads information elements from the given specification
 func %s() {
 	if loaded%s {
 		return
 	}
 	loaded%s = true
-`, funcName, funcName, funcName, funcName)
+`, funcName, funcName, funcName, funcName, funcName)
 	cb := func(ie ipfix.InformationElement) {
 		iev := reflect.ValueOf(ie)
 		iet := reflect.TypeOf(ie)
