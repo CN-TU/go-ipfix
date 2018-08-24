@@ -12,15 +12,23 @@ const basicListID = 291
 // subType represents additional information needed by RFC6313 datatypes
 type subType interface{}
 
+// InformationElement represents the description of an information element according to RFC7011
 type InformationElement struct {
-	Name    string
-	Pen     uint32
-	ID      uint16
-	Type    Type
+	// Name of the information element
+	Name string
+	// Pen is the enterprise number (0 for iana reserved)
+	Pen uint32
+	// ID is the information element ID
+	ID uint16
+	// Type is the associated data type
+	Type Type
+	// Length is the length of the field value
 	Length  uint16
 	subType subType
 }
 
+// NewInformationElement returns an information element for the given specification. If length is 0,
+// the default length for this data type is chosen.
 func NewInformationElement(name string, pen uint32, id uint16, t Type, length uint16) InformationElement {
 	if t != IllegalType && length == 0 {
 		length = DefaultSize[t]
@@ -28,6 +36,8 @@ func NewInformationElement(name string, pen uint32, id uint16, t Type, length ui
 	return InformationElement{name, pen, id, t, length, nil}
 }
 
+// NewBasicList returns an InformationElement holding the basic list according to RFC6313. If number is 0,
+// a variable length list is returned.
 func NewBasicList(name string, subelement InformationElement, number uint16) InformationElement {
 	// RFC6313: semantic + template of element + number of elements * size of element
 	length := 1 + uint16(subelement.templateSize()) + number*subelement.Length
@@ -71,6 +81,8 @@ func (ie InformationElement) serializeTo(buffer scratchBuffer) int {
 	return 8
 }
 
+// ListElement returns the InformationElement of a list item and true if this InformationElement is a list.
+// Otherwise an empty InformationElement and false is returned.
 func (ie InformationElement) ListElement() (InformationElement, bool) {
 	if ie.Type != BasicListType {
 		return InformationElement{}, false
@@ -107,7 +119,7 @@ func (ie InformationElement) serializeDataTo(buffer scratchBuffer, value interfa
 				values = values.Elem()
 			}
 			l := values.Len()
-			for i := 0; i < l; i++ {
+			for i := 0; i < l && i < 2000; i++ {
 				written += subie.Type.serializeDataTo(buffer, values.Index(i).Interface(), int(subie.Length))
 			}
 		}

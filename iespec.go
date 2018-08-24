@@ -9,6 +9,8 @@ import (
 // iespec according to draft-trammell-ipfix-text-iespec-01
 var iespecRegex = regexp.MustCompile(`(?m)^(.+)\(((\d+)/)?(\d+)\)<(.+)>(\[(.+)\])?$`)
 
+// MakeIEFromSpec returns an InformationElement as specified by the provided specification.
+// The specification format must follow draft-trammell-ipfix-text-iespec-01
 func MakeIEFromSpec(spec []byte) InformationElement {
 	var err error
 	x := iespecRegex.FindSubmatch(spec)
@@ -45,6 +47,7 @@ func init() {
 	informationElementRegistry = make(map[string]InformationElement)
 }
 
+// RegisterInformationElement registers the given InformationElement. This can later be queried by name with GetInformationElement.
 func RegisterInformationElement(x InformationElement) {
 	if _, ok := informationElementRegistry[x.Name]; ok {
 		panic(fmt.Sprintf("Information element with name %s already registered\n", x.Name))
@@ -52,6 +55,7 @@ func RegisterInformationElement(x InformationElement) {
 	informationElementRegistry[x.Name] = x
 }
 
+// GetInformationElement retrieves an InformationElement by name.
 func GetInformationElement(name string) (ret InformationElement) {
 	var ok bool
 	if ret, ok = informationElementRegistry[name]; !ok {

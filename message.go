@@ -7,6 +7,7 @@ import (
 	"time"
 )
 
+// MessageStream represents an ipfix message stream.
 type MessageStream struct {
 	w                 io.Writer
 	buffer            scratchBuffer
@@ -21,6 +22,8 @@ type MessageStream struct {
 	dirty             bool
 }
 
+// MakeMessageStream initializes a new message stream, which writes to the given writer and uses the given mtu size.
+// The observationID is used as the observation id in the ipfix messages.
 func MakeMessageStream(w io.Writer, mtu uint16, observationID uint32) (ret *MessageStream) {
 	if mtu == 0 {
 		mtu = 65535
@@ -76,6 +79,9 @@ func (m *MessageStream) sendRecord(rec record, now interface{}) (err error) {
 	}
 }
 
+// AddTemplate adds the given InformationElement as a new template. now must be the current or exported
+// time either as a time.Time value or as one of the provieded ipfix time types. A template id is
+// returned that can be used with SendData. In case of error an error value is provided.
 func (m *MessageStream) AddTemplate(now interface{}, elements ...InformationElement) (id int, err error) {
 	id = len(m.templates) + 256
 	newTemplate := template{int16(id), elements}
@@ -85,6 +91,10 @@ func (m *MessageStream) AddTemplate(now interface{}, elements ...InformationElem
 	return
 }
 
+// SendData sends the given values for the given template id (Can be allocated with AddTemplate).
+// now must be the current or exported time either as a time.Time value or as one of the provieded ipfix time types.
+// Template InformationElements and given data types must match. Numeric types are converted automatically.
+// In case of error an error is returned.
 func (m *MessageStream) SendData(now interface{}, template int, data ...interface{}) (err error) {
 	id := template - 256
 	if id < 0 || id >= len(m.templates) {
@@ -98,6 +108,8 @@ func (m *MessageStream) SendData(now interface{}, template int, data ...interfac
 	return m.sendRecord(&m.currentDataRecord, now)
 }
 
+// Finalize must be called before the underlying writer is closed. This function finishes and flushes
+// eventual not yet finalized messages.
 func (m *MessageStream) Finalize(now interface{}) (err error) {
 	if !m.dirty {
 		return nil

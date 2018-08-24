@@ -8,8 +8,7 @@ import (
 	"time"
 )
 
-// Datatypes according to RFC7011
-
+// Type is a datatype according to RFC7011
 type Type int
 
 // DateTimeSeconds represents time in units of seconds from 00:00 UTC, Januray 1, 1970 according to RFC5102.
@@ -25,32 +24,56 @@ type DateTimeMicroseconds uint64
 type DateTimeNanoseconds uint64
 
 const (
+	// OctetArrayType as defined by RFC7011
 	OctetArrayType Type = iota
+	// Unsigned8Type as defined by RFC7011
 	Unsigned8Type
+	// Unsigned16Type as defined by RFC7011
 	Unsigned16Type
+	// Unsigned32Type as defined by RFC7011
 	Unsigned32Type
+	// Unsigned64Type as defined by RFC7011
 	Unsigned64Type
+	// Signed8Type as defined by RFC7011
 	Signed8Type
+	// Signed16Type as defined by RFC7011
 	Signed16Type
+	// Signed32Type as defined by RFC7011
 	Signed32Type
+	// Signed64Type as defined by RFC7011
 	Signed64Type
+	// Float32Type as defined by RFC7011
 	Float32Type
+	// Float64Type as defined by RFC7011
 	Float64Type
+	// BooleanType as defined by RFC7011
 	BooleanType
+	// MacAddressType as defined by RFC7011
 	MacAddressType
+	// StringType as defined by RFC7011
 	StringType
+	// DateTimeSecondsType as defined by RFC7011
 	DateTimeSecondsType
+	// DateTimeMillisecondsType as defined by RFC7011
 	DateTimeMillisecondsType
+	// DateTimeMicrosecondsType as defined by RFC7011
 	DateTimeMicrosecondsType
+	// DateTimeNanosecondsType as defined by RFC7011
 	DateTimeNanosecondsType
+	// Ipv4AddressType as defined by RFC7011
 	Ipv4AddressType
+	// Ipv6AddressType as defined by RFC7011
 	Ipv6AddressType
+	// BasicListType as defined by RFC7011
 	BasicListType
+	// IllegalType is an undefined type
 	IllegalType
 )
 
+// VariableLength is the variable length specifier as defined by RFC7011
 const VariableLength uint16 = 65535
 
+// DefaultSize can be used to look up the default size of an ipfix type
 var DefaultSize = [...]uint16{
 	VariableLength,
 	1,
@@ -75,6 +98,7 @@ var DefaultSize = [...]uint16{
 	VariableLength,
 }
 
+// NameToType converts the given textual representation of a type to the ipfix type
 func NameToType(x []byte) Type {
 	switch string(x) {
 	case "octetArray":
@@ -119,7 +143,6 @@ func NameToType(x []byte) Type {
 		return Ipv6AddressType
 	}
 	panic(fmt.Sprintf("Unknown type %s\n", x))
-	return IllegalType
 }
 
 func (t Type) String() string {
