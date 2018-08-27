@@ -10,7 +10,7 @@ Usage
 
 For exporting ipfix data a MessageStream instance has to be created with MakeMessageStream.
 This stream then provides the two functions AddTemplate for adding templates and SendData for sending
-data, as specified by a template. After all the data has been added with SendData, Finalize must be called.
+data, as specified by a template. After all the data has been added with SendData, Flush must be called.
 Full examples are provided at the MakeMessageStream function.
 
 Information elements can be created either from an iespec (RFC 7373) with MakeIEFromSpec, or by hand

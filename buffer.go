@@ -5,7 +5,7 @@ import (
 )
 
 type scratchBuffer interface {
-	append(int) []byte
+	append(int) ([]byte, error)
 	bytesFree() int
 	finalize(io.Writer) (err error)
 	length() int
@@ -22,10 +22,13 @@ func (b *basicBuffer) bytesFree() int {
 	return cap(*b) - len(*b)
 }
 
-func (b *basicBuffer) append(num int) []byte {
+func (b *basicBuffer) append(num int) ([]byte, error) {
 	blen := len(*b)
+	if blen+num > cap(*b) {
+		return nil, bufferFullError(blen + num - cap(*b))
+	}
 	*b = (*b)[:blen+num]
-	return (*b)[blen : blen+num]
+	return (*b)[blen : blen+num], nil
 }
 
 func (b *basicBuffer) finalize(w io.Writer) (err error) {

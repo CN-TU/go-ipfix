@@ -22,13 +22,20 @@ func (t template) length() (ret int) {
 	return
 }
 
-func (t template) serializeTo(buffer scratchBuffer) {
-	b := buffer.append(4)
+func (t template) serializeTo(buffer scratchBuffer) error {
+	b, err := buffer.append(4)
+	if err != nil {
+		return err
+	}
 	binary.BigEndian.PutUint16(b[2:], uint16(len(t.elements)))
 	binary.BigEndian.PutUint16(b[0:], uint16(t.identifier))
 	for _, element := range t.elements {
-		element.serializeTo(buffer)
+		_, err := element.serializeTo(buffer)
+		if err != nil {
+			return err
+		}
 	}
+	return nil
 }
 
 func (t template) assignDataRecord(record *recordBuffer, values ...interface{}) {

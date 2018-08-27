@@ -19,7 +19,11 @@ func ExampleMakeMessageStream() {
 	now := time.Date(2018, 01, 01, 0, 0, 0, 0, time.UTC) // simulated fixed time
 
 	// First create a message stream; mtu=0 chooses the default size
-	msgStream := ipfix.MakeMessageStream(buf, 0, 0)
+	msgStream, err := ipfix.MakeMessageStream(buf, 0, 0)
+	if err != nil {
+		fmt.Println("MakeMessageStream failed:", err)
+		return
+	}
 
 	// Add a new template with three information elements
 	id, err := msgStream.AddTemplate(now,
@@ -51,8 +55,8 @@ func ExampleMakeMessageStream() {
 	}
 
 	// Call finalize
-	if err := msgStream.Finalize(now); err != nil {
-		fmt.Println("MessageStream.Finalize failed:", err)
+	if err := msgStream.Flush(now); err != nil {
+		fmt.Println("MessageStream.Flush failed:", err)
 		return
 	}
 
@@ -71,7 +75,11 @@ func ExampleMakeMessageStream_basicList() {
 	now := time.Date(2018, 01, 01, 0, 0, 0, 0, time.UTC) // simulated fixed time
 
 	// First create a message stream; mtu=0 chooses the default size
-	msgStream := ipfix.MakeMessageStream(buf, 0, 0)
+	msgStream, err := ipfix.MakeMessageStream(buf, 0, 0)
+	if err != nil {
+		fmt.Println("MakeMessageStream failed:", err)
+		return
+	}
 
 	// Create an information elemenet for the basiclist, holding a variable number of octetDeltaCount
 	ie := ipfix.NewBasicList("testlist", ipfix.GetInformationElement("octetDeltaCount"), 0)
@@ -101,8 +109,8 @@ func ExampleMakeMessageStream_basicList() {
 		fmt.Println("MessageStream.SendData failed:", err)
 	}
 	now = now.Add(1 * time.Second)
-	if err := msgStream.Finalize(now); err != nil {
-		fmt.Println("MessageStream.Finalize failed:", err)
+	if err := msgStream.Flush(now); err != nil {
+		fmt.Println("MessageStream.Flush failed:", err)
 	}
 
 	// buf holds now the complete ipfix data of this example
@@ -120,7 +128,11 @@ func ExampleMakeMessageStream_basicListVariable() {
 	now := time.Date(2018, 01, 01, 0, 0, 0, 0, time.UTC) // simulated fixed time
 
 	// First create a message stream; mtu=0 chooses the default size
-	msgStream := ipfix.MakeMessageStream(buf, 0, 0)
+	msgStream, err := ipfix.MakeMessageStream(buf, 0, 0)
+	if err != nil {
+		fmt.Println("MakeMessageStream failed:", err)
+		return
+	}
 
 	// Create an information elemenet for the basiclist, holding a variable number of applicationName, which in turn are also variable length
 	ie := ipfix.NewBasicList("testlist", ipfix.GetInformationElement("applicationName"), 0)
@@ -147,8 +159,8 @@ func ExampleMakeMessageStream_basicListVariable() {
 		fmt.Println("MessageStream.SendData failed:", err)
 	}
 	now = now.Add(1 * time.Second)
-	if err := msgStream.Finalize(now); err != nil {
-		fmt.Println("MessageStream.Finalize failed:", err)
+	if err := msgStream.Flush(now); err != nil {
+		fmt.Println("MessageStream.Flush failed:", err)
 	}
 
 	// buf holds now the complete ipfix data of this example

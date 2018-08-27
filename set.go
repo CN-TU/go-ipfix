@@ -6,7 +6,7 @@ import (
 
 type record interface {
 	length() int
-	serializeTo(scratchBuffer)
+	serializeTo(scratchBuffer) error
 	id() int16
 }
 
@@ -28,19 +28,21 @@ func makeSet(buffer scratchBuffer) set {
 	} // 0 id is illegal in ipfix
 }
 
-func (s *set) startSet(rec record) (err error) {
+func (s *set) startSet(rec record) error {
 	length := rec.length() + 4
 	if s.buffer.bytesFree() < length {
 		return bufferFullError(length)
 	}
 	s.length = length
 	s.id = rec.id()
-	b := s.buffer.append(4)
+	b, err := s.buffer.append(4)
+	if err != nil {
+		return err
+	}
 	_ = b[3]
 	binary.BigEndian.PutUint16(b[0:2], uint16(s.id))
 	s.lengthBytes = b[2:4]
-	rec.serializeTo(s.buffer)
-	return
+	return rec.serializeTo(s.buffer)
 }
 
 func (s *set) appendRecord(rec record) error {
@@ -58,8 +60,7 @@ func (s *set) appendRecord(rec record) error {
 		return bufferFullError(len)
 	}
 	s.length += len
-	rec.serializeTo(s.buffer)
-	return nil
+	return rec.serializeTo(s.buffer)
 }
 
 func (s *set) finalize() (int, error) {

@@ -65,20 +65,26 @@ func (ie InformationElement) templateSize() int {
 	return 8
 }
 
-func (ie InformationElement) serializeTo(buffer scratchBuffer) int {
+func (ie InformationElement) serializeTo(buffer scratchBuffer) (int, error) {
 	ident := ie.ID
 	if ie.Pen == 0 {
-		b := buffer.append(4)
+		b, err := buffer.append(4)
+		if err != nil {
+			return 0, err
+		}
 		binary.BigEndian.PutUint16(b[2:], uint16(ie.Length))
 		binary.BigEndian.PutUint16(b[0:], uint16(ident))
-		return 4
+		return 4, nil
 	}
 	ident |= 0x8000
-	b := buffer.append(8)
+	b, err := buffer.append(8)
+	if err != nil {
+		return 0, err
+	}
 	binary.BigEndian.PutUint32(b[4:], uint32(ie.Pen))
 	binary.BigEndian.PutUint16(b[2:], uint16(ie.Length))
 	binary.BigEndian.PutUint16(b[0:], uint16(ident))
-	return 8
+	return 8, nil
 }
 
 // ListElement returns the InformationElement of a list item and true if this InformationElement is a list.
@@ -90,7 +96,7 @@ func (ie InformationElement) ListElement() (InformationElement, bool) {
 	return ie.subType.(InformationElement), true
 }
 
-func (ie InformationElement) serializeDataTo(buffer scratchBuffer, value interface{}) {
+func (ie InformationElement) serializeDataTo(buffer scratchBuffer, value interface{}) error {
 	switch ie.Type {
 	case BasicListType:
 		subie, _ := ie.ListElement()
@@ -101,17 +107,27 @@ func (ie InformationElement) serializeDataTo(buffer scratchBuffer, value interfa
 
 		if ie.Length == VariableLength {
 			// RFC6313 recommends 3 byte encoding of length field
-			b := buffer.append(3)
+			b, err := buffer.append(3)
+			if err != nil {
+				return err
+			}
 			_ = b[2]
 			b[0] = 0xff
 			lengthbuffer = b[1:3]
 		}
 
 		// first semantic
-		b := buffer.append(1)
+		b, err := buffer.append(1)
+		if err != nil {
+			return err
+		}
 		b[0] = byte(UndefinedSemantic)
 		// followed by template header
-		written += subie.serializeTo(buffer)
+		headersize, err := subie.serializeTo(buffer)
+		if err != nil {
+			return err
+		}
+		written += headersize
 		// followed by all the values
 		if value != nil {
 			values := reflect.ValueOf(value)
@@ -119,8 +135,12 @@ func (ie InformationElement) serializeDataTo(buffer scratchBuffer, value interfa
 				values = values.Elem()
 			}
 			l := values.Len()
-			for i := 0; i < l && i < 2000; i++ {
-				written += subie.Type.serializeDataTo(buffer, values.Index(i).Interface(), int(subie.Length))
+			for i := 0; i < l; i++ {
+				subiesize, err := subie.Type.serializeDataTo(buffer, values.Index(i).Interface(), int(subie.Length))
+				if err != nil {
+					return err
+				}
+				written += subiesize
 			}
 		}
 		if ie.Length == VariableLength {
@@ -133,4 +153,5 @@ func (ie InformationElement) serializeDataTo(buffer scratchBuffer, value interfa
 	default:
 		ie.Type.serializeDataTo(buffer, value, int(ie.Length))
 	}
+	return nil
 }

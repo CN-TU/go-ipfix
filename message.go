@@ -2,6 +2,7 @@ package ipfix
 
 import (
 	"encoding/binary"
+	"errors"
 	"fmt"
 	"io"
 	"time"
@@ -24,9 +25,11 @@ type MessageStream struct {
 
 // MakeMessageStream initializes a new message stream, which writes to the given writer and uses the given mtu size.
 // The observationID is used as the observation id in the ipfix messages.
-func MakeMessageStream(w io.Writer, mtu uint16, observationID uint32) (ret *MessageStream) {
+func MakeMessageStream(w io.Writer, mtu uint16, observationID uint32) (ret *MessageStream, err error) {
 	if mtu == 0 {
 		mtu = 65535
+	} else if mtu < 28 {
+		return nil, errors.New("mtu must be at least 28")
 	}
 	buffer := makeBasicBuffer(int(mtu))
 	ret = &MessageStream{
@@ -39,8 +42,11 @@ func MakeMessageStream(w io.Writer, mtu uint16, observationID uint32) (ret *Mess
 	return
 }
 
-func (m *MessageStream) startMessage() {
-	b := m.buffer.append(16)
+func (m *MessageStream) startMessage() error {
+	b, err := m.buffer.append(16)
+	if err != nil {
+		return err
+	}
 	_ = b[15]
 	b[0] = 0
 	b[1] = 0x0a
@@ -49,6 +55,7 @@ func (m *MessageStream) startMessage() {
 	m.dirty = true
 	binary.BigEndian.PutUint32(b[8:12], uint32(m.sequence))
 	binary.BigEndian.PutUint32(b[12:16], uint32(m.observationID))
+	return nil
 }
 
 func (m *MessageStream) sendRecord(rec record, now interface{}) (err error) {
@@ -66,7 +73,7 @@ func (m *MessageStream) sendRecord(rec record, now interface{}) (err error) {
 		if ipfixerr, ok := err.(ipfixError); ok {
 			switch {
 			case ipfixerr.bufferFull():
-				m.Finalize(now)
+				m.Flush(now)
 				m.startMessage()
 			case ipfixerr.recordTypeMismatch():
 				m.currentSet.finalize()
@@ -108,9 +115,9 @@ func (m *MessageStream) SendData(now interface{}, template int, data ...interfac
 	return m.sendRecord(&m.currentDataRecord, now)
 }
 
-// Finalize must be called before the underlying writer is closed. This function finishes and flushes
-// eventual not yet finalized messages.
-func (m *MessageStream) Finalize(now interface{}) (err error) {
+// Flush must be called before the underlying writer is closed. This function finishes and flushes
+// eventual not yet finalized messages. This does not flush the underlying buffer!
+func (m *MessageStream) Flush(now interface{}) (err error) {
 	if !m.dirty {
 		return nil
 	}
