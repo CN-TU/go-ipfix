@@ -26,11 +26,19 @@ func ExampleMakeMessageStream() {
 	}
 
 	// Add a new template with three information elements
-	id, err := msgStream.AddTemplate(now,
-		ipfix.GetInformationElement("octetDeltaCount"),
-		ipfix.GetInformationElement("sourceIPv4Address"),
-		ipfix.GetInformationElement("flowEndNanoseconds"),
-	)
+	a, err := ipfix.GetInformationElement("octetDeltaCount")
+	if err != nil {
+		fmt.Println("GetInformationElement failed:", err)
+	}
+	b, err := ipfix.GetInformationElement("sourceIPv4Address")
+	if err != nil {
+		fmt.Println("GetInformationElement failed:", err)
+	}
+	c, err := ipfix.GetInformationElement("flowEndNanoseconds")
+	if err != nil {
+		fmt.Println("GetInformationElement failed:", err)
+	}
+	id, err := msgStream.AddTemplate(now, a, b, c)
 	if err != nil {
 		fmt.Println("MessageStream.AddTemplate failed:", err)
 		return
@@ -82,7 +90,11 @@ func ExampleMakeMessageStream_basicList() {
 	}
 
 	// Create an information elemenet for the basiclist, holding a variable number of octetDeltaCount
-	ie := ipfix.NewBasicList("testlist", ipfix.GetInformationElement("octetDeltaCount"), 0)
+	elem, err := ipfix.GetInformationElement("octetDeltaCount")
+	if err != nil {
+		fmt.Println("GetInformationElement failed:", err)
+	}
+	ie := ipfix.NewBasicList("testlist", elem, 0)
 
 	// Add a new template with this information element
 	id, err := msgStream.AddTemplate(now,
@@ -135,7 +147,11 @@ func ExampleMakeMessageStream_basicListVariable() {
 	}
 
 	// Create an information elemenet for the basiclist, holding a variable number of applicationName, which in turn are also variable length
-	ie := ipfix.NewBasicList("testlist", ipfix.GetInformationElement("applicationName"), 0)
+	elem, err := ipfix.GetInformationElement("applicationName")
+	if err != nil {
+		fmt.Println("GetInformationElement failed:", err)
+	}
+	ie := ipfix.NewBasicList("testlist", elem, 0)
 
 	// Add a new template with this information element
 	id, err := msgStream.AddTemplate(now,

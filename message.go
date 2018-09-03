@@ -3,7 +3,6 @@ package ipfix
 import (
 	"encoding/binary"
 	"errors"
-	"fmt"
 	"io"
 	"time"
 )
@@ -20,6 +19,7 @@ type MessageStream struct {
 	templates         []*template
 	currentSet        set
 	currentDataRecord recordBuffer
+	mtu               int
 	dirty             bool
 }
 
@@ -38,6 +38,7 @@ func MakeMessageStream(w io.Writer, mtu uint16, observationID uint32) (ret *Mess
 		observationID:     observationID,
 		currentSet:        makeSet(buffer),
 		currentDataRecord: makeRecordBuffer(int(mtu)),
+		mtu:               int(mtu),
 	}
 	return
 }
@@ -73,6 +74,9 @@ func (m *MessageStream) sendRecord(rec record, now interface{}) (err error) {
 		if ipfixerr, ok := err.(ipfixError); ok {
 			switch {
 			case ipfixerr.bufferFull():
+				if m.buffer.length() == 16 {
+					return RecordTooBigError{16 + rec.length(), m.mtu}
+				}
 				m.Flush(now)
 				m.startMessage()
 			case ipfixerr.recordTypeMismatch():
@@ -105,11 +109,11 @@ func (m *MessageStream) AddTemplate(now interface{}, elements ...InformationElem
 func (m *MessageStream) SendData(now interface{}, template int, data ...interface{}) (err error) {
 	id := template - 256
 	if id < 0 || id >= len(m.templates) {
-		panic(fmt.Sprintf("Unknown template id %d\n", template))
+		return UnknownTemplateError(template)
 	}
 	t := m.templates[id]
 	if t == nil {
-		panic(fmt.Sprintf("Unknown template id %d\n", template))
+		return UnknownTemplateError(template)
 	}
 	t.assignDataRecord(&m.currentDataRecord, data...)
 	return m.sendRecord(&m.currentDataRecord, now)

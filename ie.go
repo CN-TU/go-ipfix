@@ -147,7 +147,7 @@ func (ie InformationElement) serializeDataTo(buffer scratchBuffer, value interfa
 			binary.BigEndian.PutUint16(lengthbuffer, uint16(written))
 		} else {
 			if written != int(ie.Length) {
-				panic("Number of values doesn't fit ie length")
+				return BasicListMismatchError{written / int(subie.Length), int(ie.Length) / int(subie.Length)}
 			}
 		}
 	default:

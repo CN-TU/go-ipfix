@@ -2,7 +2,6 @@ package ipfix
 
 import (
 	"encoding/binary"
-	"fmt"
 	"math"
 	"net"
 	"time"
@@ -98,7 +97,7 @@ var DefaultSize = [...]uint16{
 	VariableLength,
 }
 
-// NameToType converts the given textual representation of a type to the ipfix type
+// NameToType converts the given textual representation of a type to the ipfix type. Returns IllegalType if the type is not recognised.
 func NameToType(x []byte) Type {
 	switch string(x) {
 	case "octetArray":
@@ -142,7 +141,7 @@ func NameToType(x []byte) Type {
 	case "ipv6Address":
 		return Ipv6AddressType
 	}
-	panic(fmt.Sprintf("Unknown type %s\n", x))
+	return IllegalType
 }
 
 func (t Type) String() string {
@@ -187,6 +186,8 @@ func (t Type) String() string {
 		return "ipv4Address"
 	case Ipv6AddressType:
 		return "ipv6Address"
+	case BasicListType:
+		return "basicList"
 	case IllegalType:
 		return "<bad>"
 	}
@@ -207,7 +208,7 @@ func (t Type) serializeDataTo(buffer scratchBuffer, value interface{}, length in
 	case DateTimeSecondsType, DateTimeMillisecondsType, DateTimeMicrosecondsType, DateTimeNanosecondsType:
 		return serializeDateTimeTo(buffer, t, value, length)
 	}
-	panic("unknown type")
+	return 0, IllegalTypeError(t)
 }
 
 func serializeOctetArrayTo(buffer scratchBuffer, t Type, value interface{}, length int) (int, error) {
@@ -224,7 +225,7 @@ func serializeOctetArrayTo(buffer scratchBuffer, t Type, value interface{}, leng
 	case nil:
 		// val is already nil
 	default:
-		panic("Can't convert this")
+		return 0, ConversionError{t, value}
 	}
 	if length == 0 {
 		length = int(DefaultSize[t])
@@ -282,7 +283,7 @@ func serializeOctetArrayTo(buffer scratchBuffer, t Type, value interface{}, leng
 			}
 			return length, nil
 		}
-		panic("invalid address stored")
+		return 0, ConversionError{t, value}
 	}
 	var clear []byte
 	assign, err := buffer.append(length)
@@ -333,7 +334,7 @@ func serializeIntegerTo(buffer scratchBuffer, t Type, value interface{}, length 
 			val = 2
 		}
 	default:
-		panic("Can't convert this")
+		return 0, ConversionError{t, value}
 	}
 	if length == 0 {
 		length = int(DefaultSize[t])
@@ -417,7 +418,7 @@ func serializeIntegerTo(buffer scratchBuffer, t Type, value interface{}, length 
 		binary.BigEndian.PutUint64(b, val)
 		return 8, nil
 	default:
-		panic(fmt.Sprint("Illegal encoding length for integers. Must be 1-8. Was ", length))
+		return 0, SizeError{t, length}
 	}
 }
 
@@ -458,7 +459,7 @@ func serializeFloatTo(buffer scratchBuffer, t Type, value interface{}, length in
 				val = 2
 			}
 		default:
-			panic("Can't convert this")
+			return 0, ConversionError{t, value}
 		}
 		b, err := buffer.append(4)
 		if err != nil {
@@ -503,7 +504,7 @@ func serializeFloatTo(buffer scratchBuffer, t Type, value interface{}, length in
 			val = 2
 		}
 	default:
-		panic("Can't convert this")
+		return 0, ConversionError{t, value}
 	}
 	switch length {
 	case 4:
@@ -521,7 +522,7 @@ func serializeFloatTo(buffer scratchBuffer, t Type, value interface{}, length in
 		bits := math.Float64bits(val)
 		binary.BigEndian.PutUint64(b, bits)
 	default:
-		panic(fmt.Sprint("Illegal encoding length for float64. Must be 4, 8. Was ", length))
+		return 0, SizeError{t, length}
 	}
 	return length, nil
 }
@@ -553,7 +554,7 @@ func serializeDateTimeTo(buffer scratchBuffer, t Type, value interface{}, length
 	case nil:
 		// val already 0
 	default:
-		panic("Can't convert this")
+		return 0, ConversionError{t, value}
 	}
 	switch t {
 	case DateTimeSecondsType:
@@ -593,5 +594,5 @@ func serializeDateTimeTo(buffer scratchBuffer, t Type, value interface{}, length
 		binary.BigEndian.PutUint32(b[4:8], uint32((nanoseconds<<32)/1e9))
 		return 8, nil
 	}
-	panic("Wrong type")
+	return 0, ConversionError{t, value}
 }

@@ -64,9 +64,6 @@ func (s *set) appendRecord(rec record) error {
 }
 
 func (s *set) finalize() (int, error) {
-	if s.length == 0 {
-		return 0, &illegalSetError{"Set does not contain data!"}
-	}
 	binary.BigEndian.PutUint16(s.lengthBytes, uint16(s.length))
 	s.id = 0 // 0 id is illegal in ipfix
 	s.length = 0

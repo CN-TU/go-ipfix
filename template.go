@@ -2,7 +2,6 @@ package ipfix
 
 import (
 	"encoding/binary"
-	"fmt"
 )
 
 type template struct {
@@ -38,13 +37,15 @@ func (t template) serializeTo(buffer scratchBuffer) error {
 	return nil
 }
 
-func (t template) assignDataRecord(record *recordBuffer, values ...interface{}) {
+func (t template) assignDataRecord(record *recordBuffer, values ...interface{}) error {
 	if len(values) != len(t.elements) {
-		panic(fmt.Sprintf("Supplied values (%d) differ from number of information elements (%d)!\n", len(values), len(t.elements)))
+		return TemplateMismatchError{len(values), len(t.elements)}
 	}
+	// TODO: reset record if serialize fails
 	record.template = t.identifier
 	values = values[:len(t.elements)]
 	for i, element := range t.elements {
 		element.serializeDataTo(record, values[i])
 	}
+	return nil
 }

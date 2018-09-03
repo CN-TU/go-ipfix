@@ -97,7 +97,11 @@ func %s() {
 func iespec(spec *os.File, cb func(ipfix.InformationElement)) {
 	rd := bufio.NewScanner(spec)
 	for rd.Scan() {
-		cb(ipfix.MakeIEFromSpec(rd.Bytes()))
+		if ie, err := ipfix.MakeIEFromSpec(rd.Bytes()); err == nil {
+			cb(ie)
+		} else {
+			log.Panic(err)
+		}
 	}
 }
 
