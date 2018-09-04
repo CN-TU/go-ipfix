@@ -41,11 +41,15 @@ func (t template) assignDataRecord(record *recordBuffer, values ...interface{}) 
 	if len(values) != len(t.elements) {
 		return TemplateMismatchError{len(values), len(t.elements)}
 	}
-	// TODO: reset record if serialize fails
+	good := record.length()
 	record.template = t.identifier
 	values = values[:len(t.elements)]
 	for i, element := range t.elements {
-		element.serializeDataTo(record, values[i])
+		err := element.serializeDataTo(record, values[i])
+		if err != nil {
+			record.reset(good)
+			return err
+		}
 	}
 	return nil
 }

@@ -42,3 +42,7 @@ func (b *basicBuffer) finalize(w io.Writer) (err error) {
 func (b *basicBuffer) length() int {
 	return len(*b)
 }
+
+func (b *basicBuffer) reset(i int) {
+	*b = (*b)[:i]
+}

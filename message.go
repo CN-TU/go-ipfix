@@ -63,31 +63,30 @@ func (m *MessageStream) sendRecord(rec record, now interface{}) (err error) {
 	if !m.dirty {
 		m.startMessage()
 	}
-	for {
-		err = m.currentSet.appendRecord(rec)
-		if err == nil {
-			if rec.id() >= 256 {
-				m.sequence++
-			}
-			return
+RETRY:
+	err = m.currentSet.appendRecord(rec)
+	if err == nil {
+		if rec.id() >= 256 {
+			m.sequence++
 		}
-		if ipfixerr, ok := err.(ipfixError); ok {
-			switch {
-			case ipfixerr.bufferFull():
-				if m.buffer.length() == 16 {
-					return RecordTooBigError{16 + rec.length(), m.mtu}
-				}
-				m.Flush(now)
-				m.startMessage()
-			case ipfixerr.recordTypeMismatch():
-				m.currentSet.finalize()
-			default:
-				return
+		return
+	}
+	//	fmt.Println(err)
+	if ipfixerr, ok := err.(ipfixError); ok {
+		switch {
+		case ipfixerr.bufferFull():
+			if m.buffer.length() == 16 {
+				return RecordTooBigError{16 + rec.length(), m.mtu}
 			}
-		} else {
-			return
+			m.Flush(now)
+			m.startMessage()
+			goto RETRY
+		case ipfixerr.recordTypeMismatch():
+			m.currentSet.finalize()
+			goto RETRY
 		}
 	}
+	return
 }
 
 // AddTemplate adds the given InformationElement as a new template. now must be the current or exported
@@ -115,7 +114,10 @@ func (m *MessageStream) SendData(now interface{}, template int, data ...interfac
 	if t == nil {
 		return UnknownTemplateError(template)
 	}
-	t.assignDataRecord(&m.currentDataRecord, data...)
+	err = t.assignDataRecord(&m.currentDataRecord, data...)
+	if err != nil {
+		return
+	}
 	return m.sendRecord(&m.currentDataRecord, now)
 }
 
