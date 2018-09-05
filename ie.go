@@ -4,10 +4,16 @@ import (
 	"encoding/binary"
 	"fmt"
 	"reflect"
+	"strings"
+	"unicode"
+	"unicode/utf8"
 )
 
 // basicListID is the IE ID of basicLists as defined by RFC6313
 const basicListID = 291
+
+const ianaPen = 0
+const reversePen = 29305
 
 // subType represents additional information needed by RFC6313 datatypes
 type subType interface{}
@@ -44,7 +50,40 @@ func NewBasicList(name string, subelement InformationElement, number uint16) Inf
 	if number == 0 || subelement.Length == VariableLength || number == VariableLength {
 		length = VariableLength
 	}
-	return InformationElement{name, 0, basicListID, BasicListType, length, subelement}
+	return InformationElement{name, ianaPen, basicListID, BasicListType, length, subelement}
+}
+
+// Reverse returns the reverse information element according to RFC5103
+func (ie InformationElement) Reverse() InformationElement {
+	if ie.Pen == reversePen {
+		// this is a reverse Element
+		name := strings.TrimPrefix(ie.Name, "reverse")
+		first, len := utf8.DecodeRuneInString(name)
+		name = string(unicode.ToLower(first)) + string(name[len:])
+		return InformationElement{
+			Name:    name,
+			Pen:     ianaPen,
+			ID:      ie.ID,
+			Type:    ie.Type,
+			Length:  ie.Length,
+			subType: ie.subType,
+		}
+	}
+	if ie.Pen == ianaPen {
+		// this is a non-reverse element
+		name := ie.Name
+		first, len := utf8.DecodeRuneInString(name)
+		name = "reverse" + string(unicode.ToUpper(first)) + string(name[len:])
+		return InformationElement{
+			Name:    name,
+			Pen:     reversePen,
+			ID:      ie.ID,
+			Type:    ie.Type,
+			Length:  ie.Length,
+			subType: ie.subType,
+		}
+	}
+	panic("This element has no reverse")
 }
 
 func (ie InformationElement) String() string {
