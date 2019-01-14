@@ -66,7 +66,7 @@ const (
 	// BasicListType as defined by RFC7011
 	BasicListType
 	// IllegalType is an undefined type
-	IllegalType
+	IllegalType = -1
 )
 
 // VariableLength is the variable length specifier as defined by RFC7011
