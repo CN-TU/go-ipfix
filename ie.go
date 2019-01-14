@@ -87,7 +87,10 @@ func (ie InformationElement) Reverse() InformationElement {
 }
 
 func (ie InformationElement) String() string {
-	if ie.Pen == 0 {
+	if ie.Type == BasicListType {
+		return fmt.Sprintf("basicList{allOf}\n+%s", ie.subType)
+	}
+	if ie.Pen == 0 && ie.Name != "" && ie.ID != 0 {
 		return ie.Name
 	}
 	// Output information element spec according to RFC7013 Section 10.1
