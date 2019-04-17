@@ -591,7 +591,7 @@ func serializeDateTimeTo(buffer scratchBuffer, t Type, value interface{}, length
 		}
 		_ = b[7]
 		binary.BigEndian.PutUint32(b[:4], uint32(seconds)+ntp2Unix)
-		binary.BigEndian.PutUint32(b[4:8], uint32((nanoseconds<<32)/1e9))
+		binary.BigEndian.PutUint32(b[4:8], uint32((nanoseconds<<32)/1e9)+1)
 		return 8, nil
 	}
 	return 0, ConversionError{t, value}
