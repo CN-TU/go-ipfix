@@ -70,7 +70,7 @@ func ExampleMakeMessageStream() {
 
 	// buf holds now the complete ipfix data of this example
 	fmt.Printf("% x", buf.Bytes())
-	// Output: 00 0a 00 64 5a 49 7a 3d 00 00 00 00 00 00 00 00 00 02 00 14 01 00 00 03 00 01 00 08 00 08 00 04 00 9d 00 08 01 00 00 40 00 00 00 00 00 00 00 05 c0 a8 00 01 dd f3 f8 80 00 00 00 00 00 00 00 00 00 00 00 0a c0 a8 00 02 dd f3 f8 81 00 00 00 00 00 00 00 00 00 00 00 02 c0 a8 00 03 dd f3 f8 bd 00 00 00 00
+	// Output: 00 0a 00 64 5a 49 7a 3d 00 00 00 00 00 00 00 00 00 02 00 14 01 00 00 03 00 01 00 08 00 08 00 04 00 9d 00 08 01 00 00 40 00 00 00 00 00 00 00 05 c0 a8 00 01 dd f3 f8 80 00 00 00 01 00 00 00 00 00 00 00 0a c0 a8 00 02 dd f3 f8 81 00 00 00 01 00 00 00 00 00 00 00 02 c0 a8 00 03 dd f3 f8 bd 00 00 00 01
 }
 
 func ExampleMakeMessageStream_basicList() {
