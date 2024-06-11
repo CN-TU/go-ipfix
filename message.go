@@ -101,6 +101,17 @@ func (m *MessageStream) AddTemplate(now interface{}, elements ...InformationElem
 	return
 }
 
+// SendTemplate resend an existing template by id.
+// It returns an error if the template can not be found or the send failed.
+func (m *MessageStream) SendTemplate(now interface{}, id int) (err error) {
+	if id >= len(m.templates) {
+		return UnknownTemplateError(id)
+	}
+	newTemplate := m.templates[id]
+	err = m.sendRecord(newTemplate, now)
+	return
+}
+
 // SendData sends the given values for the given template id (Can be allocated with AddTemplate).
 // now must be the current or exported time either as a time.Time value or as one of the provieded ipfix time types.
 // Template InformationElements and given data types must match. Numeric types are converted automatically.
